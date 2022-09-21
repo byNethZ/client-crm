@@ -1,0 +1,20 @@
+<div class="container">
+  <h1 class="text-center">Panel</h1>
+
+  <div class="card p-3 col-7 m-auto">
+    <div class="card-title">
+      <div class="row">
+        <label for="exampleFormControlSelect1" class="form-label text-center">¿A quién deseas activar el sistema</label>
+        <div class="mb-3 col-6">
+          <select [(ngModel)]="idUser" class="form-select" id="exampleFormControlSelect1">
+            <option selected value="99" >Todos</option>
+            <option *ngFor="let user of users" [value]="user.id" >{{user.name}}</option>
+          </select>
+        </div>
+        <div class="col-6">
+          <button class="btn btn-primary col-12" (click)="activate()">Activar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

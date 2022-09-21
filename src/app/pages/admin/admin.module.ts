@@ -1,0 +1,28 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { AdminRoutingModule } from './admin-routing.module';
+import { TeamsComponent } from './teams/teams.component';
+import { UserComponent } from './teams/user/user.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { EditUserComponent } from './teams/edit-user/edit-user.component';
+import { CreateUserComponent } from './teams/create-user/create-user.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+
+@NgModule({
+  declarations: [
+    TeamsComponent,
+    UserComponent,
+    EditUserComponent,
+    CreateUserComponent
+  ],
+  imports: [
+    CommonModule,
+    AdminRoutingModule,
+    SweetAlert2Module.forRoot(),
+    FormsModule,
+    ReactiveFormsModule
+  ]
+})
+export class AdminModule { }

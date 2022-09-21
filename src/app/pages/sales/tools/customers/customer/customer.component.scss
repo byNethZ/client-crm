@@ -1,0 +1,24 @@
+.botones{
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .botones{
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+/* .cards-clients{
+  display: flex;
+  flex-wrap: wrap;
+} */
+
+.avatar{
+  width: 80%;
+  max-width: 35rem;
+  object-fit: cover;
+  display: block;
+  margin: auto;
+}

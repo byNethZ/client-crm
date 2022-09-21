@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Data Table</h6>
+        <div class="table-responsive">
+          <div class="mb-3">
+            <input (keyup)="applyFilter($event)" type="text" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Filtrar por Vendedor">
+          </div>
+          <div class="mb 3">
+            <p class="text-success">Verde para regalos entregados</p>
+            <p >Negro para regalos pendientes</p>
+            <p >Click sobre el teléfono o el email para copiarlos</p>
+          </div>
+          <table id="dataTableCustomer" class="table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Teléfono</th>
+                <th>Regalo</th>
+                <th>Email</th>
+                <th>Asesor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ruleta of ruletaFiltered" class="{{ruleta.delivered ? 'text-success' : ''}}">
+                <td>{{ruleta.name}}</td>
+                <td>{{ruleta.lastname}}</td>
+                <td (click)="saveClipboard(ruleta.phone)" class="cursor-pointer">{{ruleta.phone}}</td>
+                <td>{{ruleta.gift}}</td>
+                <td (click)="saveClipboard(ruleta.email)" class="cursor-pointer">{{ruleta.email}}</td>
+                <td>{{ruleta.asesor}}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

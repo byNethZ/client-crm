@@ -1,0 +1,56 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { ToolsRoutingModule } from './tools-routing.module';
+import { CataloguesComponent } from './catalogues/catalogues.component';
+import { ProductsComponent } from './products/products.component';
+import { CustomersComponent } from './customers/customers.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { PromosComponent } from './promos/promos.component';
+import { CustomerComponent } from './customers/customer/customer.component';
+import { NgbModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProductComponent } from './products/product/product.component';
+import { EditCustomerComponent } from './customers/edit-customer/edit-customer.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CreateCustomerComponent } from './customers/create-customer/create-customer.component';
+import { RuletaComponent } from './ruleta/ruleta.component';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { ArchwizardModule } from 'angular-archwizard';
+import { MaterialModule } from 'src/app/material.module';
+import { ProspectsTableComponent } from './customers/prospects-table/prospects-table.component';
+import { DataTableComponent } from './customers/prospects-table/data-table/data-table.component';
+import { NewComponent } from './customers/new/new.component';
+import { DashboardModule } from 'src/app/views/pages/dashboard/dashboard.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+
+
+@NgModule({
+  declarations: [
+    CataloguesComponent,
+    ProductsComponent,
+    CustomersComponent,
+    PromosComponent,
+    CustomerComponent,
+    ProductComponent,
+    EditCustomerComponent,
+    CreateCustomerComponent,
+    RuletaComponent,
+    ProspectsTableComponent,
+    DataTableComponent,
+    NewComponent,
+  ],
+  imports: [
+    SharedModule,
+    CommonModule,
+    ToolsRoutingModule,
+    SweetAlert2Module.forRoot(),
+    NgbRatingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ColorPickerModule,
+    ArchwizardModule,
+    MaterialModule,
+    NgbModule,
+  ]
+})
+export class ToolsModule { }

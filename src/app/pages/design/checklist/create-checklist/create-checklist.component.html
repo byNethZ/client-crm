@@ -1,0 +1,74 @@
+<div class="card m-3">
+  <div class="card-body">
+    <h6 class="card-title">Crear Enlace</h6>
+
+    <form [formGroup]="form" (ngSubmit)="save($event)" class="forms-sample">
+      <div class="col-lg-6">
+        <label class="form-label">Cliente</label>
+        <input
+          type="text"
+          class="form-control"
+          id="exampleInputEmail1"
+          placeholder="Cliente"
+          formControlName="customer"
+        />
+        <!--         <input
+          class="form-control"
+          type="text"
+          matInput
+          [formControl]="controlCust"
+          [matAutocomplete]="autocust"
+        />
+        <mat-autocomplete
+          autoActiveFirstOption
+          #autocust="matAutocomplete"
+          [displayWith]="displayFnCust"
+          (optionSelected)="OnCustomerSelected($event.option)"
+        >
+          <mat-option
+            *ngFor="let customer of filCustomers | async"
+            [value]="customer"
+          >
+            {{ customer.business }}
+          </mat-option>
+        </mat-autocomplete> -->
+      </div>
+      <div class="m-3" *ngIf="customerSelected">
+        <div class="row">
+          <div class="col-lg-6">
+            <h4>{{ customerSelected?.name }}</h4>
+          </div>
+          <div class="col-lg-6">
+            <p>{{ customerSelected?.surname }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <p>{{ customerSelected?.address }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <h4>{{ customerSelected?.phone }}</h4>
+          </div>
+          <div class="col-lg-6">
+            <p>{{ customerSelected?.email }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label"
+          >Enlace Drive/Dropbox</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="exampleInputEmail1"
+          placeholder="urldropbox"
+          formControlName="urldropbox"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary me-2">Crear</button>
+    </form>
+  </div>
+</div>

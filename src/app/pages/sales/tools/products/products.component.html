@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Data Table</h6>
+        <div class="table-responsive">
+          <div class="mb-3">
+            <input (keyup)="applyFilter($event)" type="text" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Filtrar por SKU">
+          </div>
+          <table id="dataTableCustomer" class="table">
+            <thead>
+              <tr>
+                <th>SKU</th>
+                <th>Nombre</th>
+                <th>Proveedor</th>
+                <th>Precio unitario</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let product of productsFiltered" class="cursor-pointer" routerLink="/tools/product/{{product.id}}">
+                <td>{{product.sku}}</td>
+                <td>{{product.name}}</td>
+                <td>{{product.supplier}}</td>
+                <td>{{product.price_one}}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

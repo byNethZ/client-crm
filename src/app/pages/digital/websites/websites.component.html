@@ -1,0 +1,197 @@
+<h3 class="text-center">{{ title }}</h3>
+<div class="row">
+  <button
+    class="btn btn-success col-lg-2 m-2"
+    (click)="openBasicModal(xlModal)"
+  >
+    Nuevo Website
+  </button>
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table id="dataTableCustomer" class="table">
+            <thead>
+              <tr>
+                <th>Website</th>
+                <th>Cliente</th>
+                <th>Fecha de Inicio</th>
+                <th>Fecha de expiración</th>
+                <th>Tipo de Servicio</th>
+                <th>Cobro</th>
+                <th>Factura Enviada</th>
+                <th>Pago recibido</th>
+                <th>Método de pago</th>
+                <th>Asesor</th>
+                <th>Mantenimiento</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let website of websites">
+                <td><a href="{{website.url}}" target="_blank">{{ website.name }}</a></td>
+                <td>{{ website.customer_id ? website.customer_id : '' }}</td>
+                <td>{{ website.initial_date }}</td>
+                <td class="{{checkDate(website.end_date)}}">{{ website.end_date }}</td>
+                <td>{{ website.service }}</td>
+                <td>{{ website.payment }}</td>
+                <td>{{ website.invoice }}</td>
+                <td>{{ website.payment_received }}</td>
+                <td>{{ website.payment_method }}</td>
+                <td>{{ setVendor(website.vendor_id) }}</td>
+                <td>{{ website.maintenance ? 'Si' : 'No' }}</td>
+                <td>
+                  <button
+                    class="btn m-1 btn-primary"
+                    (click)="openBasicModal(xlModal, website.id)"
+                  >
+                    Editar
+                  </button>
+                  <button class="btn m-1 btn-danger" (click)="delete(website.id)">Borrar</button>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #xlModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel"></h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="modal.close('by: close icon')"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form" class="m-auto col-8" (ngSubmit)="save($event)">
+      <div class="col-lg-12 m-1">
+        <label class="form-label" for="name">Nombre</label>
+        <input
+          class="form-control"
+          formControlName="name"
+          type="text"
+          name="name"
+          id=""
+        />
+      </div>
+
+      <div class="col-lg-12 m-1">
+        <label class="form-label" for="url">URL</label>
+        <input
+          class="form-control"
+          formControlName="url"
+          type="text"
+          name="url"
+          id=""
+        />
+      </div>
+
+      <div class="col-lg-12 m-1">
+        <label class="form-label" for="initial_date">Fecha de inicio</label>
+        <input
+          class="form-control"
+          formControlName="initial_date"
+          type="date"
+          name="initial_date"
+          id=""
+        />
+      </div>
+
+      <div class="col-lg-12 m-1">
+        <label class="form-label" for="end_date">Fecha de expiración</label>
+        <input
+          class="form-control"
+          formControlName="end_date"
+          type="date"
+          name="end_date"
+          id=""
+        />
+      </div>
+
+      <div class="col-lg-12 m-1">
+        <label class="form-label" for="payment">Cobro</label>
+        <input
+          class="form-control"
+          formControlName="payment"
+          type="text"
+          name="payment"
+          id=""
+        />
+      </div>
+
+      <div class="col-lg-12 m-1">
+        <label class="form-label" for="invoice">Factura enviada</label>
+        <input
+          class="form-control"
+          formControlName="invoice"
+          type="text"
+          name="invoice"
+          id=""
+        />
+      </div>
+
+      <div class="col-lg-12 m-1">
+        <label class="form-label" for="payment_received">Pago recibido</label>
+        <input
+          class="form-control"
+          formControlName="payment_received"
+          type="text"
+          name="payment_received"
+          id=""
+        />
+      </div>
+
+      <div class="col-lg-12 m-1">
+        <label class="form-label" for="payment_method">Método de pago</label>
+        <input
+          class="form-control"
+          formControlName="payment_method"
+          type="text"
+          name="payment_method"
+          id=""
+        />
+      </div>
+
+      <div class="col-lg-12 m-1">
+        <label class="form-label" for="vendor_id">Asesor</label>
+        <select
+          name="vendor_id"
+          formControlName="vendor_id"
+          class="form-control"
+        >
+        <option *ngFor="let vendor of vendors" [value]="vendor.id">{{vendor.name}}</option>
+      </select>
+      </div>
+
+      <div class="col-lg-12 m-1">
+        <label class="form-label" for="maintenance">Mantenimiento</label>
+        <input type="checkbox" class="form-check-input" id="checkDefault" formControlName="maintenance"/>
+      </div>
+
+      <button
+        class="btn btn-dark col-lg-2 m-1"
+        [disabled]="form.invalid"
+        type="submit"
+      >
+        {{ btnString }}
+      </button>
+    </form>
+  </div>
+  <div class="modal-footer">
+  </div>
+</ng-template>

@@ -1,0 +1,71 @@
+<div class="table-responsive">
+  <div class="mb-3">
+    <input
+      (keyup)="applyFilter($event)"
+      type="text"
+      class="form-control"
+      id="exampleInputUsername1"
+      autocomplete="off"
+      placeholder="Filtrar por Cliente"
+    />
+  </div>
+
+  <div class="mb 3">
+    <p class="text-success">Clientes</p>
+    <p>Prospectos</p>
+  </div>
+  <table id="dataTableCustomer" class="table">
+    <thead>
+      <tr>
+        <th>Copiar</th>
+        <th>Restaurante</th>
+        <th>Enlace Menu</th>
+        <th>Revisado por</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let link of linksFiltered"
+        class="cursor-pointer {{ setClass(link.aprobed) }}"
+      >
+        <td (click)="copyLink(link.id)"><i data-feather="copy" appFeatherIcon></i></td>
+        <td (click)="changeShowInfo(link)">
+          <h6>{{ link.customer }}</h6>
+          <p *ngIf="role_id === 1">{{ link.user.name }}</p>
+        </td>
+        <td>
+          <a href="{{ link.urldropbox }}" target="_blank"><i data-feather="link" appFeatherIcon></i></a>
+        </td>
+        <td (click)="changeShowInfo(link)">
+          {{ link.approver ? link.approver : "Pendiente" }}
+        </td>
+        <td>
+          <button
+            class="btn btn-warning m-1"
+            (click)="resetLink(link.id)"
+          >
+            Resetear
+          </button>
+          <button
+            *ngIf="role_id === 1"
+            class="btn btn-danger m-1"
+            (click)="deleteLink(link.id)"
+          >
+            Borrar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </tfoot>
+  </table>
+</div>

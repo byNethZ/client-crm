@@ -1,0 +1,41 @@
+.card-body{
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-body .btn{
+  text-transform: uppercase;
+  max-height: 2.5rem;
+}
+
+.card-content{
+  padding: 2rem;
+  padding-top: 5rem;
+}
+
+.btn-margin{
+  border: 1px solid #acacac;
+  color: #6e6e6e;
+}
+
+.image-header-card{
+  background-image: url(./../../../../../assets/images/others/banner.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 7rem;
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.avatar-client{
+  width: 5rem;
+  height: 5rem;
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  bottom: -2.5rem;
+  object-fit: cover;
+}

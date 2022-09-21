@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div>
+          <h6 class="card-title">Checklists</h6>
+          <span class="example-spacer"></span>
+
+        </div>
+        <div class="table-responsive">
+          <div class="mb-3">
+            <input (keyup)="applyFilter($event)" type="text" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Filtrar por Cliente">
+          </div>
+          <div class="mb 3">
+            <p class="text-success">Clientes</p>
+            <p >Prospectos</p>
+          </div>
+          <table id="dataTableCustomer" class="table">
+            <thead>
+              <tr>
+                <th>Restaurante</th>
+                <th>Responsable</th>
+                <th>Aceptó términos</th>
+                <th>Admin</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let check of checklistFiltered" class="cursor-pointer {{check.accept === 1 ? 'text-success' : 'text-danger'}}">
+                <td>{{check.restaurante}}</td>
+                <td>{{check.responsable}}</td>
+                <td>{{check.accept === 1 ? 'Aceptó' : 'Pendiente' }}</td>
+                <td>
+                  <button class="btn btn-danger m-1" (click)="deleteCheck(check.id)">Borrar</button>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

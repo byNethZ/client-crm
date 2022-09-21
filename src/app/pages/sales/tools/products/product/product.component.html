@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="mt-4">
+    <span>{{category}}</span>
+    <span class="example-spacer"></span>
+    <h1>{{product?.name +' | ' + product?.sku}}</h1>
+  </div>
+  <div class="container">
+    <h2>Datos</h2>
+    <hr>
+    <div class="row">
+      <div class="col-lg-12">
+        <h3>{{ product?.name }}</h3>
+        <p>Nombre</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>{{ product?.supplier }}</h3>
+        <p>Proveedor</p>
+      </div>
+      <div class="col-lg-6">
+        <h3>{{ product?.tax }}</h3>
+        <p>Impuesto (Tax)</p>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <hr>
+    <h2>Descripción</h2>
+    <hr>
+    <p>{{product?.description_spanish}}</p>
+    <p>{{product?.description_english}}</p>
+  </div>
+  <div class="container">
+    <hr>
+    <h2>Precios</h2>
+    <hr>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th *ngIf="product?.price_one">Precio Unitario</th>
+            <th *ngIf="product?.price_two">Primer paquete </th>
+            <th *ngIf="product?.price_three">Segundo paquete</th>
+            <th *ngIf="product?.price_four">Tercer paquete</th>
+            <th *ngIf="product?.price_five">Cuarto paquete</th>
+            <th *ngIf="product?.price_six">Quinto paquete</th>
+            <th *ngIf="product?.price_seven">Sexto paquete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th *ngIf="product?.price_one">{{product?.price_one}}</th>
+            <th *ngIf="product?.price_two">{{product?.price_two ? product?.price_two : 'N/A'}}</th>
+            <th *ngIf="product?.price_three">{{product?.price_three ? product?.price_three : 'N/A'}}</th>
+            <th *ngIf="product?.price_four">{{product?.price_four ? product?.price_four : 'N/A'}}</th>
+            <th *ngIf="product?.price_five">{{product?.price_five ? product?.price_five : 'N/A'}}</th>
+            <th *ngIf="product?.price_six">{{product?.price_six ? product?.price_six : 'N/A'}}</th>
+            <th *ngIf="product?.price_seven">{{product?.price_seven ? product?.price_seven : 'N/A'}}</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

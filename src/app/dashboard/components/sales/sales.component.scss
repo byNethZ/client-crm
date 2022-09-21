@@ -1,0 +1,32 @@
+.google-maps {
+  height: 35rem;
+  width: 100%;
+}
+
+.info-status{
+  text-align: center;
+  margin: 1rem auto;
+  padding: 1rem;
+}
+
+.info-status p{
+  color: #8d0000;
+  font-size: 1.8rem;
+}
+
+.vendor-total{
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.vendor-total p, .vendor-total h6, .vendor-total div{
+  width: 100%;
+  margin: auto;
+}
+
+@media (min-width: 768px) {
+  .vendor-total p, .vendor-total h6, .vendor-total div{
+    width: auto;
+  }
+}

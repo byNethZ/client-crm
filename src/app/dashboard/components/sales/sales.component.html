@@ -1,0 +1,172 @@
+<div class="col-xl-6 m-auto mb-3 grid-margin stretch-card">
+  <div class="card">
+
+    <div class="card-body" *ngIf="role === 1">
+      <h6 class="card-title justify-content-center text-center">Clientes Registrados Hoy: {{currentTotal}}</h6>
+
+      <div class="row vendor-total m-auto">
+        <ngb-accordion [closeOthers]="true" activeIds="static-1">
+          <ngb-panel *ngFor="let data of currentOrganizedByVendor" id="{{data.name}}" title="{{data.name}}: {{data.total}}">
+            <ng-template ngbPanelContent>
+              <div *ngFor="let dataStatus of data.status">
+                <h6 class="text-primary text-center">{{utils.formatStatusCustomer(dataStatus.status)}}</h6>
+                <p class="text-center">{{dataStatus.total}}</p>
+              </div>
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+
+      </div>
+
+    </div>
+
+    <div class="card-body" *ngIf="role !== 1">
+      <h6 class="card-title justify-content-center text-center">Clientes Registrados Hoy: {{currentTotal}}</h6>
+
+      <div *ngFor="let dataStatus of currentStatusByVendor">
+        <h6 class="text-primary text-center">{{utils.formatStatusCustomer(dataStatus.status)}}</h6>
+        <p class="text-center">{{dataStatus.total}}</p>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="row justify-content-center m-2" *ngIf="role === 1">
+  <div class="col-lg-5">
+    <select (change)="setVendorId($event)" class="form-select" name="" id="">
+      <option value="">General</option>
+      <option *ngFor="let vendor of vendors" value="{{ vendor.id }}">
+        {{ vendor?.name }}
+      </option>
+    </select>
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="col-xl-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title justify-content-center">Clientes por Status</h6>
+
+        <div class="row">
+          <div
+            class="card col-xl-6 info-status"
+            *ngFor="let status of customerByStatus"
+          >
+            <h3 *ngIf="status.status === 0" style="color: #156184">
+              Prospectos
+            </h3>
+            <h3 *ngIf="status.status === 1" style="color: #156184">
+              En Negociación
+            </h3>
+            <h3 *ngIf="status.status === 2" style="color: #156184">
+              Seguimiento
+            </h3>
+            <h3 *ngIf="status.status === 3" style="color: #156184">
+              En Cierre
+            </h3>
+            <h3 *ngIf="status.status === 4" style="color: #156184">
+              Rechazos
+            </h3>
+            <h3 *ngIf="status.status === 5" style="color: #156184">
+              Clientes Activos
+            </h3>
+            <h3 *ngIf="status.status === 6" style="color: #156184">
+              Clientes Inactivos
+            </h3>
+            <p>{{ status.total }}</p>
+          </div>
+
+        </div>
+        <button
+          class="btn btn-primary me-2 col-6"
+          type="button"
+          routerLink="/tools/table-prospects"
+        >
+          Ver Clientes
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Clientes por Estado</h6>
+
+        <apx-chart
+          [series]="barChartOptions.series"
+          [chart]="barChartOptions.chart"
+          [colors]="barChartOptions.colors"
+          [grid]="barChartOptions.grid"
+          [xaxis]="barChartOptions.xaxis"
+          [yaxis]="barChartOptions.yaxis"
+          [plotOptions]="barChartOptions.plotOptions"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xl-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Industrias Líderes</h6>
+
+        <apx-chart
+          [series]="pieOneChartOptions.series"
+          [labels]="pieOneChartOptions.labels"
+          [chart]="pieOneChartOptions.chart"
+          [colors]="pieOneChartOptions.colors"
+          [stroke]="pieOneChartOptions.stroke"
+          [legend]="pieOneChartOptions.legend"
+          [dataLabels]="pieOneChartOptions.dataLabels"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Industrias Secundarias</h6>
+
+        <apx-chart
+          [series]="pieTwoChartOptions.series"
+          [labels]="pieTwoChartOptions.labels"
+          [chart]="pieTwoChartOptions.chart"
+          [colors]="pieTwoChartOptions.colors"
+          [stroke]="pieTwoChartOptions.stroke"
+          [legend]="pieTwoChartOptions.legend"
+          [dataLabels]="pieTwoChartOptions.dataLabels"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xl-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Distribución de Clientes</h6>
+        <google-map
+          [options]="optionsMap"
+          height="35rem"
+          [zoom]="zoom"
+          width="100%"
+          [center]="center"
+        >
+          <map-marker
+            *ngFor="let state of markers"
+            [position]="state.position"
+            [label]="state.label"
+          ></map-marker>
+        </google-map>
+      </div>
+    </div>
+  </div>
+</div>

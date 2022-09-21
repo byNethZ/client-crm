@@ -1,0 +1,77 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$nobleui-angular-primary: mat.define-palette(mat.$indigo-palette);
+$nobleui-angular-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$nobleui-angular-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$nobleui-angular-theme: mat.define-light-theme((
+  color: (
+    primary: $nobleui-angular-primary,
+    accent: $nobleui-angular-accent,
+    warn: $nobleui-angular-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($nobleui-angular-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+
+// Global icon font
+@import "./assets/fonts/feather/style.css";
+
+
+// // 3rd party plugins
+@import "~@mdi/font/css/materialdesignicons.min.css";
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+@import "~highlight.js/styles/googlecode.css";
+@import '~ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css';
+@import '~ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css';
+@import '~animate.css/animate.min.css';
+@import '~@fullcalendar/common/main.min.css';
+@import '~@fullcalendar/daygrid/main.min.css';
+@import '~@fullcalendar/timegrid/main.min.css';
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import '~simplemde/dist/simplemde.min.css';
+@import "~metismenujs/scss/metismenujs";
+@import '~dropzone/dist/min/dropzone.min.css';
+@import '~quill/dist/quill.snow.css';
+@import '~angular-archwizard/styles/archwizard.css';
+@import '~simple-datatables/dist/style.css';
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/bootstrap.css';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
+
+// NobleUI styles for LTR
+@import "./assets/scss/style";
+
+
+// NobleUI styles For RTL
+// @import "./assets/scss/style.rtl.css";
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,0 +1,204 @@
+<div class="container">
+
+  <div class="botones" >
+    <button class="btn btn-primary m-1" routerLink="/tools/customers">Atrás</button>
+    <button class="btn btn-primary m-1" routerLink="/tools/edit-customer/{{customer.id}}">Editar</button>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-6 m-auto">
+        <img class="avatar" src="{{imageLink}}" alt="{{customer.name}}">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container text-center">
+    <div class="mt-4">
+      <span class="example-spacer"></span>
+      <h1>
+        {{
+          customer.business
+            ? customer.business
+            : customer.name
+        }}
+      </h1>
+    </div>
+
+    <div class="col-lg-6">
+      <h3>{{ customer.name }}</h3>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <p>{{ customer.phone ? customer.phone : 'N/A' }}</p>
+      </div>
+      <div class="col-lg-6">
+        <span>{{ customer.email ? customer.email : 'N/A' }}</span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container mt-5 text-center">
+    <div class="row col-lg-12">
+      <div class="col-md-6">
+        <p>Nivel</p>
+        <ngb-rating [(rate)]="currentRate"></ngb-rating>
+
+        <h2 class="text-muted mt-2"><b>{{currentRate}}</b></h2>
+      </div>
+      <div class="col-md-6">
+        <p>{{ customer.status === 5 ? 'Cliente Activo' : customer.status === 6 ? 'Cliente Inactivo' : 'Prospecto' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container text-center">
+    <hr>
+    <h2>Datos Generales</h2>
+    <hr>
+
+    <div class="row">
+      <div class="col-md-6">
+        <h3>{{ customer.birthday ? customer.birthday : "N/A" }}</h3>
+        <p>Fecha de nacimiento</p>
+      </div>
+      <div class="col-md-6">
+        <h3>{{ customer.gender ? customer.gender : 'N/A' }}</h3>
+        <p>Género</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <h3>{{ customer.address ? customer.address : 'N/A' }}</h3>
+        <p>Dirección</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>{{ customer.town ? customer.town : 'N/A' }}</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <h3>{{ customer.city ? customer.city : 'N/A' }}</h3>
+        <p>Ciudad</p>
+      </div>
+      <div class="col-md-6">
+        <h3>{{ customer.zipcode ? customer.zipcode : 'N/A' }}</h3>
+        <p>Código postal</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <h3>{{ state }}</h3>
+        <p>Estado</p>
+      </div>
+      <div class="col-md-6">
+        <h3>{{ customer.country_id === 236 ? 'USA' : 'Mexico' }}</h3>
+        <p>País</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container text-center">
+    <hr>
+    <h2>Datos de Contacto</h2>
+    <hr>
+
+    <div class="row">
+      <div class="col-md-6">
+        <p>{{ customer.phone ? customer.phone : 'N/A' }}</p>
+      </div>
+      <div class="col-md-6">
+        <span>{{ customer.email ? customer.email : 'N/A' }}</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h3>{{ customer.website ? customer.website : 'N/A' }}</h3>
+        <p>Website</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container text-center">
+    <hr>
+    <h2>Industria</h2>
+    <hr>
+    <div class="row">
+      <div class="col-md-6">
+        <h3>{{ category }}</h3>
+        <p>Categoría</p>
+      </div>
+      <div class="col-md-6">
+        <h3>{{ asesor?.name + ' ' + asesor?.lastname }}</h3>
+        <p>Asignado a</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <p>Notas</p>
+        <h3>{{ customer.bio ? customer.bio : 'N/A' }}</h3>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container text-center">
+    <hr>
+    <h2>Preferencias de Cliente</h2>
+    <hr>
+
+    <div class="row">
+      <div class="col-md-6">
+        <h3 style="text-transform: capitalize;" >{{ customer.color ? customer.color : 'N/A' }}</h3>
+        <p>Color favorito</p>
+      </div>
+      <div class="col-md-6">
+        <h3>{{ customer.birthplace ? customer.birthplace : 'N/A' }}</h3>
+        <p>Lugar de nacimiento</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <h3>{{ customer.hobby ? customer.hobby : 'N/A' }}</h3>
+        <p>Hobby</p>
+      </div>
+      <div class="col-md-6">
+        <h3>{{ customer.place? customer.place: 'N/A' }}</h3>
+        <p>Lugar favorito</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <h3>{{ customer.movie ? customer.movie : 'N/A' }}</h3>
+        <p>Pelicula favorita</p>
+      </div>
+      <div class="col-md-6">
+        <h3>{{ customer.music? customer.music: 'N/A' }}</h3>
+        <p>Música favorita</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <h3>{{ customer.sport ? customer.sport : 'N/A' }}</h3>
+        <p>Deporte favorito</p>
+      </div>
+      <div class="col-md-6">
+        <h3>{{ customer.business_number? customer.business_number: 'N/A' }}</h3>
+        <p>Número de negocios</p>
+      </div>
+    </div>
+
+  </div>
+</div>

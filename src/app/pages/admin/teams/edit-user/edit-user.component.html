@@ -1,0 +1,183 @@
+<div class="container mt-2">
+  <div class="container col-lg-8">
+    <h3>Generales</h3>
+
+    <div class="m-2" *ngIf="departamentUser === 2 && isEdit" >
+      <form [formGroup]="formPassword" (ngSubmit)="changePassword($event)">
+        <div class="row">
+          <div class="col-lg-12">
+            <label class="form-label" for="password">Genera un nuevo password</label>
+            <input class="form-control" type="text" name="password" id="password" formControlName="password">
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="submit text-center m-3">
+                <button
+                  class="btn btn-dark col-lg-3"
+                  [disabled]="formPassword.invalid"
+                  type="submit"
+                >
+                  Cambiar Password
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="save($event)">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="col-lg-12">
+              <label class="form-label" for="business">Email</label>
+              <input
+                class="form-control"
+                formControlName="email"
+                type="text"
+                name="email"
+                id=""
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="col-lg-12">
+              <label class="form-label" for="status">Rol</label>
+              <select
+                class="form-control"
+                formControlName="role_id"
+                name="role_id"
+                id=""
+              >
+              <option value="1">Administrador</option>
+              <option value="2">Colaborador</option>
+            </select>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!isEdit" class="row">
+          <div class="col-lg-6">
+            <div class="col-lg-12">
+              <label class="form-label" for="business">Password</label>
+              <input
+                class="form-control"
+                formControlName="password"
+                type="text"
+                name="password"
+                id=""
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="col-lg-12">
+              <label class="form-label" for="name">Nombre</label>
+              <input
+                class="form-control"
+                formControlName="name"
+                type="text"
+                name="name"
+                id=""
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="col-lg-12">
+              <label class="form-label" for="surname">Apellido</label>
+              <input
+                class="form-control"
+                formControlName="lastname"
+                type="text"
+                name="lastname"
+                id=""
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="col-lg-12">
+              <label class="form-label" for="name">Departamento</label>
+              <select
+                class="form-control"
+                formControlName="departament_id"
+                type="text"
+                name="departament_id"
+                id=""
+              >
+              <option *ngFor="let departament of departaments" value="{{departament.id}}">{{departament.name}}</option>
+            </select>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="col-lg-12">
+              <label class="form-label" for="surname">Departamento Alterno</label>
+              <select
+                class="form-control"
+                formControlName="departament_alt_id"
+                type="text"
+                name="departament_alt_id"
+                id=""
+              >
+              <option *ngFor="let departament of departaments" value="{{departament.id}}">{{departament.name}}</option>
+            </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="col-lg-12">
+              <label class="form-label" for="surname">Teléfono Personal</label>
+              <input
+                class="form-control"
+                formControlName="personal_phone"
+                type="text"
+                name="personal_phone"
+                id=""
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="col-lg-12">
+              <label class="form-label" for="name">Teléfono Público</label>
+              <input
+                class="form-control"
+                formControlName="public_phone"
+                type="text"
+                name="public_phone"
+                id=""
+              />
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="submit text-center m-3">
+            <button
+              class="btn btn-dark col-lg-2"
+              [disabled]="form.invalid"
+              type="submit"
+            >
+              Editar
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!--
+
+status:
+
+
+vendor_id:
+level:
+type_id:
+token:
+ -->

@@ -1,0 +1,38 @@
+<button class="btn btn-primary col-lg-2 m-2" routerLink="/tools/customers">Clientes</button>
+<button class="btn btn-primary col-lg-2 m-2" routerLink="/tools/create-customer">Nuevo Prospecto</button>
+<button class="btn btn-primary col-lg-2 m-2" routerLink="/tools/customers/new">Nuevo Cliente</button>
+
+<div class="example">
+  <ul ngbNav #fillJustifyNav="ngbNav" class="nav-tabs nav-fill">
+    <li [ngbNavItem]="1">
+      <a ngbNavLink>Prospecto ({{lengthProspects}})</a>
+      <ng-template ngbNavContent>
+        <h6 class="mb-2">Prospecto</h6>
+        <app-data-table [status]="0" (lengthData)="setLenght($event, 0)"></app-data-table>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+      <a ngbNavLink>Negociación ({{lengthNegociation}})</a>
+      <ng-template ngbNavContent>
+        <h6 class="mb-2">Negociación</h6>
+        <app-data-table [status]="1" (lengthData)="setLenght($event, 1)"></app-data-table>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="3">
+      <a ngbNavLink>Seguimiento ({{lengthFollowing}})</a>
+      <ng-template ngbNavContent>
+        <h6 class="mb-2">Seguimiento</h6>
+        <app-data-table [status]="2" (lengthData)="setLenght($event, 2)"></app-data-table>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="4">
+      <a ngbNavLink>Cierre ({{lengthClosed}})</a>
+      <ng-template ngbNavContent>
+        <h6 class="mb-2">Cierre</h6>
+        <app-data-table [status]="3" (lengthData)="setLenght($event, 3)"></app-data-table>
+      </ng-template>
+    </li>
+  </ul>
+
+  <div [ngbNavOutlet]="fillJustifyNav" class="border border-top-0 p-3"></div>
+</div>

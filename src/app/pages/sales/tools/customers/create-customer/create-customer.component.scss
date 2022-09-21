@@ -1,0 +1,37 @@
+@use './../../../../../styles/variables' as variables;
+
+.card-body svg{
+  width: 3rem;
+  height: 3rem;
+}
+.card-departaments{
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.card-types{
+  text-align: center;
+}
+
+.select-status{
+  width: 90% !important;
+  margin: auto !important;
+}
+
+.checkbox, .radio{
+  visibility: hidden;
+}
+
+input[type=checkbox]:checked + .card-departaments{
+  background-color: #00df76;
+  color: #fff;
+}
+
+input[type=radio]:checked + .card-types{
+  background-color: variables.$azulBliones;
+  color: #fff;
+}
+
+.icon-button{
+  width: 3rem;
+}

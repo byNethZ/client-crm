@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div>
+          <h6 class="card-title">Checklists</h6>
+          <span class="example-spacer"></span>
+          <button
+            (click)="showCreateContainer()"
+            class="m-3 btn {{ !createLink ? 'btn-primary' : 'btn-danger' }}"
+            mat-raised-button
+          >
+            {{ !createLink ? "Crear Enlace" : "Cancelar" }}
+          </button>
+
+          <ng-container *ngIf="createLink">
+            <app-create-checklist></app-create-checklist>
+          </ng-container>
+        </div>
+
+        <div class="example">
+          <ul ngbNav #fillJustifyNav="ngbNav" class="nav-tabs nav-fill">
+            <li [ngbNavItem]="1">
+              <a ngbNavLink>Todos</a>
+              <ng-template ngbNavContent>
+                <h6 class="mb-2">Todos</h6>
+
+                <app-details-checklist [isAll]="true"></app-details-checklist>
+
+
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+              <a ngbNavLink>Rechazados</a>
+              <ng-template ngbNavContent>
+                <h6 class="mb-2">Rechazados</h6>
+
+                <app-details-checklist [isAll]="false" [status]="2"></app-details-checklist>
+
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="3">
+              <a ngbNavLink>Pendientes</a>
+              <ng-template ngbNavContent>
+                <h6 class="mb-2">Pendientes</h6>
+
+                <app-details-checklist [isAll]="false" [status]="0"></app-details-checklist>
+
+              </ng-template>
+            </li>
+          </ul>
+
+          <div
+            [ngbNavOutlet]="fillJustifyNav"
+            class="border border-top-0 p-3"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

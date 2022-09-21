@@ -1,0 +1,16 @@
+<a class="btn btn-primary" target="_blank" href="https://catalogos.bliones.com/id={{vendor_id}}">Catalogo Formato Anterior</a>
+
+<div class="row container">
+  <div class="p-2 col-lg-6" *ngFor="let catalogue of catalogues">
+    <div class="card col-lg-12">
+      <img src={{catalogue.image}} class="card-img-top" alt={{catalogue.name}}>
+      <div class="card-body">
+        <h5 class="card-title text-center">{{catalogue.name}}</h5>
+        <div class="container text-center">
+          <a [swal]="{ toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true, title: 'Copiado al portapapeles', icon: 'success'}" (click)="saveClipboard(catalogue.url+'/?id='+vendor_id)" class="btn btn-primary m-1">Copiar</a>
+          <a (click)="openUrl(catalogue.url+'/?id='+vendor_id)" class="btn btn-primary m-1">Ir</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

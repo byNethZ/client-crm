@@ -1,0 +1,70 @@
+<table id="dataTableExample" class="table">
+  <thead>
+    <tr>
+      <th>Prospecto</th>
+      <th>Interesado</th>
+      <th>Industría</th>
+      <th>Fecha</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let prospect of prospects">
+      <td>
+        <p>{{prospect.name}}</p>
+        <div class="row">
+          <a *ngIf="prospect.phone" href="tel:{{prospect.phone}}">{{prospect.phone}}</a>
+        </div>
+        <div class="row">
+          <a *ngIf="prospect.email || prospect.email !== 'N/A'" href="mailto:{{prospect.email}}">{{prospect.email}}</a>
+        </div>
+        <p *ngIf="role === '1'">{{showVendor(prospect.vendor?.id)}}</p>
+        <p *ngIf="prospect.field_2 === '1'">Asignado por Digital</p>
+        <button class="btn btn-facebook" (click)="redirectFB(prospect.field_1)" *ngIf="prospect.field_1">Perfil Facebook</button>
+      </td>
+      <td >
+        <p [innerHTML]="interestToString(prospect.interests?.interests)"></p>
+      </td>
+      <td>{{prospect.industry?.type}}</td>
+      <td>
+        <span class="badge bg-danger">{{ warningDate(prospect.updated_at, false) }}</span>
+        <span class="badge bg-success">{{ warningDate(prospect.created_at, true) }}</span>
+      </td>
+      <td><button class="btn btn-primary" (click)="openBasicModal(basicModal, prospect.id)">Cambiar</button></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </tfoot>
+</table>
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel"></h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <h3>Cambiar el estatus de tu prospecto</h3>
+    <div class="row m-2 justify-content-center">
+      <button (click)="changeStatus(0)" class="btn btn-primary col-lg-5 m-1">Prospecto</button>
+      <button (click)="changeStatus(1)" class="btn btn-primary col-lg-5 m-1">Negociación</button>
+    </div>
+    <div class="row m-2 justify-content-center">
+      <button (click)="changeStatus(2)" class="btn btn-primary col-lg-5 m-1">Seguimiento</button>
+      <button (click)="changeStatus(3)" class="btn btn-primary col-lg-5 m-1">Cierre</button>
+    </div>
+    <div class="row m-2 justify-content-center">
+      <button routerLink="/tools/edit-customer/{{idCustomerSelected}}" (click)="modal.close('by: close button')" class="btn btn-primary col-lg-6">Cliente Nuevo</button>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+  </div>
+</ng-template>
