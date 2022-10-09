@@ -94,6 +94,12 @@ export const MENU: MenuItem[] = [
     link: '/digital/websites',
     departament: 2
   },
+  {
+    label: 'Reportes',
+    icon: 'send',
+    link: '/admin/reportes',
+    departament: 10
+  },
   //start ui components
 ];
 

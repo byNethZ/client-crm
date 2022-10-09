@@ -1,0 +1,43 @@
+<div class="mt-2" *ngIf="type === 'tag'">
+  <p class="card-title text-capitalize">{{title}}</p>
+
+  <tag-input
+    [(ngModel)]="items"
+    theme="bootstrap"
+    [modelAsStrings]="true"
+    (onAdd)="onAdd($event)"
+    (onRemove)="onRemove($event)"
+  >
+  </tag-input>
+
+  <p class="mt-2">Etiquetas guardadas:</p>
+  <br />
+  <ul>
+    <li class="mt-2" *ngFor="let item of items">{{item}}</li>
+    <br />
+  </ul>
+</div>
+
+<div class="mt-2" *ngIf="type === 'percent'">
+  <p class="card-title text-capitalize">{{title}}</p>
+  <form>
+    <div *ngFor="let value of values">
+      <label class="form-label" for="value">{{value}}</label>
+      <input
+        class="form-control"
+        type="number"
+        name="value"
+        id=""
+      />
+    </div>
+    <button class="btn btn-primary mt-2" (click)="addDataObject($event)">
+      Guardar
+    </button>
+  </form>
+  <p class="mt-2">Datos guardados:</p>
+  <br />
+  <ul>
+    <li *ngFor="let data of dataSaved | keyvalue"><strong>{{data.key}}:</strong> {{data.value}}%</li>
+  </ul>
+  <br />
+</div>

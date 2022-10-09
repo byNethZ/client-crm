@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Vendor } from 'src/app/models/vendor.interface';
 import { Website } from 'src/app/models/website.interface';
+import { UserService } from 'src/app/services/user.service';
 import { VendorService } from 'src/app/services/vendor.service';
 import { WebsitesService } from 'src/app/services/websites.service';
 import Utils from 'src/utils/Utils';
@@ -29,7 +30,8 @@ export class WebsitesComponent implements OnInit {
   constructor(
     private _websitesService: WebsitesService,
     private _modalService: NgbModal,
-    private _vendorService: VendorService
+    private _vendorService: VendorService,
+    private _userService: UserService,
   ) {
     this.form = new FormGroup ({
       name: new FormControl('', [Validators.required]),
@@ -67,6 +69,7 @@ export class WebsitesComponent implements OnInit {
   ngOnInit(): void {
     this.getWebsites();
     this.getVendors();
+    console.log(this._userService.user);
   }
 
   getWebsites(){

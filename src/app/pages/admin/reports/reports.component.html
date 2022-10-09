@@ -1,0 +1,24 @@
+<div>
+  <div class="card p-3 col-7 m-auto">
+    <div class="card-title">
+      <div class="row">
+        <label for="exampleFormControlSelect1" class="form-label text-center">Envío de reportes de prospectos</label>
+        <div class="mb-3 col-4">
+          <select [(ngModel)]="idUser" class="form-select" id="exampleFormControlSelect1">
+            <option *ngFor="let user of users" [value]="user.id" >{{user.name}}</option>
+          </select>
+        </div>
+        <div class="mb-3 col-4">
+          <select [(ngModel)]="modeReport" class="form-select" id="exampleFormControlSelect1">
+            <option value="day">Diario</option>
+            <option value="week">Semanal</option>
+            <option value="month">Mensual</option>
+          </select>
+        </div>
+        <div class="col-4">
+          <button class="btn btn-primary col-12" (click)="sendReport()">Activar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

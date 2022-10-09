@@ -22,6 +22,7 @@ import { DataTableComponent } from './customers/prospects-table/data-table/data-
 import { NewComponent } from './customers/new/new.component';
 import { DashboardModule } from 'src/app/views/pages/dashboard/dashboard.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { FeatherIconModule } from 'src/app/core/feather-icon/feather-icon.module';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ArchwizardModule,
     MaterialModule,
     NgbModule,
+    FeatherIconModule,
   ]
 })
 export class ToolsModule { }

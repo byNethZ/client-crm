@@ -5,7 +5,7 @@ export interface User{
     role_id:number;
     email: string;
     password: string;
-    departament_alt_id: string;
+    departament_alt_id: number;
     avatar: string;
     token: string;
     departament_id: number;

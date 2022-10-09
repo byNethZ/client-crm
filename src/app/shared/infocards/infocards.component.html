@@ -1,0 +1,20 @@
+<div>
+  <div class="title">
+    <h4>{{title}}</h4>
+  </div>
+
+  <div class="info-card" *ngIf="type === 'tag' || type === 'percent'">
+    <ul *ngIf="type ==='tag'">
+      <li *ngFor="let item of dataParsed" >{{item}}</li>
+    </ul>
+
+    <ul *ngIf="type ==='percent'">
+      <li *ngFor="let data of dataParsed | keyvalue"><strong>{{data.key}}:</strong> {{data.value}}%</li>
+    </ul>
+  </div>
+
+  <div class="info-card" *ngIf="type === 'text'">
+    <p [innerText]="textData" ></p>
+  </div>
+
+</div>

@@ -11,10 +11,13 @@ import { Router } from '@angular/router';
 import { WizardComponent } from 'angular-archwizard';
 import { map, Observable, startWith } from 'rxjs';
 import { Customer } from 'src/app/models/customer.interface';
+import { User } from 'src/app/models/user.interface';
 import { CustomerService } from 'src/app/services/customer.service';
 import { CustomertypesService } from 'src/app/services/customertypes.service';
 import { ProductService } from 'src/app/services/product.service';
+import { UserService } from 'src/app/services/user.service';
 import { VendorService } from 'src/app/services/vendor.service';
+import Utils from 'src/utils/Utils';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -23,10 +26,15 @@ import Swal from 'sweetalert2';
   styleUrls: ['./create-customer.component.scss'],
 })
 export class CreateCustomerComponent implements OnInit {
+  public user: User;
+  public utils= new Utils();
   public errorMessage: string | boolean = false;
   public typeCustomer: FormGroup;
   formData: FormGroup;
   formDepartaments: FormGroup;
+
+  public customerExists: Customer | undefined;
+  public vendorDesigned: User | undefined;
 
   public customer: Customer;
   public vendor_id: string | null = localStorage.getItem('vendor_id')
@@ -36,6 +44,12 @@ export class CreateCustomerComponent implements OnInit {
   public departament_id: number | null = parseInt(
     localStorage.getItem('departament_id')!
   );
+
+  public departament_id_alt: number | null = parseInt(
+    localStorage.getItem('departament_alt_id')!
+  );
+
+  public id: string = localStorage.getItem('id')!;
 
   //autocomplete
   controlCust = new FormControl();
@@ -50,6 +64,7 @@ export class CreateCustomerComponent implements OnInit {
   public arrayInterests: any[] = [];
 
   public customers: Customer[] = [];
+  public customersByVendor: Customer[] = [];
   public customersFiltered: Customer[] = [];
 
   public isProspect: boolean = false;
@@ -64,7 +79,8 @@ export class CreateCustomerComponent implements OnInit {
     private _customerTypes: CustomertypesService,
     private _productService: ProductService,
     private _vendorService: VendorService,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private _userService: UserService,
   ) {
     this.customer = {
       id: 1,
@@ -99,6 +115,34 @@ export class CreateCustomerComponent implements OnInit {
       field_3: '',
       birthday: '',
       gender: '',
+      occupation: '',
+      marital_status: 1,
+      nationality: 1,
+      language: 1,
+      fears: '',
+      emotions: '',
+      needs: '',
+      identity: '',
+      dreams: '',
+      goals: '',
+      tasks: '',
+      relations: '',
+      values: '',
+      motivators: '',
+      beliefs: '',
+      mind: '',
+      food: '',
+      personality: '',
+      mindset: '',
+      pleasures: '',
+      finances: '',
+      wishes: '',
+      important_dates: '',
+      challenges: '',
+      responsability: '',
+      demotivators: '',
+      works: '',
+      notes: '',
       image: '',
       created_at: '',
       updated_at: ''
@@ -116,10 +160,15 @@ export class CreateCustomerComponent implements OnInit {
       socialProfile: new FormControl(''),
       vendor_id: new FormControl('10', Validators.required),
       origin: new FormControl('', Validators.required),
+      notes: new FormControl(''),
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getDepartaments();
+    this.getCustomers();
+    this.getVendors();
+  }
 
   getVendors() {
     this._vendorService.getVendors(this.token!).subscribe(
@@ -147,10 +196,17 @@ export class CreateCustomerComponent implements OnInit {
   }
 
   getCustomers() {
-    this._customerService.getCustomers(this.token!).subscribe(
+    this._customerService.getAllCustomers(this.token!).subscribe(
       (response) => {
         this.customers = response.customers;
-        this.customersFiltered = this.customers;
+        this.customersByVendor = this.customers.filter( (customer) => {
+          if( customer.vendor_id === parseInt(this.vendor_id!) && customer.status === 5 ){
+            return true
+          }
+          return false;
+        });
+        //console.log(this.customersByVendor);
+        this.customersFiltered = this.customersByVendor
       },
       (error) => {
         console.log(error);
@@ -161,7 +217,7 @@ export class CreateCustomerComponent implements OnInit {
   private _filterCustomers(value: string): Customer[] {
     const formatVal = value.toLowerCase();
 
-    return this.customers.filter((customer) =>
+    return this.customersByVendor.filter((customer) =>
       customer.business?.toLowerCase().includes(formatVal)
     );
   }
@@ -171,9 +227,9 @@ export class CreateCustomerComponent implements OnInit {
     //console.log(this.filterValue);
     let filterValueLower = this.filterValue.toLowerCase();
     if (this.filterValue === '') {
-      this.customersFiltered = this.customers;
+      this.customersFiltered = this.customersByVendor;
     } else {
-      this.customersFiltered = this.customers.filter((customer) =>
+      this.customersFiltered = this.customersByVendor.filter((customer) =>
         customer.business.toLowerCase().includes(filterValueLower, -1)
       );
     }
@@ -214,14 +270,18 @@ export class CreateCustomerComponent implements OnInit {
   save(event: Event, status: number = 0) {
     event.preventDefault();
 
+
+
     this.customer.name = this.formData.value.name;
-    this.customer.phone = this.formData.value.phone;
+    this.customer.phone = this.utils.formatPhone(this.formData.value.phone);
     this.customer.email = this.formData.value.email;
     this.customer.type_id = parseInt(this.typeCustomer.value.type_id);
     this.customer.field_1 = this.formData.value.socialProfile;
     this.customer.field_3 = this.formData.value.origin;
+    this.customer.notes = this.formData.value.notes;
     this.customer.status = status;
-    this.customer.vendor_id = this.departament_id === 2
+
+    this.customer.vendor_id = this.departament_id === 8 || this.departament_id_alt === 8
       ? this.formData.value.vendor_id
       : this.vendor_id;
 
@@ -231,9 +291,8 @@ export class CreateCustomerComponent implements OnInit {
       this.customer.token = this.generateToken();
     }
 
-    //field_2 represents is Assigned by Digital departament
-    if(this.departament_id === 2 ){
-      this.customer.field_2 = '1';
+    if( this.departament_id === 8 || this.departament_id_alt === 8 ){
+      this.customer.field_2 = this.id;
     }
 
     let data = {
@@ -290,15 +349,12 @@ export class CreateCustomerComponent implements OnInit {
     this.isProspect = resp;
     if (this.isProspect) {
       this.getCustomerTypes();
-      this.getDepartaments();
-      this.getVendors();
     } else {
-      this.getCustomers();
       this.filCustomers = this.controlCust.valueChanges.pipe(
         startWith(''),
         map((val) => (typeof val === 'string' ? val : val.business)),
         map((business) =>
-          business ? this._filterCustomers(business) : this.customers.slice()
+          business ? this._filterCustomers(business) : this.customersByVendor.slice()
         )
       );
     }
@@ -380,5 +436,25 @@ export class CreateCustomerComponent implements OnInit {
       }
 
     }
+  }
+
+  verifyCustomer(){
+    let phone = this.formData.value.phone;
+    let formattedPhone = this.utils.formatPhone(phone);
+    this.customerExists = this.customers.find( (customer) => customer.phone === phone)
+    this.vendorDesigned = this.vendors.find( (vendor) => vendor.id === this.customerExists?.vendor_id)
+    //console.log( this.customers );
+
+    if(this.customerExists !== undefined || formattedPhone === '' || formattedPhone.length < 10) {
+      this.formData.patchValue({phone: ''});
+      this.errorMessage = 'Ingrese un teléfono válido'
+    } else {
+      this.errorMessage = ''
+
+    }
+
+    //if(phone)
+    //
+
   }
 }

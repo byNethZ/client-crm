@@ -22,3 +22,73 @@
   display: block;
   margin: auto;
 }
+
+.business{
+  font-size: 1.5rem;
+}
+
+.contacts{
+  display: flex;
+  justify-content: space-around;
+  max-width: 30rem;
+}
+
+.separador{
+  width: 80%;
+  max-width: 15rem;
+  margin: 1.5rem auto;
+  height: 3px;
+  border-radius: 50%;
+  background-color: #B9B9B9;
+}
+
+.card{
+  background-color: transparent !important;
+  border: none !important;
+box-shadow: none !important;
+}
+
+.card-info{
+  width: 80%;
+  max-width: 35rem;
+  margin: 2rem auto;
+}
+
+.info-flex div{
+  padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .cards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .card-info{
+    width: 45%;
+  }
+
+  .info-flex{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  .info-flex div{
+    width: 50%;
+  }
+}
+
+@media (min-width: 992px) {
+  .card-info{
+    width: 30%;
+  }
+
+  .info-flex div{
+    width: 25%;
+  }
+
+
+}

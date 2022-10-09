@@ -57,14 +57,15 @@ export class EditUserComponent implements OnInit {
 
           this.user = response.user;
           this.departament = response.departament;
-          this.form = new FormGroup({
-            name: new FormControl(this.user.name, [Validators.required]),
-            lastname: new FormControl(this.user.lastname, [Validators.required]),
-            email: new FormControl(this.user.email, [Validators.required]),
-            role_id: new FormControl(this.user.role_id, [Validators.required]),
-            departament_id: new FormControl(this.user.departament_id, [Validators.required]),
-            departament_alt_id: new FormControl(this.user.departament_alt_id),            personal_phone: new FormControl(this.user.personal_phone, [Validators.required]),
-            public_phone: new FormControl(this.user.public_phone),
+          this.form.setValue({
+            name: this.user.name,
+            lastname: this.user.lastname,
+            email: this.user.email,
+            role_id: this.user.role_id,
+            departament_id: this.user.departament_id,
+            departament_alt_id: this.user.departament_alt_id,
+            personal_phone: this.user.personal_phone,
+            public_phone: this.user.public_phone,
           })
 
 

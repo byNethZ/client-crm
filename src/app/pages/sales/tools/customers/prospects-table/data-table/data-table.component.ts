@@ -7,6 +7,8 @@ import { User } from 'src/app/models/user.interface';
 import { CustomerService } from 'src/app/services/customer.service';
 import { ProductService } from 'src/app/services/product.service';
 import { UserService } from 'src/app/services/user.service';
+import Utils from 'src/utils/Utils';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-data-table',
@@ -17,12 +19,14 @@ export class DataTableComponent implements OnInit {
   public prospects: Prospect[] = [];
   public token: string | null = localStorage.getItem('token');
   public role: string | null = localStorage.getItem('role_id');
+  public utils = new Utils();
 
   public departaments: Customer_Type[] = [];
   public users: User[] = [];
 
   public interests: String[] = [];
   public idCustomerSelected: number;
+  public notesIdCustomerSelected: string = '';
 
   basicModalCloseResult: string = '';
 
@@ -48,7 +52,7 @@ export class DataTableComponent implements OnInit {
   getCustomerData(){
     this._customerService.getCustomersByStatus(this.token!, this.status).subscribe(
       response => {
-        //console.log(response.customers);
+        console.log(response.customers);
         //this.prospects = response.customers;
         this.parseData(response.customers)
 
@@ -128,6 +132,15 @@ export class DataTableComponent implements OnInit {
     }).catch((res) => {});
   }
 
+  openRejectModal(contentCurrent: TemplateRef<any>){
+    this._modalService.dismissAll();
+
+    this._modalService.open(contentCurrent, {}).result.then((result) => {
+      this.basicModalCloseResult = "Modal closed" + result
+    }).catch((res) => {});
+
+  }
+
   changeStatus(status: number){
 
     this._customerService.changeStatus(this.idCustomerSelected, status, this.token!).subscribe(
@@ -149,13 +162,14 @@ export class DataTableComponent implements OnInit {
     this._router.navigate([`/tools/customer/${id}`]);
   }
 
-  showVendor(id: number | undefined | null): string{
+  showVendor(id: number | undefined | null | string ): string{
     let vendorName: string = 'Vendor Name';
-    if(id !== undefined){
+    if(id !== undefined || id !== null){
+      if(typeof id === 'string') id = parseInt(id);
       let result: any
       result = this.users.find((user: any) => user.id === id);
-      //console.log(result)
-      vendorName = result !== undefined ? `Asesor: ${result?.name}` : '';
+      //console.log(id)
+      vendorName = result !== undefined ? `${result?.name}` : '';
     }
     return vendorName;
   }
@@ -172,6 +186,35 @@ export class DataTableComponent implements OnInit {
 
   setLength() {
     this.lengthData.emit(this.prospects.length);
+  }
+
+  sendNotes(){
+    this._modalService.dismissAll();
+    console.log(this.notesIdCustomerSelected);
+    let request = { notes: this.notesIdCustomerSelected}
+    this._customerService.prospectRejected(this.idCustomerSelected, request, this.token!).subscribe({
+      next: (response) => {
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'success',
+          title: 'El cliente ha sido actualizado',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+        });
+        this.notesIdCustomerSelected = '';
+        this.getCustomerData();
+      },
+      error: (error) => console.log(error)
+    })
+  }
+
+  getNotes(id: number): string{
+    let note: string = '';
+    let prospectSearched = this.prospects.find( (prospect) => prospect.id === id);
+    if(prospectSearched) return note = prospectSearched.notes;
+    return note;
   }
 
 }

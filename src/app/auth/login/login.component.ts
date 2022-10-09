@@ -29,16 +29,16 @@ export class LoginComponent implements OnInit {
     this.user = {
       personal_phone: '',
       public_phone: '',
-      id: 1,
+      id: 0,
       name: '',
       lastname: '',
-      role_id: 1,
+      role_id: 0,
       email: '',
       password: '',
       avatar: '',
       token: '',
-      departament_alt_id: '',
-      departament_id: 1,
+      departament_alt_id: 0,
+      departament_id: 0,
     };
     this.token = localStorage.getItem('token');
   }

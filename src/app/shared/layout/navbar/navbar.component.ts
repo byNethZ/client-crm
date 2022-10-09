@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit {
       email: '',
       password: '',
       departament_id: 1,
-      departament_alt_id: '',
+      departament_alt_id: 0,
       avatar: '',
       token: '',
     }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ReportsComponent } from './reports/reports.component';
 import { CreateUserComponent } from './teams/create-user/create-user.component';
 import { EditUserComponent } from './teams/edit-user/edit-user.component';
 import { TeamsComponent } from './teams/teams.component';
@@ -11,6 +12,7 @@ const routes: Routes = [
   {path:'team/:id', component: UserComponent},
   {path:'edit-user/:id', component: EditUserComponent},
   {path:'create-user', component: CreateUserComponent},
+  {path:'reportes', component: ReportsComponent},
 ];
 
 @NgModule({

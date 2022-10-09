@@ -88,6 +88,16 @@ export class CustomerService {
     });
   }
 
+  prospectRejected(id: number, notes: any, token: string): Observable<any> {
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`);
+
+    return this._http.put(`${global.url}/customers/rejected/${id}`, notes, {
+      headers: headers,
+    });
+  }
+
   updateInterests(id: number, data: any, token: string): Observable<any> {
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/json')

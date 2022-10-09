@@ -8,6 +8,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { EditUserComponent } from './teams/edit-user/edit-user.component';
 import { CreateUserComponent } from './teams/create-user/create-user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReportsComponent } from './reports/reports.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TeamsComponent,
     UserComponent,
     EditUserComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    ReportsComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,27 @@
+.info-card{
+  border: 1px solid #d3d3d3;
+  border-radius: 1rem;
+  padding: 2rem 2rem .5rem 2rem;
+  position: relative;
+  background-color: #fff;
+}
+
+.title{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1rem;
+  margin: auto;
+  text-align: center;
+  background-color: #acacac;
+  padding: .5rem;
+  max-width: 10rem;
+  border-radius: 2rem;
+  z-index: 15;
+}
+
+.title h4{
+  display: block;
+  color: rgb(53, 53, 53);
+  font-size: 1rem;
+}

@@ -17,7 +17,7 @@
 
   <div class="row" *ngIf="isEdit">
     <div class="col-lg-6 m-auto justify-content-center">
-      <img class="preview" src="{{imageLink}}" alt="{{customer.name}}">
+      <img class="preview" src="{{ imageLink }}" alt="{{ customer.name }}" />
     </div>
   </div>
 
@@ -85,6 +85,19 @@
               />
             </div>
           </div>
+
+          <div class="col-lg-6">
+            <div class="col-lg-12">
+              <label class="form-label" for="email">E-mail*</label>
+              <input
+                class="form-control"
+                formControlName="email"
+                type="text"
+                name="email"
+                id=""
+              />
+            </div>
+          </div>
         </div>
         <div class="row">
           <div class="col-lg-6">
@@ -101,21 +114,23 @@
           </div>
           <div class="col-lg-6">
             <div class="col-lg-12">
-              <label class="form-label" for="email">E-mail*</label>
+              <label class="form-label" for="business_number"
+                >Teléfono de negocio</label
+              >
               <input
                 class="form-control"
-                formControlName="email"
+                formControlName="business_number"
                 type="text"
-                name="email"
+                name="business_number"
                 id=""
               />
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-12">
-            <div class="col-lg-6">
-              <label class="form-label" for="website">Website*</label>
+          <div class="col-lg-6">
+            <div class="col-lg-12">
+              <label class="form-label" for="website">Website</label>
               <input
                 class="form-control"
                 formControlName="website"
@@ -124,6 +139,62 @@
                 id=""
               />
             </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="col-lg-12">
+              <label class="form-label" for="field_1">Facebook</label>
+              <input
+                class="form-control"
+                formControlName="field_1"
+                type="text"
+                name="field_1"
+                id=""
+              />
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="col-lg-12">
+            <label class="form-label" for="nationality">Nacionalidad</label>
+
+            <select
+              class="form-control"
+              formControlName="nationality"
+              name="nationality"
+              id=""
+            >
+              <option value="1">Mexicana</option>
+              <option value="2">Americana</option>
+              <option value="3">Cubana</option>
+              <option value="4">Guatemalteca</option>
+              <option value="5">Salvadoreño</option>
+              <option value="6">Peruano</option>
+              <option value="7">Costarricense</option>
+              <option value="8">Colombiano</option>
+              <option value="9">Hondureño</option>
+              <option value="10">Brasileño</option>
+              <option value="11">Otro</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="col-lg-12">
+            <label class="form-label" for="language">Idioma Preferido</label>
+            <select
+              class="form-control"
+              formControlName="language"
+              name="language"
+              id=""
+            >
+              <option value="1">Español</option>
+              <option value="2">Inglés</option>
+            </select>
           </div>
         </div>
       </div>
@@ -170,22 +241,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="col-lg-6">
-              <label class="form-label" for="town">Tipo de dirección*</label>
-              <select
-                class="form-select"
-                name="town"
-                formControlName="town"
-                id="town"
-              >
-                <option value="Casa">Casa</option>
-                <option value="Negocio">Negocio</option>
-              </select>
-            </div>
-          </div>
-        </div>
+
         <div class="row">
           <div class="col-lg-6">
             <div class="col-lg-12">
@@ -195,10 +251,8 @@
                 formControlName="country_id"
                 name="country_id"
                 id=""
-                (click)="chooseCountry()"
               >
                 <option value="236">USA</option>
-                <option value="142">México</option>
               </select>
             </div>
           </div>
@@ -216,6 +270,23 @@
                 </option>
               </select>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="col-lg-6">
+            <label class="form-label" for="town">Tipo de dirección*</label>
+            <select
+              class="form-select"
+              name="town"
+              formControlName="town"
+              id="town"
+            >
+              <option value="Casa">Casa</option>
+              <option value="Negocio">Negocio</option>
+            </select>
           </div>
         </div>
       </div>
@@ -278,14 +349,47 @@
         </div>
 
         <div class="row">
+          <div class="col-lg-4" *ngIf="customer.field_2">
+            <div class="col-lg-12">
+              <label class="form-label">Asignado por</label>
+              <select class="form-select" formControlName="field_2">
+                <option
+                  [disabled]="role !== 1"
+                  *ngFor="let vendor of marketingsUser"
+                  value="{{ vendor?.id }}"
+                >
+                  {{ vendor?.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="col-lg-12">
+              <label class="form-label">Origen</label>
+              <select class="form-select" formControlName="level">
+                <option [disabled]="role !== 1" value="1">Llamada</option>
+                <option [disabled]="role !== 1" value="2">Facebook</option>
+                <option [disabled]="role !== 1" value="3">Whatsapp</option>
+                <option [disabled]="role !== 1" value="4">Referido</option>
+                <option [disabled]="role !== 1" value="5">Correo directo</option>
+                <option [disabled]="role !== 1" value="6">Instagram</option>
+                <option [disabled]="role !== 1" value="7">Website</option>
+                <option [disabled]="role !== 1" value="8">Oficina</option>
+                <option [disabled]="role !== 1" value="9">Visita</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
           <div class="col-lg-12">
             <div class="col-lg-12">
-              <label class="form-label" for="bio">Notas</label>
+              <label class="form-label" for="notes">Notas</label>
               <textarea
                 class="form-control"
-                formControlName="bio"
+                formControlName="notes"
                 type="text"
-                name="bio"
+                name="notes"
                 id=""
               ></textarea>
             </div>
@@ -293,161 +397,564 @@
         </div>
       </div>
 
-      <div class="container">
-        <hr />
-        <h3>Preferencias</h3>
-        <p>
-          Esta sección es opcional. Si el cliente ya cuenta con token aparecerá
-          el botón para compartir en la parte inferior, puedes compartir el
-          enlace al cliente para que lo responda después de que guardes los
-          datos
-        </p>
-        <hr />
+      <div class="mt-2 mb-2 w-100">
+        <ngb-accordion [closeOthers]="true">
+          <ngb-panel id="static-1" title="Preferencias (Opcional)">
+            <ng-template ngbPanelContent>
+              <div class="container">
+                <hr />
+                <h3>Preferencias</h3>
+                <p>
+                  Esta sección es opcional. Si el cliente ya cuenta con token
+                  aparecerá el botón para compartir en la parte inferior, puedes
+                  compartir el enlace al cliente para que lo responda después de
+                  que guardes los datos
+                </p>
+                <hr />
 
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="col-lg-12">
-              <label class="form-label" for="birthday"
-                >Fecha de nacimiento</label
-              >
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="birthday"
+                        >Fecha de nacimiento</label
+                      >
 
-              <input
-                class="form-control"
-                type="date"
-                name="birthday"
-                formControlName="birthday"
-                id=""
-              />
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="col-lg-12">
-              <label class="form-label" for="gender">Género</label>
-              <select
-                class="form-control"
-                formControlName="gender"
-                type="text"
-                name="gender"
-                id=""
-              >
-                <option value="m">Hombre</option>
-                <option value="f">Mujer</option>
-              </select>
-            </div>
-          </div>
-        </div>
+                      <input
+                        class="form-control"
+                        type="date"
+                        name="birthday"
+                        formControlName="birthday"
+                        id=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="gender">Género</label>
+                      <select
+                        class="form-control"
+                        formControlName="gender"
+                        type="text"
+                        name="gender"
+                        id=""
+                      >
+                        <option value="m">Hombre</option>
+                        <option value="f">Mujer</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
 
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="col-lg-12">
-              <label class="form-label" for="birthplace"
-                >Lugar de nacimiento</label
-              >
-              <input
-                class="form-control"
-                formControlName="birthplace"
-                type="text"
-                name="birthplace"
-                id=""
-              />
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="col-lg-12">
-              <label class="form-label" for="business_number"
-                >Numero de negocios</label
-              >
-              <input
-                class="form-control"
-                formControlName="business_number"
-                type="number"
-                name="business_number"
-                id=""
-              />
-            </div>
-          </div>
-        </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="occupation"
+                        >Ocupación</label
+                      >
+                      <input
+                        class="form-control"
+                        formControlName="occupation"
+                        type="text"
+                        name="occupation"
+                        id=""
+                      />
+                    </div>
+                  </div>
 
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="col-lg-12">
-              <label class="form-label" for="color">Color favorito</label>
-              <input
-                class="form-control"
-                formControlName="color"
-                type="textcolor"
-                name="color"
-                id="color"
-              />
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="col-lg-12">
-              <label class="form-label" for="place">Lugar favorito</label>
-              <input
-                class="form-control"
-                formControlName="place"
-                type="text"
-                name="place"
-                id=""
-              />
-            </div>
-          </div>
-        </div>
+                  <div class="col-lg-6">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="marital_status"
+                        >Situación sentimental</label
+                      >
+                      <select
+                        class="form-control"
+                        formControlName="marital_status"
+                        type="text"
+                        name="marital_status"
+                        id=""
+                      >
+                        <option value="1">Casado</option>
+                        <option value="2">Soltero</option>
+                        <option value="3">Divorciado</option>
+                        <option value="4">Complicado</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
 
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="col-lg-12">
-              <label class="form-label" for="hobby">Hobby</label>
-              <input
-                class="form-control"
-                formControlName="hobby"
-                type="text"
-                name="hobby"
-                id=""
-              />
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="col-lg-12">
-              <label class="form-label" for="movie">Pelicula favorita</label>
-              <input
-                class="form-control"
-                formControlName="movie"
-                type="text"
-                name="movie"
-                id=""
-              />
-            </div>
-          </div>
-        </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="identity">Identidad</label>
+                      <textarea
+                        class="form-control"
+                        formControlName="identity"
+                        type="text"
+                        name="identity"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
 
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="col-lg-12">
-              <label class="form-label" for="music">Música favorita</label>
-              <input
-                class="form-control"
-                formControlName="music"
-                type="text"
-                name="music"
-                id=""
-              />
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="col-lg-12">
-              <label class="form-label" for="sport">Deporte favorita</label>
-              <input
-                class="form-control"
-                formControlName="sport"
-                type="text"
-                name="sport"
-                id=""
-              />
-            </div>
-          </div>
-        </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="dreams">Sueños</label>
+                      <textarea
+                        class="form-control"
+                        formControlName="dreams"
+                        type="text"
+                        name="dreams"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="goals">Metas</label>
+                      <textarea
+                        class="form-control"
+                        formControlName="goals"
+                        type="text"
+                        name="goals"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="tasks">Tareas</label>
+                      <textarea
+                        class="form-control"
+                        formControlName="tasks"
+                        type="text"
+                        name="tasks"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="relations"
+                        >Relaciones</label
+                      >
+                      <textarea
+                        class="form-control"
+                        formControlName="relations"
+                        type="text"
+                        name="relations"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="birthplace"
+                        >Lugar de nacimiento</label
+                      >
+                      <input
+                        class="form-control"
+                        formControlName="birthplace"
+                        type="text"
+                        name="birthplace"
+                        id=""
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="movie"
+                        >Pelicula favorita</label
+                      >
+                      <input
+                        class="form-control"
+                        formControlName="movie"
+                        type="text"
+                        name="movie"
+                        id=""
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="color"
+                        >Color favorito</label
+                      >
+                      <input
+                        class="form-control"
+                        formControlName="color"
+                        type="textcolor"
+                        name="color"
+                        id="color"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="place"
+                        >Lugar favorito</label
+                      >
+                      <input
+                        class="form-control"
+                        formControlName="place"
+                        type="text"
+                        name="place"
+                        id=""
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="food"
+                        >Comida favorita</label
+                      >
+                      <input
+                        class="form-control"
+                        formControlName="food"
+                        type="text"
+                        name="food"
+                        id=""
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="music"
+                        >Música favorita</label
+                      >
+                      <input
+                        class="form-control"
+                        formControlName="music"
+                        type="text"
+                        name="music"
+                        id=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="sport"
+                        >Deporte favorito</label
+                      >
+                      <input
+                        class="form-control"
+                        formControlName="sport"
+                        type="text"
+                        name="sport"
+                        id=""
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="col-lg-12">
+                      <input-array
+                        [title]="'Emociones'"
+                        [dataFetched]="customer.emotions"
+                        [type]="'tag'"
+                        (dataOutput)="changeArrayData($event, 'emotions')"
+                      ></input-array>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="col-lg-12">
+                      <input-array
+                        [title]="'Valores'"
+                        [type]="'tag'"
+                        [dataFetched]="customer.values"
+                        (dataOutput)="changeArrayData($event, 'values')"
+                      ></input-array>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="col-lg-12">
+                      <input-array
+                        [title]="'Creencias'"
+                        [type]="'tag'"
+                        [dataFetched]="customer.beliefs"
+                        (dataOutput)="changeArrayData($event, 'beliefs')"
+                      ></input-array>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="col-lg-12">
+                      <input-array
+                        [title]="'Personalidad'"
+                        [type]="'tag'"
+                        [dataFetched]="customer.personality"
+                        (dataOutput)="changeArrayData($event, 'personality')"
+                      ></input-array>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="col-lg-12">
+                      <input-array
+                        title="Mente"
+                        [values]="['derecho', 'izquierdo']"
+                        [type]="'percent'"
+                        [dataFetched]="customer.mind"
+                        (dataObjectOutput)="changeArrayData($event, 'mind')"
+                      ></input-array>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="bio"
+                        >Breve biografía</label
+                      >
+                      <textarea
+                        class="form-control"
+                        formControlName="bio"
+                        type="text"
+                        name="bio"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="hobby">Hobby</label>
+                      <textarea
+                        class="form-control"
+                        formControlName="hobby"
+                        type="text"
+                        name="hobby"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="mindset">Mentalidad</label>
+                      <textarea
+                        class="form-control"
+                        formControlName="mindset"
+                        type="text"
+                        name="mindset"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="pleasures"
+                        >Diversión</label
+                      >
+                      <textarea
+                        class="form-control"
+                        formControlName="pleasures"
+                        type="text"
+                        name="pleasures"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="finances">Finanzas</label>
+                      <textarea
+                        class="form-control"
+                        formControlName="finances"
+                        type="text"
+                        name="finances"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="wishes">Deseos</label>
+                      <textarea
+                        class="form-control"
+                        formControlName="wishes"
+                        type="text"
+                        name="wishes"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="important_dates"
+                        >Fechas importantes</label
+                      >
+                      <textarea
+                        class="form-control"
+                        formControlName="important_dates"
+                        type="text"
+                        name="important_dates"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="challenges">Retos</label>
+                      <textarea
+                        class="form-control"
+                        formControlName="challenges"
+                        type="text"
+                        name="challenges"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="responsability"
+                        >Responsabilidades</label
+                      >
+                      <textarea
+                        class="form-control"
+                        formControlName="responsability"
+                        type="text"
+                        name="responsability"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="motivators"
+                        >Motivadores</label
+                      >
+                      <textarea
+                        class="form-control"
+                        formControlName="motivators"
+                        type="text"
+                        name="motivators"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="demotivators"
+                        >Desmotivadores</label
+                      >
+                      <textarea
+                        class="form-control"
+                        formControlName="demotivators"
+                        type="text"
+                        name="demotivators"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="works">Trabajos</label>
+                      <textarea
+                        class="form-control"
+                        formControlName="works"
+                        type="text"
+                        name="works"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="fears">Miedos</label>
+                      <textarea
+                        class="form-control"
+                        formControlName="fears"
+                        type="text"
+                        name="fears"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <label class="form-label" for="needs">Necesidades</label>
+                      <textarea
+                        class="form-control"
+                        formControlName="needs"
+                        type="text"
+                        name="needs"
+                        id=""
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
       </div>
 
       <div class="row">

@@ -1,25 +1,25 @@
 <h3 class="text-center">{{ title }}</h3>
 <app-customersvendors *ngIf="role_id === 1"></app-customersvendors>
-<div class="row">
-  <button
-    class="btn btn-primary col-lg-2 m-2"
-    routerLink="/tools/create-customer"
-  >
-    Nuevo Prospecto
-  </button>
-  <button
-    class="btn btn-primary col-lg-2 m-2"
-    routerLink="/tools/customers/new"
-  >
-    Nuevo Cliente
-  </button>
+<button
+class="btn btn-primary col-lg-2 m-2"
+routerLink="/tools/create-customer"
+>
+Nuevo Prospecto
+</button>
+<button
+class="btn btn-primary col-lg-2 m-2"
+routerLink="/tools/customers/new"
+>
+Nuevo Cliente
+</button>
+<div>
   <div class="m-3">
     <input (keyup)="applyFilter($event)" type="text" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Filtrar por Negocio">
   </div>
   <div class="cards-clients">
     <div class="row justify-content-center">
       <div
-        class="card text-center col-3 m-2 p-0"
+        class="card text-center col-3-clients m-2 p-0"
         *ngFor="let customer of customersFiltered"
       >
         <div class="image-header-card">
@@ -32,9 +32,9 @@
           </div>
           <div class="card-body">
             <a class="btn btn-primary" href="mailto:{{ customer.email }}"
-              >E-mail</a
+              ><i data-feather="mail" appFeatherIcon></i></a
             >
-            <a class="btn btn-margin" href="tel:{{ customer.phone }}">Llamar</a>
+            <a class="btn btn-margin" href="tel:{{ customer.phone }}"><i data-feather="phone" appFeatherIcon></i></a>
           </div>
         </div>
       </div>

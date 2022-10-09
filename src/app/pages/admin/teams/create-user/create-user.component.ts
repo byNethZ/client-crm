@@ -46,7 +46,7 @@ export class CreateUserComponent implements OnInit {
       email: '',
       role_id: 1,
       departament_id: 1,
-      departament_alt_id: '',
+      departament_alt_id: 0,
       password: '',
       personal_phone: '',
       public_phone: '',
@@ -69,8 +69,8 @@ export class CreateUserComponent implements OnInit {
     this.user.lastname = this.form.value.lastname;
     this.user.email = this.form.value.email;
     this.user.role_id = this.form.value.role_id;
-    this.user.departament_id = this.form.value.departament_id;
-    this.user.departament_alt_id = this.form.value.departament_alt_id;
+    this.user.departament_id = parseInt(this.form.value.departament_id);
+    this.user.departament_alt_id = parseInt(this.form.value.departament_alt_id);
     this.user.personal_phone = this.form.value.personal_phone;
     this.user.public_phone = this.form.value.public_phone;
     this.user.password = this.form.value.password;

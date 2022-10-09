@@ -28,7 +28,6 @@ export interface Customer {
   vendor_id: number;
   level: number;
   type_id: number;
-  token: string;
   color: string;
   place: string;
   hobby: string;
@@ -38,12 +37,41 @@ export interface Customer {
   birthplace: string;
   sport: string;
   business_number: string;
-  field_1: string;
-  field_2: string;
-  field_3: string;
+  field_1: string; //facebook id
+  field_2: string; //asigned by (Digital)
+  field_3: string; //origin
   birthday: string;
   gender: string;
+  occupation: string;
+  marital_status: number;
+  nationality: number;
+  language: number;
+  fears: string;
+  emotions: [] | string;
+  needs: string;
+  identity: string;
+  dreams: string;
+  goals: string;
+  tasks: string;
+  relations: string;
+  values: [] | string;
+  motivators: string;
+  beliefs: [] | string;
+  mind: [] | string;
+  food: string;
+  personality: [] | string;
+  mindset: string;
+  pleasures: string;
+  finances: string;
+  wishes: string;
+  important_dates: string;
+  challenges: string;
+  responsability: string;
+  demotivators: string;
+  works: string;
+  notes: string;
   image: string;
+  token: string;
   created_at: string;
   updated_at: string;
 }

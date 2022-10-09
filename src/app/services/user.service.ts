@@ -12,6 +12,7 @@ import { catchError, map } from 'rxjs/operators';
 export class UserService {
   public isAuth: boolean;
   public token: any;
+  public user: User;
 
   constructor(private _http: HttpClient) {
     this.isAuth = false;
@@ -25,6 +26,7 @@ export class UserService {
       .pipe(
         map((res) => {
           //console.log(res);
+          //this.user = res;
           this.saveDataLocal(res);
           this.isAuth = true;
         }),

@@ -13,8 +13,13 @@ import styles from './stylesMap';
 })
 export class SalesComponent implements OnInit {
   public utils = new Utils();
+
   public token: string | null = localStorage.getItem('token');
   public role: number = parseInt(localStorage.getItem('role_id')!);
+  public id: number = parseInt(localStorage.getItem('id')!);
+  public departamentUser: number | null = parseInt(localStorage.getItem('departament_id')!);
+  public departamentAltUser: number | null = parseInt(localStorage.getItem('departament_alt_id')!);
+
   center: google.maps.LatLngLiteral;
   lat: number = 38;
   lng: number = -97;
@@ -50,9 +55,11 @@ export class SalesComponent implements OnInit {
   public pieTwoChartOptions: any = {};
 
   public currentTotal: number = 0;
+  public currentTotalMarketing: number = 0;
   public currentTotalByVendor: any[] = []
   public currentStatusByVendor: any[] = []
   public currentOrganizedByVendor: any[] = []
+  public prospectsMarketing: any[] = []
 
 
   obj = {
@@ -284,6 +291,7 @@ export class SalesComponent implements OnInit {
           this.organiceData(response.countByState, response.countByCategory);
           this.statesDataArray = response.countByState;
           this.customerByStatus = response.customersByStatus;
+
           //console.log(this.customerByStatus);
           this.addMarkers(this.statesDataArray);
         },
@@ -315,11 +323,13 @@ export class SalesComponent implements OnInit {
   getCurrentDay(){
     this._dashboardService.getCustomerCurrentDay(this.token!).subscribe(
       (response) => {
-        console.log(response);
-        if (this.role === 1){
+        //console.log(response);
+        if (this.role === 1 || this.departamentUser === 8){
           this.currentTotal = response.data.total[0].total;
           this.currentTotalByVendor = response.data.totalbyVendor;
           this.currentStatusByVendor = response.data.byStatus;
+
+          this.setProspectsMarketing(response.data.byMarketing)
 
           this.mergeStatusArray(this.currentTotalByVendor, this.currentStatusByVendor);
 
@@ -336,6 +346,14 @@ export class SalesComponent implements OnInit {
     );
   }
 
+  setProspectsMarketing(data: any){
+    this.prospectsMarketing = data;
+
+    this.prospectsMarketing.map( (data) => {
+      this.currentTotalMarketing += data.total;
+    } )
+  }
+
   mergeStatusArray(arrOne: any[], arrTwo: any[]) {
     arrOne.map( (el) =>{
       this.currentOrganizedByVendor.push({
@@ -344,7 +362,7 @@ export class SalesComponent implements OnInit {
       })
     })
 
-    console.log(this.currentOrganizedByVendor);
+    //console.log(this.currentOrganizedByVendor);
   }
 
   organiceData(stateData: any, categoryData: any) {

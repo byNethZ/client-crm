@@ -6,6 +6,7 @@ import MetisMenu from 'metismenujs';
 import { MENU } from './menu';
 import { MenuItem } from './menu.model';
 import { Router, NavigationEnd } from '@angular/router';
+import Utils from 'src/utils/Utils';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,9 +14,12 @@ import { Router, NavigationEnd } from '@angular/router';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit, AfterViewInit {
+  public utils = new Utils();
+
   public departmentUser : number | null = parseInt(localStorage.getItem('departament_id')!);
   public departmentAltUser : number | null = parseInt(localStorage.getItem('departament_alt_id')!);
   public userId : number | null = parseInt(localStorage.getItem('id')!);
+  public userRole : number | null = parseInt(localStorage.getItem('role_id')!);
 
   @ViewChild('sidebarToggler') sidebarToggler: ElementRef;
 

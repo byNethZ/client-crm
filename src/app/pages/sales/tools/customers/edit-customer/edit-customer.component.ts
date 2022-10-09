@@ -7,11 +7,14 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Customer } from 'src/app/models/customer.interface';
+import { User } from 'src/app/models/user.interface';
 import { CustomerService } from 'src/app/services/customer.service';
 import { CustomertypesService } from 'src/app/services/customertypes.service';
 import { global } from 'src/app/services/global';
 import { StateService } from 'src/app/services/state.service';
+import { UserService } from 'src/app/services/user.service';
 import { VendorService } from 'src/app/services/vendor.service';
+import Utils from 'src/utils/Utils';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -20,6 +23,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./edit-customer.component.scss'],
 })
 export class EditCustomerComponent implements OnInit {
+  public utils = new Utils()
   public isEdit: boolean = true;
   public idCustomer: string | null = null;
   form: FormGroup;
@@ -35,7 +39,10 @@ export class EditCustomerComponent implements OnInit {
   public color: string = '#ffffff';
   public tokenGenerated: string;
   public btnString: string = 'Editar';
-  public vendors: any[] = [];
+
+  public vendors: User[] = [];
+  public marketingsUser:  User[] = []
+
   public formData = new FormData();
   public imageLink: string = `${global.urlStorageCustomers}/default.jpg`
 
@@ -46,7 +53,7 @@ export class EditCustomerComponent implements OnInit {
     private _stateService: StateService,
     private _route: ActivatedRoute,
     private _customerTypes: CustomertypesService,
-    private _vendorService: VendorService
+    private _userServices: UserService
   ) {
     this.customer = {
       id: 1,
@@ -81,6 +88,34 @@ export class EditCustomerComponent implements OnInit {
       field_3: '',
       birthday: '',
       gender: '',
+      occupation: '',
+      marital_status: 1,
+      nationality: 1,
+      language: 1,
+      fears: '',
+      emotions: '',
+      needs: '',
+      identity: '',
+      dreams: '',
+      goals: '',
+      tasks: '',
+      relations: '',
+      values: '',
+      motivators: '',
+      beliefs: '',
+      mind: '',
+      food: '',
+      personality: '',
+      mindset: '',
+      pleasures: '',
+      finances: '',
+      wishes: '',
+      important_dates: '',
+      challenges: '',
+      responsability: '',
+      demotivators: '',
+      works: '',
+      notes: '',
       image: '',
       created_at: '',
       updated_at: ''
@@ -94,11 +129,11 @@ export class EditCustomerComponent implements OnInit {
       zipcode: new FormControl(this.customer.zipcode, [Validators.required]),
       city: new FormControl(this.customer.city, [Validators.required]),
       town: new FormControl(this.customer.town, [Validators.required]),
-      country_id: new FormControl(this.customer.country_id),
-      state_id: new FormControl(this.customer.state_id),
+      country_id: new FormControl(this.customer.country_id, [Validators.required]),
+      state_id: new FormControl(this.customer.state_id, [Validators.required]),
       phone: new FormControl(this.customer.phone, [Validators.required]),
       email: new FormControl(this.customer.email, [Validators.required]),
-      website: new FormControl(this.customer.website, [Validators.required]),
+      website: new FormControl(this.customer.website),
       vendor_id: new FormControl(this.customer.vendor_id, [
         Validators.required,
       ]),
@@ -119,6 +154,29 @@ export class EditCustomerComponent implements OnInit {
       field_3: new FormControl(this.customer.field_3),
       gender: new FormControl(this.customer.gender),
       birthday: new FormControl(this.customer.birthday),
+      occupation: new FormControl(''),
+      marital_status: new FormControl(1),
+      nationality: new FormControl(1),
+      language: new FormControl(1),
+      fears: new FormControl(''),
+      needs: new FormControl(''),
+      identity: new FormControl(''),
+      dreams: new FormControl(''),
+      goals: new FormControl(''),
+      tasks: new FormControl(''),
+      relations: new FormControl(''),
+      motivators: new FormControl(''),
+      food: new FormControl(''),
+      mindset: new FormControl(''),
+      pleasures: new FormControl(''),
+      finances: new FormControl(''),
+      wishes: new FormControl(''),
+      important_dates: new FormControl(''),
+      challenges: new FormControl(''),
+      responsability: new FormControl(''),
+      demotivators: new FormControl(''),
+      works: new FormControl(''),
+      notes: new FormControl(''),
 
     });
     const image = new FormData();
@@ -144,10 +202,13 @@ export class EditCustomerComponent implements OnInit {
   }
 
   getVendors(){
-    this._vendorService.getVendors(this.token!).subscribe(
+    this._userServices.getUsers(this.token!).subscribe(
       response => {
 
-        this.vendors = response;
+        //this.vendors = response;
+        //console.log(response);
+        this.vendors = this.utils.getVendorsUsers(response);
+        this.marketingsUser = this.utils.getMarketingUsers(response);
 
       },
       error => {
@@ -166,52 +227,61 @@ export class EditCustomerComponent implements OnInit {
 
           this.customer = response.customer;
           this.stateChoosed = response.customer.state_id;
-          this.form = new FormGroup({
-            status: new FormControl(5, [
-              Validators.required,
-            ]),
-            name: new FormControl(this.customer.name, [Validators.required]),
-            business: new FormControl(this.customer.business, [
-              Validators.required,
-            ]),
-            address: new FormControl(this.customer.address, [
-              Validators.required,
-            ]),
-            zipcode: new FormControl(this.customer.zipcode, [
-              Validators.required,
-            ]),
-            city: new FormControl(this.customer.city, [Validators.required]),
-            town: new FormControl(this.customer.town),
-            country_id: new FormControl(''+this.customer.country_id, [Validators.required]),
-            state_id: new FormControl(''+this.customer.state_id, [Validators.required]),
-            phone: new FormControl(this.customer.phone, [Validators.required]),
-            email: new FormControl(this.customer.email, [Validators.required]),
-            website: new FormControl(this.customer.website, [Validators.required]),
-            vendor_id: new FormControl('' + this.customer.vendor_id, [
-              Validators.required,
-            ]),
-            level: new FormControl('' + this.customer.level, [
-              Validators.required,
-            ]),
-            type_id: new FormControl(this.customer.type_id, [
-              Validators.required,
-            ]),
-            token: new FormControl(this.customer.token, [Validators.required]),
-            color: new FormControl(this.customer.color),
-            place: new FormControl(this.customer.place),
-            hobby: new FormControl(this.customer.hobby),
-            movie: new FormControl(this.customer.movie),
-            music: new FormControl(this.customer.music),
-            bio: new FormControl(this.customer.bio),
-            birthplace: new FormControl(this.customer.birthplace),
-            sport: new FormControl(this.customer.sport),
-            business_number: new FormControl(this.customer.business_number),
-            field_1: new FormControl(this.customer.field_1),
-            field_2: new FormControl(this.customer.field_2),
-            field_3: new FormControl(this.customer.field_3),
-            gender: new FormControl(this.customer.gender),
-            birthday: new FormControl(this.customer.birthday),
-
+          console.log(this.customer);
+          this.form.setValue({
+            status: 5,
+            name: this.customer.name,
+            business: this.customer.business,
+            address: this.customer.address,
+            zipcode: this.customer.zipcode,
+            city: this.customer.city,
+            town: this.customer.town,
+            country_id: 236,
+            state_id: ''+this.customer.state_id,
+            phone: this.customer.phone,
+            email: this.customer.email,
+            website: this.customer.website,
+            vendor_id:this.customer.vendor_id,
+            level: this.customer.level,
+            type_id: this.customer.type_id,
+            token: this.customer.token,
+            color: this.customer.color,
+            place: this.customer.place,
+            hobby: this.customer.hobby,
+            movie: this.customer.movie,
+            music: this.customer.music,
+            bio: this.customer.bio,
+            birthplace: this.customer.birthplace,
+            sport: this.customer.sport,
+            business_number: this.customer.business_number,
+            field_1: this.customer.field_1,
+            field_2: this.customer.field_2,
+            field_3: this.customer.field_3,
+            gender: this.customer.gender,
+            birthday: this.customer.birthday,
+            occupation: this.customer.occupation,
+            marital_status: this.customer.marital_status,
+            nationality: this.customer.nationality,
+            language: this.customer.language,
+            fears: this.customer.fears,
+            needs: this.customer.needs,
+            identity: this.customer.identity,
+            dreams: this.customer.dreams,
+            goals: this.customer.goals,
+            tasks: this.customer.tasks,
+            relations: this.customer.relations,
+            motivators: this.customer.motivators,
+            food: this.customer.food,
+            mindset: this.customer.mindset,
+            pleasures: this.customer.pleasures,
+            finances: this.customer.finances,
+            wishes: this.customer.wishes,
+            important_dates: this.customer.important_dates,
+            challenges: this.customer.challenges,
+            responsability: this.customer.responsability,
+            demotivators: this.customer.demotivators,
+            works: this.customer.works,
+            notes: this.customer.notes,
           });
           this.chooseCountry();
           this.getCustomerTypes();
@@ -246,11 +316,11 @@ export class EditCustomerComponent implements OnInit {
     this.customer.state_id = parseInt(this.form.value.state_id);
     this.customer.city = this.form.value.city;
     this.customer.town = this.form.value.town;
-    this.customer.phone = this.form.value.phone;
+    this.customer.phone = this.utils.formatPhone(this.form.value.phone) ? this.utils.formatPhone(this.form.value.phone) : 'N/A';
     this.customer.email = this.form.value.email;
     this.customer.website = this.form.value.website;
     this.customer.vendor_id = parseInt(this.form.value.vendor_id);
-    this.customer.level = this.form.value.level;
+    this.customer.level = parseInt(this.form.value.level);
     this.customer.type_id = parseInt(this.form.value.type_id);
     this.customer.token = this.form.value.token;
     this.customer.color = this.form.value.color;
@@ -267,6 +337,29 @@ export class EditCustomerComponent implements OnInit {
     this.customer.field_3 = this.form.value.field_3;
     this.customer.birthday = this.formatDate(this.form.value.birthday);
     this.customer.gender = this.form.value.gender;
+    this.customer.occupation = this.form.value.occupation;
+    this.customer.marital_status = parseInt(this.form.value.marital_status);
+    this.customer.nationality = parseInt(this.form.value.nationality);
+    this.customer.language = parseInt(this.form.value.language);
+    this.customer.fears = this.form.value.fears;
+    this.customer.needs = this.form.value.needs;
+    this.customer.identity = this.form.value.identity;
+    this.customer.dreams = this.form.value.dreams;
+    this.customer.goals = this.form.value.goals;
+    this.customer.tasks = this.form.value.tasks;
+    this.customer.relations = this.form.value.relations;
+    this.customer.motivators = this.form.value.motivators;
+    this.customer.food = this.form.value.food;
+    this.customer.mindset = this.form.value.mindset;
+    this.customer.pleasures = this.form.value.pleasures;
+    this.customer.finances = this.form.value.finances;
+    this.customer.wishes = this.form.value.wishes;
+    this.customer.important_dates = this.form.value.important_dates;
+    this.customer.challenges = this.form.value.challenges;
+    this.customer.responsability = this.form.value.responsability;
+    this.customer.demotivators = this.form.value.demotivators;
+    this.customer.works = this.form.value.works;
+    this.customer.notes = this.form.value.notes;
 
     if(this.customer.token === 'N/A' || !this.customer.token || this.customer.token === '') {
       this.customer.token = this.tokenGenerated;
@@ -385,13 +478,19 @@ export class EditCustomerComponent implements OnInit {
 
         this._customerService.uploadImage(this.token!, this.customer.id, this.formData).subscribe(
           response => {
-            //console.log(response)
-            this.imageLink = `${global.urlStorageCustomers}/${response}`
+            console.log(response)
+            this.imageLink = `${global.urlStorageCustomers}/${response.newImage}`
           },
           error => {
             console.log(error)
           }
         )
     }
+  }
+
+  changeArrayData(value: string[] | {}, field: string){
+    this.customer = { ...this.customer, [field]: JSON.stringify(value)};
+    //console.log(this.customer);
+
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import Utils from 'src/utils/Utils';
 
 @Component({
   selector: 'app-buttons-dashboard',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./buttons-dashboard.component.scss']
 })
 export class ButtonsDashboardComponent implements OnInit {
+  public utils = new Utils();
+
   public departament_id: number = parseInt(localStorage.getItem('departament_id')!);
   public departament_alt_id: number | null = parseInt(localStorage.getItem('departament_alt_id')!);
   public role_id: number = parseInt(localStorage.getItem('role_id')!);

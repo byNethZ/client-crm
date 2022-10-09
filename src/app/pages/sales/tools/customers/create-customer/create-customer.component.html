@@ -38,7 +38,7 @@
   </aw-wizard-step>
 
   <aw-wizard-step stepTitle="Paso 2">
-    <div class="row mb-3" *ngIf="isProspect">
+    <div class="mb-3" *ngIf="isProspect">
       <h2 class="text-center m-3">¿En qué está interesado?</h2>
       <p class="text-danger text-center text-uppercase" *ngIf="errorMessage">
         {{ errorMessage }}
@@ -139,7 +139,7 @@
   </aw-wizard-step>
 
   <aw-wizard-step stepTitle="Paso 3">
-    <div class="row mb-3" *ngIf="isProspect">
+    <div class="mb-3" *ngIf="isProspect">
       <h2 class="text-center m-3">¿De que industría es?</h2>
       <p class="text-danger text-center text-uppercase" *ngIf="errorMessage">
         {{ errorMessage }}
@@ -168,7 +168,7 @@
       </div>
     </div>
 
-    <div class="row mb-3" *ngIf="!isProspect">
+    <div class="mb-3" *ngIf="!isProspect">
       <h2 class="text-center m-3">¿En qué está interesado?</h2>
       <p class="text-danger text-center text-uppercase" *ngIf="errorMessage">
         {{ errorMessage }}
@@ -229,11 +229,15 @@
         <div class="row">
           <label class="col-sm-3 col-form-label" for="phone">Teléfono*</label>
           <input
-            class="form-control"
-            type="text"
+            class="form-control {{errorMessage ? 'error-input': ''}}"
+            type="tel"
             formControlName="phone"
             name="phone"
+            (change)="verifyCustomer()"
           />
+        </div>
+        <div *ngIf="customerExists !== undefined">
+          <p class="text-danger">Este número ya existe en la base de datos y pertenece al cliente {{customerExists.name}} del(a) vendedor(a) {{vendorDesigned?.name}}</p>
         </div>
         <div class="row">
           <label class="col-sm-3 col-form-label" for="email">Email</label>
@@ -272,9 +276,11 @@
             <option value="5">Correo directo</option>
             <option value="6">Instagram</option>
             <option value="7">Website</option>
+            <option value="8">Oficina</option>
+            <option value="9">Visita</option>
           </select>
         </div>
-        <div class="row" *ngIf="departament_id === 2">
+        <div class="row" *ngIf="departament_id === 8 || departament_id_alt === 8  ">
           <label class="col-sm-3 col-form-label" for="vendor_id"
             >Vendedor*</label
           >
@@ -289,6 +295,20 @@
             </option>
           </select>
         </div>
+
+        <div class="row">
+          <label class="col-sm-3 col-form-label" for="notes"
+            >Notas / Observaciones</label
+          >
+          <textarea
+            class="form-control"
+            formControlName="notes"
+            type="text"
+            name="notes"
+            id=""
+          ></textarea>
+        </div>
+
       </form>
     </div>
 

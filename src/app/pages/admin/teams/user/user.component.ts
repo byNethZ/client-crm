@@ -23,7 +23,7 @@ export class UserComponent implements OnInit {
       email: '',
       role_id: 1,
       departament_id: 1,
-      departament_alt_id: '',
+      departament_alt_id: 0,
       password: '',
       personal_phone: '',
       public_phone: '',

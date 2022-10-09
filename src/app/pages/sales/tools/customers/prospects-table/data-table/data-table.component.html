@@ -18,8 +18,10 @@
         <div class="row">
           <a *ngIf="prospect.email || prospect.email !== 'N/A'" href="mailto:{{prospect.email}}">{{prospect.email}}</a>
         </div>
-        <p *ngIf="role === '1'">{{showVendor(prospect.vendor?.id)}}</p>
-        <p *ngIf="prospect.field_2 === '1'">Asignado por Digital</p>
+        <p *ngIf="role === '1'">Asesor: {{showVendor(prospect.vendor_id)}}</p>
+        <p>Origen: {{utils.formatOriginProspect(prospect.field_3)}}</p>
+        <p *ngIf="prospect.field_2">Asignado por: {{showVendor( prospect.field_2 )}}</p>
+        <p *ngIf="prospect.notes"><b>Notas:</b> {{getNotes( prospect.id )}}</p>
         <button class="btn btn-facebook" (click)="redirectFB(prospect.field_1)" *ngIf="prospect.field_1">Perfil Facebook</button>
       </td>
       <td >
@@ -61,7 +63,25 @@
       <button (click)="changeStatus(3)" class="btn btn-primary col-lg-5 m-1">Cierre</button>
     </div>
     <div class="row m-2 justify-content-center">
-      <button routerLink="/tools/edit-customer/{{idCustomerSelected}}" (click)="modal.close('by: close button')" class="btn btn-primary col-lg-6">Cliente Nuevo</button>
+      <button routerLink="/tools/edit-customer/{{idCustomerSelected}}" (click)="modal.close('by: close button')" class="btn btn-success col-lg-5 m-1">Cliente Nuevo</button>
+      <button (click)="openRejectModal(rejectCustomer)" class="btn btn-danger col-lg-5 m-1">Rechazo</button>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #rejectCustomer let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel"></h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <p>Especifique el motivo del rechazo</p>
+    <div class="row m-2 justify-content-center">
+      <textarea [(ngModel)]="notesIdCustomerSelected"></textarea>
+      <button (click)="sendNotes()" class="btn btn-danger col-lg-6 m-2">Guardar cambios</button>
     </div>
   </div>
   <div class="modal-footer">

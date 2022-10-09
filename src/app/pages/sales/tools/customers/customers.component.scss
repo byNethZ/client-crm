@@ -1,24 +1,27 @@
-.card-body{
+.card-body {
   display: flex;
   justify-content: space-between;
 }
 
-.card-body .btn{
+.card-body .btn {
   text-transform: uppercase;
   max-height: 2.5rem;
 }
 
-.card-content{
-  padding: 2rem;
-  padding-top: 5rem;
+.card-content {
+  padding: 3rem 3rem 0rem;
 }
 
-.btn-margin{
+.card-content h4{
+  word-break: break-word;
+}
+
+.btn-margin {
   border: 1px solid #acacac;
   color: #6e6e6e;
 }
 
-.image-header-card{
+.image-header-card {
   background-image: url(./../../../../../assets/images/others/banner.jpg);
   background-position: center center;
   background-repeat: no-repeat;
@@ -29,7 +32,7 @@
   right: 0;
 }
 
-.avatar-client{
+.avatar-client {
   width: 5rem;
   height: 5rem;
   position: absolute;
@@ -38,4 +41,9 @@
   right: 0;
   bottom: -2.5rem;
   object-fit: cover;
+}
+
+.col-3-clients {
+  flex: 0 0 auto;
+  width: 20%;
 }
