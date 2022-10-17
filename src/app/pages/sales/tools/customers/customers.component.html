@@ -12,10 +12,24 @@ routerLink="/tools/customers/new"
 >
 Nuevo Cliente
 </button>
+
 <div>
+
+  <div class="row justify-content-center m-3" *ngIf="role_id === 1">
+    <div class="col-lg-5">
+      <select (change)="setVendorId($event)" class="form-select" name="" id="">
+        <option value="99">General</option>
+        <option *ngFor="let vendor of vendors" value="{{ vendor.id }}">
+          {{ vendor?.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
   <div class="m-3">
     <input (keyup)="applyFilter($event)" type="text" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Filtrar por Negocio">
   </div>
+
   <div class="cards-clients">
     <div class="row justify-content-center">
       <div
@@ -40,56 +54,9 @@ Nuevo Cliente
       </div>
     </div>
   </div>
+
+  <div *ngIf="this.customersFiltered.length === 0" >
+    <h4 class="text-center">Sin clientes</h4>
+  </div>
 </div>
 
-<!--<div class="col-md-12 stretch-card">
-  <div class="card">
-    <div class="card-body">
-      <h6 class="card-title">Clientes ({{customers.length}})</h6>
-      <div class="table-responsive">
-        <div class="mb-3">
-          <input (keyup)="applyFilter($event)" type="text" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Filtrar por Negocio">
-        </div>
-        <div class="mb 3">
-          <p class="text-success">Clientes</p>
-          <p >Prospectos</p>
-        </div>
-        <table id="dataTableCustomer" class="table">
-          <thead>
-            <tr>
-              <th>Negocio</th>
-              <th>Nombre</th>
-              <th>Teléfono</th>
-              <th>Correo Electrónico</th>
-              <th>Level</th>
-              <th>Admin</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let customer of customersFiltered" class="cursor-pointer {{customer.status === 1 ? 'text-success' : ''}}">
-              <td routerLink="/tools/customer/{{customer.id}}">{{customer.business}}</td>
-              <td routerLink="/tools/customer/{{customer.id}}">{{customer.name}}</td>
-              <td><a href="tel:{{customer.phone}}">{{customer.phone}}</a></td>
-              <td><a href="mailto:{{customer.email}}">{{customer.email}}</a></td>
-              <td routerLink="/tools/customer/{{customer.id}}">{{customer.level}}</td>
-              <td>
-                <button class="btn btn-primary m-1" routerLink="/tools/edit-customer/{{customer.id}}">Editar</button>
-                <button *ngIf="role_id === 1" class="btn btn-danger m-1" (click)="deleteCustomer(customer.id)">Borrar</button>
-              </td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>-->

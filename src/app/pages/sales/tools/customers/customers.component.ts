@@ -6,6 +6,8 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { CustomertypesService } from 'src/app/services/customertypes.service';
 import Utils from 'src/utils/Utils';
+import { VendorService } from 'src/app/services/vendor.service';
+import { User } from 'src/app/models/user.interface';
 
 @Component({
   selector: 'app-customers',
@@ -13,8 +15,10 @@ import Utils from 'src/utils/Utils';
   styleUrls: ['./customers.component.scss']
 })
 export class CustomersComponent implements OnInit {
+  public idVendorSelected: number = 99;
   public utils = new Utils();
   public customers: Customer[] = [];
+  public vendors: User[] = [];
   public customersFiltered: Customer[] = [];
   public token: string = localStorage.getItem('token')!;
   public role_id: number = parseInt(localStorage.getItem('role_id')!);
@@ -25,6 +29,7 @@ export class CustomersComponent implements OnInit {
   constructor(
     private _customerService: CustomerService,
     private _customerTypeService: CustomertypesService,
+    private _vendorService: VendorService,
     private _route: ActivatedRoute
   ) {
   }
@@ -32,6 +37,19 @@ export class CustomersComponent implements OnInit {
   ngOnInit(): void {
     this.getCustomers();
     this.setTitle();
+    this.getVendors();
+  }
+
+  getVendors() {
+    this._vendorService.getVendors(this.token!).subscribe(
+      (response) => {
+        //console.log(response)
+        this.vendors = response;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   getCustomers(){
@@ -42,6 +60,7 @@ export class CustomersComponent implements OnInit {
         response => {
           this.customers = response.customers;
           this.customersFiltered = this.customers;
+          //console.log(this.customers);
         },
         error => {
           console.log(error)
@@ -54,6 +73,7 @@ export class CustomersComponent implements OnInit {
       response => {
         this.customers = response.customers;
         this.customersFiltered = this.customers;
+        //console.log(this.customers);
 
       },
       error => {
@@ -86,11 +106,16 @@ export class CustomersComponent implements OnInit {
       this.filterValue = (event.target as HTMLInputElement).value;
       //console.log(this.filterValue);
       let filterValueLower = this.filterValue.toLowerCase();
-      if(this.filterValue === '' ) {
+      if(this.filterValue === '' && this.idVendorSelected === 99 ) {
+
           this.customersFiltered = this.customers;
-      }
-      else {
-        this.customersFiltered = this.customers.filter((customer) => customer?.business?.toLowerCase().includes(filterValueLower,-1))
+        }
+        else if ( this.filterValue === '' && this.idVendorSelected !== 99 ) {
+
+          this.customersFiltered = this.customers.filter( customer => customer.vendor_id === this.idVendorSelected);
+      } else {
+
+        this.customersFiltered = this.customersFiltered.filter((customer) => customer?.business?.toLowerCase().includes(filterValueLower,-1))
       }
 
     }
@@ -130,6 +155,20 @@ export class CustomersComponent implements OnInit {
           )
         }
       })
+    }
+
+    setVendorId(evt: Event) {
+      this.idVendorSelected = parseInt((evt.target as HTMLSelectElement).value);
+
+      if(this.idVendorSelected === 99){
+        this.customersFiltered = this.customers;
+
+        return;
+      }
+
+      this.customersFiltered = this.customers.filter( customer => customer.vendor_id === this.idVendorSelected )
+
+
     }
 
 }

@@ -30,11 +30,11 @@
 
     <ul class="sidebar-nav metismenu" id="sidebar-menu" #sidebarMenu>
       <ng-container *ngFor="let item of menuItems">
-        <li class="nav-item nav-category" *ngIf="utils.setMenuPermissions(true, item.isTitle, item.departament, departmentUser, departmentAltUser, userRole) ">
+        <li class="nav-item nav-category" *ngIf="utils.setMenuPermissions(true, item.isTitle, item.departament, departmentUser, departmentAltUser, userRole, userId) ">
           {{ item.label }}
         </li>
 
-        <li class="nav-item" *ngIf="utils.setMenuPermissions(false, item.isTitle, item.departament, departmentUser, departmentAltUser, userRole)">
+        <li class="nav-item" *ngIf="utils.setMenuPermissions(false, item.isTitle, item.departament, departmentUser, departmentAltUser, userRole, userId)">
           <a class="nav-link" *ngIf="hasItems(item)" href="javascript:void(0);">
             <i
               class="link-icon"

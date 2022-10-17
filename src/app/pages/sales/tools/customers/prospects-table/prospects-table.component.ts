@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-prospects-table',
@@ -6,13 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./prospects-table.component.scss']
 })
 export class ProspectsTableComponent implements OnInit {
+  public token: string = localStorage.getItem('token')!;
 
   public lengthProspects: number | string = '...';
   public lengthNegociation: number | string = '...';
   public lengthFollowing: number | string = '...';
   public lengthClosed: number | string = '...';
+  public idCustomerSelected: number = 0;
+  public basicModalCloseResult: string = '';
 
-  constructor() { }
+  constructor(
+    private _modalService: NgbModal,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -26,6 +32,18 @@ export class ProspectsTableComponent implements OnInit {
 
     return
 
+  }
+
+  openModal(id: number, content: TemplateRef<any>, xl = false) {
+    this.idCustomerSelected = id;
+    let params = {};
+
+    if(xl) params = {size: 'lg', centered: true}
+    //console.log(this.idCustomerSelected);
+
+    this._modalService.open(content, params).result.then((result) => {
+      this.basicModalCloseResult = "Modal closed" + result
+    }).catch((res) => {});
   }
 
 }

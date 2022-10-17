@@ -9,6 +9,8 @@ import { EditUserComponent } from './teams/edit-user/edit-user.component';
 import { CreateUserComponent } from './teams/create-user/create-user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReportsComponent } from './reports/reports.component';
+import { GoalsComponent } from './goals/goals.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -17,14 +19,16 @@ import { ReportsComponent } from './reports/reports.component';
     UserComponent,
     EditUserComponent,
     CreateUserComponent,
-    ReportsComponent
+    ReportsComponent,
+    GoalsComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     SweetAlert2Module.forRoot(),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class AdminModule { }

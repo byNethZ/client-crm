@@ -7,6 +7,10 @@ import { InputArrayComponent } from './inputarray/inputarray.components';
 import { TagInputModule } from 'ngx-chips';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InfocardsComponent } from './infocards/infocards.component';
+import { ProgressComponent } from './progress/progress.component';
+import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommentsComponent } from './comments/comments.component';
+import { QuillModule } from 'ngx-quill';
 
 
 
@@ -14,7 +18,9 @@ import { InfocardsComponent } from './infocards/infocards.component';
   declarations: [
     CustomersvendorsComponent,
     InputArrayComponent,
-    InfocardsComponent
+    InfocardsComponent,
+    ProgressComponent,
+    CommentsComponent
   ],
   imports: [
     CommonModule,
@@ -22,12 +28,16 @@ import { InfocardsComponent } from './infocards/infocards.component';
     NgApexchartsModule,
     TagInputModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbProgressbarModule,
+    QuillModule.forRoot(),
   ],
   exports: [
     CustomersvendorsComponent,
     InputArrayComponent,
-    InfocardsComponent
+    InfocardsComponent,
+    ProgressComponent,
+    CommentsComponent
   ]
 })
 export class SharedModule { }

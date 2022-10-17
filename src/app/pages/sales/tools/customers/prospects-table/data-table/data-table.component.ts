@@ -31,7 +31,9 @@ export class DataTableComponent implements OnInit {
   basicModalCloseResult: string = '';
 
   @Input() status: number;
+  @Input() isRejectedTable: boolean = false;
   @Output() lengthData = new EventEmitter<number>();
+  @Output() id = new EventEmitter<number>()
 
   constructor(
     private _customerService: CustomerService,
@@ -124,10 +126,13 @@ export class DataTableComponent implements OnInit {
     window.open(link);
   }
 
-  openBasicModal(content: TemplateRef<any>, id: number) {
+  openBasicModal(content: TemplateRef<any>, id: number, xl = false) {
     this.idCustomerSelected = id;
+    let params = {};
 
-    this._modalService.open(content, {}).result.then((result) => {
+    if(xl) params = {size: 'lg', centered: true}
+
+    this._modalService.open(content, params).result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result
     }).catch((res) => {});
   }
@@ -215,6 +220,10 @@ export class DataTableComponent implements OnInit {
     let prospectSearched = this.prospects.find( (prospect) => prospect.id === id);
     if(prospectSearched) return note = prospectSearched.notes;
     return note;
+  }
+
+  openFatherModal(id: number){
+    this.id.emit(id);
   }
 
 }

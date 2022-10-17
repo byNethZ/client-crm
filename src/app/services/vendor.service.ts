@@ -19,4 +19,12 @@ export class VendorService {
 
     return this._http.get(`${global.url}/vendors`, { headers: headers});
   }
+
+  getVendorsAndMarketing(token : string) :Observable<any> {
+      let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`);
+
+    return this._http.get(`${global.url}/marketingvendors`, { headers: headers});
+  }
 }

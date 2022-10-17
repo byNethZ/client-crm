@@ -1,0 +1,90 @@
+<div>
+  <div *ngIf="goalsData.length !== 0; else noInfo">
+    <div *ngIf="currentMonthData.prospect.isSet === true" class="mt-3">
+
+      <h3>Prospectos</h3>
+
+      <div *ngIf="withInfo" class="mb-2" >
+        <div>
+          <h3>{{goalDataProspect.toFixed(0)}}</h3>
+          <h5>Meta Asignada</h5>
+        </div>
+        <div class="results">
+          <div>
+            <h3>{{resultDataProspect.toFixed(0)}}</h3>
+            <h5>Resultado</h5>
+          </div>
+          <div>
+            <h3>{{ percentDataProspect ? percentDataProspect.toFixed(2) : 0}} %</h3>
+            <h5>Porcentaje</h5>
+          </div>
+        </div>
+      </div>
+
+      <p>
+        <ngb-progressbar
+          [striped]="true"
+          [animated]="true"
+          height="25px"
+          type="primary"
+          [value]="
+            utils.calcGoalFalse(
+              currentMonthData.prospect.result,
+              currentMonthData.prospect.goal
+            )
+          "
+          >{{ resultDataProspect.toFixed(0) }}</ngb-progressbar
+        >
+      </p>
+
+    </div>
+
+    <div *ngIf="currentMonthData.quantity.isSet === true" class="mt-3">
+
+      <h3>Ventas</h3>
+
+      <div *ngIf="withInfo" class="mb-2" >
+        <div>
+          <h3>{{goalDataQuantity.toFixed(0)}}</h3>
+          <h5>Meta Asignada</h5>
+        </div>
+        <div class="results">
+          <div>
+            <h3>{{resultDataQuantity.toFixed(0)}}</h3>
+            <h5>Resultado</h5>
+          </div>
+          <div>
+            <h3>{{ percentDataQuantity ? percentDataQuantity.toFixed(2) : 0}} %</h3>
+            <h5>Porcentaje</h5>
+          </div>
+        </div>
+      </div>
+
+      <p>
+        <ngb-progressbar
+          [striped]="true"
+          [animated]="true"
+          height="25px"
+          type="primary"
+          [value]="
+            utils.calcGoalFalse(
+              currentMonthData.quantity.result,
+              currentMonthData.quantity.goal
+            )
+          "
+          >{{
+            utils.calcGoalReal(
+              currentMonthData.quantity.result,
+              currentMonthData.quantity.goal
+            )
+          }}
+          %</ngb-progressbar
+        >
+      </p>
+    </div>
+  </div>
+
+  <ng-template #noInfo>
+    <h5>Sin meta asignada</h5>
+  </ng-template>
+</div>

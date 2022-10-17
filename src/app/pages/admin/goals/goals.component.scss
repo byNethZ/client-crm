@@ -1,0 +1,19 @@
+.info{
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.info div{
+  width: 100%;
+}
+
+.results{
+  display: flex;
+}
+
+.results div{
+  width: 50%;
+}

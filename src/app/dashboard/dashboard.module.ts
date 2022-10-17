@@ -17,6 +17,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { DesignComponent } from './components/design/design.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { ButtonsDashboardComponent } from './components/buttons-dashboard/buttons-dashboard.component';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   {
@@ -38,7 +39,8 @@ const routes: Routes = [
     NgbCarouselModule,
     NgChartsModule,
     GoogleMapsModule,
-    NgbAccordionModule
+    NgbAccordionModule,
+    SharedModule
   ],
   exports: [
 

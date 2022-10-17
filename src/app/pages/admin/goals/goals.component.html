@@ -1,0 +1,266 @@
+<div class="container"></div>
+
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Metas Asignadas</h6>
+
+        <div class="table-responsive pt-3">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Usuario</th>
+                <th>Progreso</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let vendor of vendors"
+                class="position-relative w-100"
+              >
+                <td>{{ vendor.name }}</td>
+                <td class="w-50">
+                  <app-progress
+                    [token]="token"
+                    [idUser]="vendor.id"
+                    [withInfo]="false"
+                  ></app-progress>
+                </td>
+                <td>
+                  <button
+                    class="btn btn-primary m-2"
+                    *ngIf="role === 1"
+                    (click)="openBasicModal(basicModal, vendor.id)"
+                  >
+                    Editar meta
+                  </button>
+                  <button
+                    class="btn btn-primary m-2"
+                    (click)="openBasicModal(resultsModal, vendor.id)"
+                  >
+                    Agregar resultado
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel"></h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div *ngIf="goalsSelected.length === 0">
+      <h6>El usuario aún no cuenta con una meta definida</h6>
+    </div>
+
+    <div *ngIf="goalsSelected.length === 1">
+      <div class="m-3">
+        <button (click)="resetData()" class="btn btn-primary">
+          Agregar nueva meta
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="goalsSelected.length > 1">
+      <div class="m-3">
+        <label for="type">Seleccione un tipo de meta a visualizar</label>
+        <select
+          (change)="selectGoal()"
+          [(ngModel)]="idGoal"
+          class="form-control"
+          name="type"
+          id=""
+        >
+          <option
+            *ngFor="let goalSelected of goalsSelected"
+            value="{{ goalSelected.id }}"
+          >
+            {{ utils.formatTypeGoal(goalSelected.type) }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <form [formGroup]="formGoal" (ngSubmit)="save($event)">
+      <div *ngIf="isNew" class="mt-2">
+        <h4>Crear meta nueva</h4>
+        <div class="m-3">
+          <label for="type">Tipo de meta</label>
+          <select formControlName="type" class="form-control" name="type" id="">
+            <option value="1">Ventas</option>
+            <option value="2">Prospecto</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label class="form-label" for="">Enero</label>
+        <input formControlName="jan_goal" class="form-control" type="number" />
+      </div>
+      <div>
+        <label class="form-label" for="">Febrero</label>
+        <input formControlName="feb_goal" class="form-control" type="number" />
+      </div>
+      <div>
+        <label class="form-label" for="">Marzo</label>
+        <input formControlName="mar_goal" class="form-control" type="number" />
+      </div>
+      <div>
+        <label class="form-label" for="">Abril</label>
+        <input formControlName="apr_goal" class="form-control" type="number" />
+      </div>
+      <div>
+        <label class="form-label" for="">Mayo</label>
+        <input formControlName="may_goal" class="form-control" type="number" />
+      </div>
+      <div>
+        <label class="form-label" for="">Junio</label>
+        <input formControlName="jun_goal" class="form-control" type="number" />
+      </div>
+      <div>
+        <label class="form-label" for="">Julio</label>
+        <input formControlName="jul_goal" class="form-control" type="number" />
+      </div>
+      <div>
+        <label class="form-label" for="">Agosto</label>
+        <input formControlName="aug_goal" class="form-control" type="number" />
+      </div>
+      <div>
+        <label class="form-label" for="">Septiembre</label>
+        <input formControlName="sep_goal" class="form-control" type="number" />
+      </div>
+      <div>
+        <label class="form-label" for="">Octubre</label>
+        <input formControlName="oct_goal" class="form-control" type="number" />
+      </div>
+      <div>
+        <label class="form-label" for="">Noviembre</label>
+        <input formControlName="nov_goal" class="form-control" type="number" />
+      </div>
+      <div>
+        <label class="form-label" for="">Diciembre</label>
+        <input formControlName="dec_goal" class="form-control" type="number" />
+      </div>
+      <button
+        class="btn btn-primary col-lg-2 m-3"
+        [disabled]="formGoal.invalid"
+        type="submit"
+      >
+        {{ buttonSave }}
+      </button>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">
+      Close
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #resultsModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel"></h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+  </div>
+
+  <div *ngIf="goalsSelected.length > 1">
+    <div class="m-3">
+      <label for="type">Seleccione un tipo de meta a visualizar</label>
+      <select
+        (change)="selectGoal()"
+        [(ngModel)]="idGoal"
+        class="form-control"
+        name="type"
+        id=""
+      >
+        <option
+          *ngFor="let goalSelected of goalsSelected"
+          value="{{ goalSelected.id }}"
+        >
+          {{ utils.formatTypeGoal(goalSelected.type) }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="formResult" (ngSubmit)="saveResult($event)">
+      <div *ngIf="this.idGoal !== '' || this.goalsSelected.length === 1">
+        <select (change)="changeMonth($event)" formControlName="key" class="form-control" name="" id="">
+          <option value="jan_result">Enero</option>
+          <option value="feb_result">Febrero</option>
+          <option value="mar_result">Marzo</option>
+          <option value="apr_result">Abril</option>
+          <option value="may_result">Mayo</option>
+          <option value="jun_result">Junio</option>
+          <option value="jul_result">Julio</option>
+          <option value="aug_result">Agosto</option>
+          <option value="sep_result">Septiembre</option>
+          <option value="oct_result">Octubre</option>
+          <option value="nov_result">Noviembre</option>
+          <option value="dec_result">Diciembre</option>
+        </select>
+      </div>
+
+      <div *ngIf="isDataMonthAvailable && this.goalsSelected.length > 0">
+        <div class="info">
+          <div>
+            <h3>{{assignedCurrentGoal}}</h3>
+            <h5>Meta Asignada</h5>
+          </div>
+          <div class="results">
+            <div>
+              <h3>{{resultGoal}}</h3>
+              <h5>Resultado</h5>
+            </div>
+            <div>
+              <h3>{{percentGoal.toFixed(2)}} %</h3>
+              <h5>Porcentaje</h5>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label class="form-label" for=""></label>
+          <input (input)="calcResult($event)" formControlName="value" class="form-control" type="number" />
+        </div>
+        <div>
+          <button
+            class="btn btn-primary col-lg-2 m-3"
+            [disabled]="formGoal.invalid"
+            type="submit"
+          >Guardar</button>
+        </div>
+      </div>
+
+      <div *ngIf="!isDataMonthAvailable || this.goalsSelected.length === 0">
+        <h5 class="text-center mt-3">Este usuario aún no tiene asignada una meta para este mes o no ha seleccionado el tipo de meta</h5>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">
+      Close
+    </button>
+  </div>
+</ng-template>

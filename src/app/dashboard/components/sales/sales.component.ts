@@ -25,6 +25,7 @@ export class SalesComponent implements OnInit {
   lng: number = -97;
   public zoom: number = 5;
   public idVendor: string = '';
+  public idVendorNumber: number = this.id;
   public vendors: any[] = [];
 
   public markers: any[] = [];
@@ -422,6 +423,7 @@ export class SalesComponent implements OnInit {
   setVendorId(evt: any) {
     //console.log(evt.target?.value);
     this.idVendor = evt.target.value;
+    this.idVendorNumber = this.idVendor !== '' ? parseInt(this.idVendor) : this.id;
     this.categoryArrayOne = [];
     this.categoryArrayTwo = [];
     this.categoryTotalArrayOne = [];

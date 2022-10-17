@@ -8,31 +8,52 @@
       <a ngbNavLink>Prospecto ({{lengthProspects}})</a>
       <ng-template ngbNavContent>
         <h6 class="mb-2">Prospecto</h6>
-        <app-data-table [status]="0" (lengthData)="setLenght($event, 0)"></app-data-table>
+        <app-data-table [status]="0" (lengthData)="setLenght($event, 0)" (id)="openModal($event, comments, true)"></app-data-table>
       </ng-template>
     </li>
     <li [ngbNavItem]="2">
       <a ngbNavLink>Negociación ({{lengthNegociation}})</a>
       <ng-template ngbNavContent>
         <h6 class="mb-2">Negociación</h6>
-        <app-data-table [status]="1" (lengthData)="setLenght($event, 1)"></app-data-table>
+        <app-data-table [status]="1" (lengthData)="setLenght($event, 1)" (id)="openModal($event, comments, true)"></app-data-table>
       </ng-template>
     </li>
     <li [ngbNavItem]="3">
       <a ngbNavLink>Seguimiento ({{lengthFollowing}})</a>
       <ng-template ngbNavContent>
         <h6 class="mb-2">Seguimiento</h6>
-        <app-data-table [status]="2" (lengthData)="setLenght($event, 2)"></app-data-table>
+        <app-data-table [status]="2" (lengthData)="setLenght($event, 2)" (id)="openModal($event, comments, true)"></app-data-table>
       </ng-template>
     </li>
     <li [ngbNavItem]="4">
       <a ngbNavLink>Cierre ({{lengthClosed}})</a>
       <ng-template ngbNavContent>
         <h6 class="mb-2">Cierre</h6>
-        <app-data-table [status]="3" (lengthData)="setLenght($event, 3)"></app-data-table>
+        <app-data-table [status]="3" (lengthData)="setLenght($event, 3)" (id)="openModal($event, comments, true)"></app-data-table>
       </ng-template>
     </li>
   </ul>
 
   <div [ngbNavOutlet]="fillJustifyNav" class="border border-top-0 p-3"></div>
 </div>
+
+<div>
+  <h4>Prospectos rechazados</h4>
+  <app-data-table [status]="4" (lengthData)="setLenght($event, 4)" (id)="openModal($event, comments, true)" [isRejectedTable]="true"></app-data-table>
+</div>
+
+<ng-template #comments let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Comentarios</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <app-comments [idCustomer]="idCustomerSelected" [token]="token"></app-comments>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+  </div>
+
+</ng-template>

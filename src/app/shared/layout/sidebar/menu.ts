@@ -78,6 +78,12 @@ export const MENU: MenuItem[] = [
     departament: 1
   },
   {
+    label: 'Metas',
+    icon: 'trending-up',
+    link: '/admin/metas',
+    departament: 1
+  },
+  {
     label: 'Digital',
     isTitle: true,
     departament: 2
