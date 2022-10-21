@@ -18,6 +18,7 @@ export class CommentsComponent implements OnInit {
   public comments: Comment[] = [];
   public idUser: number = parseInt(localStorage.getItem('id')!);
   public newComment: Comment;
+  public charging: boolean = false;
 
   public quillConfig = {
     toolbar: {
@@ -91,6 +92,8 @@ export class CommentsComponent implements OnInit {
   }
 
   save(){
+    this.charging = true;
+
     this.newComment = {
       author_id: this.idUser,
       customer_id: this.idCustomer,
@@ -110,6 +113,7 @@ export class CommentsComponent implements OnInit {
   }
 
   changeStatus(status: number){
+    this.charging = true;
 
     this._customerService.changeStatus(this.idCustomer, status, this.token!).subscribe(
       response => {

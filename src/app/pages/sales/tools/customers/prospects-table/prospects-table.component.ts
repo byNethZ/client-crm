@@ -8,6 +8,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ProspectsTableComponent implements OnInit {
   public token: string = localStorage.getItem('token')!;
+  public role_id: number = parseInt(localStorage.getItem('role_id')!);
+  public departament_id: number = parseInt(localStorage.getItem('departament_id')!);
+  public departament_alt_id: number | null = localStorage.getItem('departament_alt_id') ? parseInt(localStorage.getItem('departament_alt_id')!) : null;
 
   public lengthProspects: number | string = '...';
   public lengthNegociation: number | string = '...';

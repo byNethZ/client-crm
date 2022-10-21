@@ -194,7 +194,7 @@ export default class Utils {
   }
 
   getVendorsUsers(data: User[]) {
-    console.log(data);
+    //console.log(data);
     return data.filter((user: User) => {
       if (user.departament_alt_id === 4 || user.departament_id === 4)
         return true;
@@ -245,6 +245,7 @@ export default class Utils {
 
       if (
         (itemDepartament === 4 && userDepartament === 8) ||
+        (itemDepartament === 1 && userDepartament === 8) ||
         (itemDepartament === 4 && userDepartamentAlt === 8) ||
         (itemDepartament === 1 && userId === 3)
       ) {

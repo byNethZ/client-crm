@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
@@ -18,17 +19,27 @@ import Swal from 'sweetalert2';
 export class DataTableComponent implements OnInit {
   public prospects: Prospect[] = [];
   public token: string | null = localStorage.getItem('token');
+
   public role: string | null = localStorage.getItem('role_id');
+  public departament_id: number = parseInt(localStorage.getItem('departament_id')!);
+  public departament_alt_id: number | null = localStorage.getItem('departament_alt_id') ? parseInt(localStorage.getItem('departament_alt_id')!) : null;
+
   public utils = new Utils();
 
   public departaments: Customer_Type[] = [];
   public users: User[] = [];
+  public vendors: User[] = [];
 
   public interests: String[] = [];
   public idCustomerSelected: number;
   public notesIdCustomerSelected: string = '';
 
   basicModalCloseResult: string = '';
+
+  public formChangeVendor= new FormGroup({
+    vendor: new FormControl('', [Validators.required]),
+    status: new FormControl('', [Validators.required]),
+  })
 
   @Input() status: number;
   @Input() isRejectedTable: boolean = false;
@@ -54,7 +65,7 @@ export class DataTableComponent implements OnInit {
   getCustomerData(){
     this._customerService.getCustomersByStatus(this.token!, this.status).subscribe(
       response => {
-        console.log(response.customers);
+        //console.log(response.customers);
         //this.prospects = response.customers;
         this.parseData(response.customers)
 
@@ -88,6 +99,7 @@ export class DataTableComponent implements OnInit {
       response => {
         //console.log(response)
         this.users = response;
+        this.vendors = this.utils.getVendorsUsers(response);
       },
       error => {
         console.log(error)
@@ -160,6 +172,24 @@ export class DataTableComponent implements OnInit {
 
       }
     )
+
+  }
+
+  changeVendor(evt: Event){
+    evt.preventDefault();
+
+    let req = {
+      vendor_id: parseInt(this.formChangeVendor.value.vendor)
+    }
+
+    this._customerService.changeVendor(this.idCustomerSelected, parseInt(this.formChangeVendor.value.status), this.token!, req).subscribe({
+      next: () => {
+        this.getCustomerData();
+        this._modalService.dismissAll();
+        this.formChangeVendor.reset();
+      },
+      error: ( err ) => console.log(err)
+    })
 
   }
 

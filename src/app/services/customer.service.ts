@@ -118,6 +118,16 @@ export class CustomerService {
     });
   }
 
+  changeVendor(id: number, status: number, token: string, req: any): Observable<any> {
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`);
+
+    return this._http.put(`${global.url}/change-vendor/${id}/${status}`, req, {
+      headers: headers,
+    });
+  }
+
   uploadImage(token: string, id: number, image: any): Observable<any> {
     let headers = new HttpHeaders()
     .set('Authorization', `Bearer ${token}`);

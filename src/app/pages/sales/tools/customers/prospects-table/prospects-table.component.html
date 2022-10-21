@@ -37,8 +37,8 @@
   <div [ngbNavOutlet]="fillJustifyNav" class="border border-top-0 p-3"></div>
 </div>
 
-<div>
-  <h4>Prospectos rechazados</h4>
+<div *ngIf="role_id === 1 || departament_id === 8 || departament_alt_id === 8">
+  <h4 class="text-center">Prospectos rechazados</h4>
   <app-data-table [status]="4" (lengthData)="setLenght($event, 4)" (id)="openModal($event, comments, true)" [isRejectedTable]="true"></app-data-table>
 </div>
 
