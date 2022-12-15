@@ -45,15 +45,10 @@ export const MENU: MenuItem[] = [
     ]
   },
   {
-    label: 'Menus',
-    isTitle: true,
-    departament: 6
-  },
-  {
-    label: 'Enlaces',
-    icon: 'link',
-    link: '/design/checklists',
-    departament: 6
+    label: 'Ganadores Black Friday',
+    icon: 'gift',
+    link: '/tools/ruleta',
+    departament: 4
   },
   {
     label: 'Contratos',
@@ -65,6 +60,17 @@ export const MENU: MenuItem[] = [
     icon: 'link',
     link: '/design/photographies',
     departament: 4
+  },
+  {
+    label: 'Menus',
+    isTitle: true,
+    departament: 6
+  },
+  {
+    label: 'Enlaces',
+    icon: 'link',
+    link: '/design/checklists',
+    departament: 6
   },
   {
     label: 'Admin',

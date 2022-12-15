@@ -4,9 +4,11 @@
 
 export const environment = {
   production: false,
-  url: 'http://localhost:8000/api',
+  //url: 'http://localhost:8000/api',
   urlStorageCustomers: 'http://localhost:8000/storage/customers',
   googleKey: 'AIzaSyBfc7gde2FSVvX1h2M3_nNFwowx5zpvDJc',
+  url: 'https://bliones.net/api/api',
+  //urlStorageCustomers: 'https://bliones.net/api/storage/customers',
 };
 
 /*

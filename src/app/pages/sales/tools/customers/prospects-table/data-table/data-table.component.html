@@ -1,4 +1,18 @@
 <div class="table-responsive">
+
+  <div class="row justify-content-center m-3" *ngIf="role === '1'">
+    <div class="col-lg-5">
+      <select (change)="setVendorId($event)" class="form-select" name="" id="">
+        <option value="99">General</option>
+        <option *ngFor="let vendor of vendors" value="{{ vendor.id }}">
+          {{ vendor?.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <h5>Resultados: {{customersFiltered.length}}</h5>
+
   <table id="dataTableExample" class="table">
     <thead>
       <tr>
@@ -10,7 +24,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let prospect of prospects">
+      <tr *ngFor="let prospect of customersFiltered">
         <td>
           <p>{{prospect.name}}</p>
           <div class="row">

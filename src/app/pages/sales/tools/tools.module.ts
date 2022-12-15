@@ -23,6 +23,7 @@ import { NewComponent } from './customers/new/new.component';
 import { DashboardModule } from 'src/app/views/pages/dashboard/dashboard.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FeatherIconModule } from 'src/app/core/feather-icon/feather-icon.module';
+import { RejectedCustomersComponent } from './customers/rejected-customers/rejected-customers.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { FeatherIconModule } from 'src/app/core/feather-icon/feather-icon.module
     ProspectsTableComponent,
     DataTableComponent,
     NewComponent,
+    RejectedCustomersComponent,
   ],
   imports: [
     SharedModule,

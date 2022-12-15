@@ -64,4 +64,15 @@ export class RuletaComponent implements OnInit {
 
   }
 
+  setDelivered(id: number){
+    this._promoService.setDelivered(this.token, id).subscribe(
+      response => {
+        this.getPromos();
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  }
+
 }

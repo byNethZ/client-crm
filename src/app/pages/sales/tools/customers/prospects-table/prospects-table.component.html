@@ -1,6 +1,7 @@
 <button class="btn btn-primary col-lg-2 m-2" routerLink="/tools/customers">Clientes</button>
 <button class="btn btn-primary col-lg-2 m-2" routerLink="/tools/create-customer">Nuevo Prospecto</button>
 <button class="btn btn-primary col-lg-2 m-2" routerLink="/tools/customers/new">Nuevo Cliente</button>
+<button *ngIf="role_id === 1 || departament_id === 8 || departament_alt_id === 8" class="btn btn-danger col-lg-2 m-2" routerLink="/tools/rejected-prospects">Prospectos Rechazados</button>
 
 <div class="example">
   <ul ngbNav #fillJustifyNav="ngbNav" class="nav-tabs nav-fill">
@@ -35,11 +36,6 @@
   </ul>
 
   <div [ngbNavOutlet]="fillJustifyNav" class="border border-top-0 p-3"></div>
-</div>
-
-<div *ngIf="role_id === 1 || departament_id === 8 || departament_alt_id === 8">
-  <h4 class="text-center">Prospectos rechazados</h4>
-  <app-data-table [status]="4" (lengthData)="setLenght($event, 4)" (id)="openModal($event, comments, true)" [isRejectedTable]="true"></app-data-table>
 </div>
 
 <ng-template #comments let-modal>

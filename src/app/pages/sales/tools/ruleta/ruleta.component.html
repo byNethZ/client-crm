@@ -21,6 +21,7 @@
                 <th>Regalo</th>
                 <th>Email</th>
                 <th>Asesor</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -31,6 +32,10 @@
                 <td>{{ruleta.gift}}</td>
                 <td (click)="saveClipboard(ruleta.email)" class="cursor-pointer">{{ruleta.email}}</td>
                 <td>{{ruleta.asesor}}</td>
+                <td>
+                  <button *ngIf="ruleta.delivered !== 1" class="btn btn-success" (click)="setDelivered(ruleta.id)" >Cerrado</button>
+                  <p *ngIf="ruleta.delivered === 1">Ya fue cerrado</p>
+                </td>
               </tr>
             </tbody>
             <tfoot>

@@ -14,6 +14,8 @@ export class DetailsChecklistComponent implements OnInit {
   public links : any[];
   public linksFiltered : any[];
 
+  public urlGif: string = '';
+
   public filteredValue : string;
   public role_id: number = parseInt(localStorage.getItem('role_id')!);
 
@@ -35,7 +37,7 @@ export class DetailsChecklistComponent implements OnInit {
         response => {
           this.links = response.links;
           this.linksFiltered = this.links;
-          console.log(response)
+          //console.log(response)
 
         },
         error => {
@@ -162,13 +164,14 @@ export class DetailsChecklistComponent implements OnInit {
   setClass(status: number): string{
     let classStyle: string = '';
     if( status === 0 ) return classStyle = 'pendiente';
-    if( status === 1 ) return classStyle = 'aceptado';
+    if( status === 1 ) return classStyle = 'aprobado';
     if( status === 2 ) return classStyle = 'rechazado';
     return classStyle
   }
 
   changeShowInfo(link: Link){
     let statusString: string = '';
+    this.getGif();
     if(typeof link.aprobed === 'number'){
       statusString = this.setClass(link.aprobed)
     }
@@ -176,11 +179,25 @@ export class DetailsChecklistComponent implements OnInit {
       title: '<strong>Información</strong>',
       icon: 'info',
       html:
-        `Status: ${statusString.toUpperCase()} ` +
-        `<br>Revisado por: ${link.approver ? link.approver : 'Pendiente'}<br>` +
-        `<br>${link.message}`,
+        `<p class="info-swal-checklist">Status: ${statusString.toUpperCase()}</p>` +
+        `<p class="info-swal-checklist">Checklist: ${link.customer}</p><br>` +
+        `<p class="info-swal-checklist">Revisado por: ${link.approver ? link.approver : 'Pendiente'}</p><br>` +
+        `<p class="info-swal-checklist">${link.message}</p>`,
+        //+ `<img class="img-swal-checklist" src="${this.urlGif}" alt="gif">`,
       showCloseButton: true
     })
+  }
+
+  getGif(){
+    this._linkService.getGif().subscribe(
+      (response: any) => {
+        console.log(response.data.images.original.url);
+        this.urlGif = response.data.images.original.url;
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
 

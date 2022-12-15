@@ -18,6 +18,9 @@ import Swal from 'sweetalert2';
 })
 export class DataTableComponent implements OnInit {
   public prospects: Prospect[] = [];
+  public idVendorSelected: number = 99;
+  public customersFiltered: Prospect[] = [];
+
   public token: string | null = localStorage.getItem('token');
 
   public role: string | null = localStorage.getItem('role_id');
@@ -25,6 +28,7 @@ export class DataTableComponent implements OnInit {
   public departament_alt_id: number | null = localStorage.getItem('departament_alt_id') ? parseInt(localStorage.getItem('departament_alt_id')!) : null;
 
   public utils = new Utils();
+
 
   public departaments: Customer_Type[] = [];
   public users: User[] = [];
@@ -114,6 +118,7 @@ export class DataTableComponent implements OnInit {
       }
     })
     this.prospects = data;
+    this.customersFiltered = this.prospects;
     this.setLength();
 
   }
@@ -254,6 +259,20 @@ export class DataTableComponent implements OnInit {
 
   openFatherModal(id: number){
     this.id.emit(id);
+  }
+
+  setVendorId(evt: Event) {
+    this.idVendorSelected = parseInt((evt.target as HTMLSelectElement).value);
+
+    if(this.idVendorSelected === 99){
+      this.customersFiltered = this.prospects;
+
+      return;
+    }
+
+    this.customersFiltered = this.prospects.filter( customer => customer.vendor_id === this.idVendorSelected )
+
+
   }
 
 }

@@ -51,4 +51,10 @@ export class LinksService {
 
     return this._http.post(`${global.url}/change-link/${id}`, '', {headers: headers})
   }
+
+  getGif(){
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this._http.get(`https://api.giphy.com/v1/gifs/random?api_key=S6Fzm6zZKpoZtXyGoPJ3oRRiCVYJPRRy&tag=celebrating`, {headers: headers})
+  }
 }

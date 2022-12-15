@@ -7,6 +7,7 @@ import { CustomersComponent } from './customers/customers.component';
 import { EditCustomerComponent } from './customers/edit-customer/edit-customer.component';
 import { NewComponent } from './customers/new/new.component';
 import { ProspectsTableComponent } from './customers/prospects-table/prospects-table.component';
+import { RejectedCustomersComponent } from './customers/rejected-customers/rejected-customers.component';
 import { ProductComponent } from './products/product/product.component';
 import { ProductsComponent } from './products/products.component';
 import { PromosComponent } from './promos/promos.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path:'promos', component: PromosComponent},
   {path:'ruleta', component: RuletaComponent},
   {path:'table-prospects', component: ProspectsTableComponent},
+  {path:'rejected-prospects', component: RejectedCustomersComponent},
 ];
 
 @NgModule({
