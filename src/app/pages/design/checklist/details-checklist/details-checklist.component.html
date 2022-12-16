@@ -32,7 +32,7 @@
         <td (click)="copyLink(link.id)"><i data-feather="copy" appFeatherIcon></i></td>
         <td (click)="changeShowInfo(link)">
           <h6>{{ link.customer }}</h6>
-          <p *ngIf="role_id === 1">{{ link.user.name }}</p>
+          <p *ngIf="role_id === 1">{{ link.user?.name }}</p>
         </td>
         <td>
           <a href="{{ link.urldropbox }}" target="_blank"><i data-feather="link" appFeatherIcon></i></a>

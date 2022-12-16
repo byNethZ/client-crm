@@ -11,8 +11,8 @@ import Swal from 'sweetalert2';
 export class DetailsChecklistComponent implements OnInit {
   public token : string = localStorage.getItem('token')!;
   public id : string = localStorage.getItem('id')!;
-  public links : any[];
-  public linksFiltered : any[];
+  public links : Link[];
+  public linksFiltered : Link[];
 
   public urlGif: string = '';
 
@@ -37,7 +37,7 @@ export class DetailsChecklistComponent implements OnInit {
         response => {
           this.links = response.links;
           this.linksFiltered = this.links;
-          //console.log(response)
+          console.log(this.links)
 
         },
         error => {
@@ -68,7 +68,12 @@ export class DetailsChecklistComponent implements OnInit {
         this.linksFiltered = this.links;
     }
     else {
-      this.linksFiltered = this.links.filter((link) => link.customer.toLowerCase().includes(filteredValueLower,-1))
+      this.linksFiltered = this.links.filter((link) => {
+        if(link.customer){
+          return link.customer.toLowerCase().includes(filteredValueLower,-1)
+        }
+        return true;
+      })
     }
 
   }
@@ -110,8 +115,8 @@ export class DetailsChecklistComponent implements OnInit {
     })
   }
 
-  resetLink(id:string){
-    this._linkService.changeStatusLink(id, this.token).subscribe(
+  resetLink(id:number){
+    this._linkService.changeStatusLink(id+'', this.token).subscribe(
       response => {
         this.getLinks();
         Swal.fire({
@@ -131,7 +136,7 @@ export class DetailsChecklistComponent implements OnInit {
     )
   }
 
-  copyLink(id:string){
+  copyLink(id:number){
     if (!navigator.clipboard) {
       Swal.fire({
         toast: true,
@@ -144,7 +149,7 @@ export class DetailsChecklistComponent implements OnInit {
       })
       return;
     }
-    navigator.clipboard.writeText(`https://bliones.net/checklist-menus/cust/?check=${id}`).then(
+    navigator.clipboard.writeText(`https://bliones.net/checklist/menus/${id}`).then(
       (response) => {
         Swal.fire({
           toast: true,
@@ -165,12 +170,14 @@ export class DetailsChecklistComponent implements OnInit {
     let classStyle: string = '';
     if( status === 0 ) return classStyle = 'pendiente';
     if( status === 1 ) return classStyle = 'aprobado';
-    if( status === 2 ) return classStyle = 'rechazado';
+    if( status === 2 ) return classStyle = 'declinado';
     return classStyle
   }
 
   changeShowInfo(link: Link){
     let statusString: string = '';
+    let createdDateParsed: string = new Date(link.created_at).toLocaleString('en-US',{ dateStyle: "long", timeZone: 'America/New_York' });
+    let updatedDateParsed: string = new Date(link.updated_at).toLocaleString('en-US',{ dateStyle: "long", timeZone: 'America/New_York' });
     this.getGif();
     if(typeof link.aprobed === 'number'){
       statusString = this.setClass(link.aprobed)
@@ -182,10 +189,19 @@ export class DetailsChecklistComponent implements OnInit {
         `<p class="info-swal-checklist">Status: ${statusString.toUpperCase()}</p>` +
         `<p class="info-swal-checklist">Checklist: ${link.customer}</p><br>` +
         `<p class="info-swal-checklist">Revisado por: ${link.approver ? link.approver : 'Pendiente'}</p><br>` +
-        `<p class="info-swal-checklist">${link.message}</p>`,
+        `<p class="info-swal-checklist info-swal-message">${link.message}</p>` +
+        `<p class="info-swal-checklist">Creado: ${ createdDateParsed }</p>` +
+        `<p class="info-swal-checklist">${ this.formatedDateUpdated(updatedDateParsed, link.aprobed) }</p>`,
         //+ `<img class="img-swal-checklist" src="${this.urlGif}" alt="gif">`,
       showCloseButton: true
     })
+  }
+
+  formatedDateUpdated(date: string, status: number): string{
+
+    if(status !== 0) return `Revisado: ${date}`
+
+    return '';
   }
 
   getGif(){
