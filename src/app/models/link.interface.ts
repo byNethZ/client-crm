@@ -12,4 +12,6 @@ export interface Link{
   updated_at: string;
   customer_id: number;
   user?: User;
+  type: string;
+  notes: string
 }

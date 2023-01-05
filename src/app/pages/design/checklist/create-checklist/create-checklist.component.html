@@ -3,35 +3,45 @@
     <h6 class="card-title">Crear Enlace</h6>
 
     <form [formGroup]="form" (ngSubmit)="save($event)" class="forms-sample">
-      <div class="col-lg-6">
-        <label class="form-label">Cliente</label>
-        <input
-          type="text"
-          class="form-control"
-          id="exampleInputEmail1"
-          placeholder="Cliente"
-          formControlName="customer"
-        />
-        <!--         <input
-          class="form-control"
-          type="text"
-          matInput
-          [formControl]="controlCust"
-          [matAutocomplete]="autocust"
-        />
-        <mat-autocomplete
-          autoActiveFirstOption
-          #autocust="matAutocomplete"
-          [displayWith]="displayFnCust"
-          (optionSelected)="OnCustomerSelected($event.option)"
-        >
-          <mat-option
-            *ngFor="let customer of filCustomers | async"
-            [value]="customer"
+      <div class="row">
+        <div class="col-lg-6">
+          <label for="customer" class="form-label">Cliente</label>
+          <input
+            type="text"
+            class="form-control"
+            id="customer"
+            placeholder="Cliente"
+            formControlName="customer"
+          />
+          <!-- Mat Autocomplete for clients database in future -->
+          <!--         <input
+            class="form-control"
+            type="text"
+            matInput
+            [formControl]="controlCust"
+            [matAutocomplete]="autocust"
+          />
+          <mat-autocomplete
+            autoActiveFirstOption
+            #autocust="matAutocomplete"
+            [displayWith]="displayFnCust"
+            (optionSelected)="OnCustomerSelected($event.option)"
           >
-            {{ customer.business }}
-          </mat-option>
-        </mat-autocomplete> -->
+            <mat-option
+              *ngFor="let customer of filCustomers | async"
+              [value]="customer"
+            >
+              {{ customer.business }}
+            </mat-option>
+          </mat-autocomplete> -->
+        </div>
+        <div class="col-lg-6">
+          <label class="form-label" for="type">Tipo de checklist</label>
+          <select formControlName="type" class="form-control" name="type" id="type">
+            <option value="menu">Menú</option>
+            <option value="cover">Cover</option>
+          </select>
+        </div>
       </div>
       <div class="m-3" *ngIf="customerSelected">
         <div class="row">
@@ -57,15 +67,27 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label"
+        <label for="urldropbox" class="form-label"
           >Enlace Drive/Dropbox</label
         >
         <input
           type="text"
           class="form-control"
-          id="exampleInputEmail1"
+          id="urldropbox"
           placeholder="urldropbox"
           formControlName="urldropbox"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="notes" class="form-label"
+          >Notas / Observaciones (Opcional) </label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="notes"
+          placeholder="Anota cualquier observación que desees, el cliente no verá esta información"
+          formControlName="notes"
         />
       </div>
       <button type="submit" class="btn btn-primary me-2">Crear</button>

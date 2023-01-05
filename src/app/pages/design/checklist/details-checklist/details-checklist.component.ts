@@ -29,6 +29,7 @@ export class DetailsChecklistComponent implements OnInit {
   ngOnInit(): void {
     this.getLinks();
     //console.log(this.isAll)
+    this.getGif();
   }
 
   getLinks(){
@@ -136,7 +137,7 @@ export class DetailsChecklistComponent implements OnInit {
     )
   }
 
-  copyLink(id:number){
+  copyLink(id:number, type: string){
     if (!navigator.clipboard) {
       Swal.fire({
         toast: true,
@@ -149,7 +150,7 @@ export class DetailsChecklistComponent implements OnInit {
       })
       return;
     }
-    navigator.clipboard.writeText(`https://bliones.net/checklist/menus/${id}`).then(
+    navigator.clipboard.writeText(`https://bliones.net/checklist/menus/${type}/${id}`).then(
       (response) => {
         Swal.fire({
           toast: true,
@@ -188,11 +189,13 @@ export class DetailsChecklistComponent implements OnInit {
       html:
         `<p class="info-swal-checklist">Status: ${statusString.toUpperCase()}</p>` +
         `<p class="info-swal-checklist">Checklist: ${link.customer}</p><br>` +
+        `<p class="info-swal-checklist">Tipo: ${link.type}</p>` +
+        `<p class="info-swal-checklist">${this.formatNotes(link.notes)}</p><br>` +
         `<p class="info-swal-checklist">Revisado por: ${link.approver ? link.approver : 'Pendiente'}</p><br>` +
         `<p class="info-swal-checklist info-swal-message">${link.message}</p>` +
         `<p class="info-swal-checklist">Creado: ${ createdDateParsed }</p>` +
-        `<p class="info-swal-checklist">${ this.formatedDateUpdated(updatedDateParsed, link.aprobed) }</p>`,
-        //+ `<img class="img-swal-checklist" src="${this.urlGif}" alt="gif">`,
+        `<p class="info-swal-checklist">${ this.formatedDateUpdated(updatedDateParsed, link.aprobed) }</p>`
+        + `<img class="img-swal-checklist" src="${this.urlGif}" alt="gif">`,
       showCloseButton: true
     })
   }
@@ -204,10 +207,19 @@ export class DetailsChecklistComponent implements OnInit {
     return '';
   }
 
+  formatNotes(notes: string): string{
+
+    if(!notes) return '';
+
+    return `Nota: ${notes}`;
+
+  }
+
   getGif(){
     this._linkService.getGif().subscribe(
       (response: any) => {
-        console.log(response.data.images.original.url);
+        //console.log(response.data.images.original.url);
+        //console.log(response);
         this.urlGif = response.data.images.original.url;
       },
       error => {

@@ -36,6 +36,8 @@ export class CreateChecklistComponent implements OnInit {
     this.form = new FormGroup({
       urldropbox: new FormControl('', [Validators.required]),
       customer: new FormControl('', [Validators.required]),
+      type: new FormControl('menu', [Validators.required]),
+      notes: new FormControl('',),
     });
     this.link = {
       id: 1,
@@ -47,7 +49,9 @@ export class CreateChecklistComponent implements OnInit {
       approver: '',
       created_at: '',
       updated_at: '',
-      customer_id: 1
+      customer_id: 1,
+      type: '',
+      notes: ''
     }
   }
 
@@ -112,10 +116,14 @@ export class CreateChecklistComponent implements OnInit {
   save(evt: Event) {
     evt.preventDefault();
 
+    //this lines is for mat autocomplete in future functionality
     // this.link.customer = this.customerSelected?.business;
     // this.link.customer_id = this.customerSelected?.id ? this.customerSelected?.id : 1;
+
     this.link.customer = this.form.value.customer;
     this.link.urldropbox = this.form.value.urldropbox;
+    this.link.type = this.form.value.type;
+    this.link.notes = this.form.value.notes;
 
     this._linkService.createLink(this.link, this.token).subscribe(
       response => {

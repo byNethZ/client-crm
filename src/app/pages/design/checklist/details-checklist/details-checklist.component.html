@@ -29,9 +29,10 @@
         *ngFor="let link of linksFiltered"
         class="cursor-pointer {{ setClass(link.aprobed) }}"
       >
-        <td (click)="copyLink(link.id)"><i data-feather="copy" appFeatherIcon></i></td>
+        <td (click)="copyLink(link.id, link.type)"><i data-feather="copy" appFeatherIcon></i></td>
         <td (click)="changeShowInfo(link)">
           <h6>{{ link.customer }}</h6>
+          <p>{{link.type}}</p>
           <p *ngIf="role_id === 1">{{ link.user?.name }}</p>
         </td>
         <td>
@@ -57,15 +58,5 @@
         </td>
       </tr>
     </tbody>
-    <tfoot>
-      <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-    </tfoot>
   </table>
 </div>
