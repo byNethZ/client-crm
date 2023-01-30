@@ -18,7 +18,7 @@ export class LinksService {
         .set('Authorization', `Bearer ${token}`)
         .set('Accept', 'application/json');
 
-    return this._http.get(`${global.url}/all-checklist/${id}`, {headers: headers});
+    return this._http.get(`${global.url}/checklists/all/${id}`, {headers: headers});
   }
 
   getLinksByStatus(token: string, id : string, status: string|number) : Observable<any>{
@@ -35,21 +35,21 @@ export class LinksService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json')
     .set('Authorization', `Bearer ${token}`);
 
-    return this._http.post(`${global.url}/create-checklist`, data, {headers: headers})
+    return this._http.post(`${global.url}/checklists`, data, {headers: headers})
   }
 
   deleteLink(id: string, token: string) : Observable<any>{
     let headers = new HttpHeaders().set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this._http.delete(`${global.url}/delete-link/${id}`, {headers: headers})
+    return this._http.delete(`${global.url}/checklists/${id}`, {headers: headers})
   }
 
   changeStatusLink(id: string, token: string) : Observable<any>{
     let headers = new HttpHeaders().set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this._http.post(`${global.url}/change-link/${id}`, '', {headers: headers})
+    return this._http.put(`${global.url}/checklists/status/${id}`, '', {headers: headers})
   }
 
   getGif(){

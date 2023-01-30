@@ -11,6 +11,8 @@ import { ProgressComponent } from './progress/progress.component';
 import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommentsComponent } from './comments/comments.component';
 import { QuillModule } from 'ngx-quill';
+import { TableBasicComponent } from './table-basic/table-basic.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -20,7 +22,9 @@ import { QuillModule } from 'ngx-quill';
     InputArrayComponent,
     InfocardsComponent,
     ProgressComponent,
-    CommentsComponent
+    CommentsComponent,
+    TableBasicComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +41,8 @@ import { QuillModule } from 'ngx-quill';
     InputArrayComponent,
     InfocardsComponent,
     ProgressComponent,
-    CommentsComponent
+    CommentsComponent,
+    ProfileComponent
   ]
 })
 export class SharedModule { }

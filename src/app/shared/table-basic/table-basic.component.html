@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Data Table</h6>
+        <div class="table-responsive">
+          <div class="mb-3">
+            <input (keyup)="applyFilter($event)" type="text" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Filtrar por Vendedor">
+          </div>
+          <div class="mb 3">
+            <p class="text-success">Verde para regalos entregados</p>
+            <p >Negro para regalos pendientes</p>
+            <p >Click sobre el teléfono o el email para copiarlos</p>
+          </div>
+          <table id="dataTableCustomer" class="table">
+            <thead>
+              <tr>
+                <th *ngFor="let item of headers" >{{item}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let dataSingle of dataFiltered" class="{{dataSingle.delivered ? 'text-success' : ''}}">
+                <td>{{dataSingle.name}}</td>
+                <td>{{dataSingle.lastname}}</td>
+                <td (click)="saveClipboard(dataSingle.phone)" class="cursor-pointer">{{dataSingle.phone}}</td>
+                <td>{{dataSingle.gift}}</td>
+                <td (click)="saveClipboard(dataSingle.email)" class="cursor-pointer">{{dataSingle.email}}</td>
+                <td>{{dataSingle.asesor}}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

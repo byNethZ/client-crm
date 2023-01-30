@@ -8,7 +8,7 @@ import { LayoutModule } from './shared/layout/layout.module';
 import { AuthGuard } from './core/guard/auth.guard';
 
 import { AppComponent } from './app.component';
-import { ErrorPageComponent } from './views/pages/error-page/error-page.component';
+import { ErrorPageComponent } from './pages/error-page/error-page.component';
 
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { HttpClientModule } from '@angular/common/http';

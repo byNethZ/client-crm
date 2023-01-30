@@ -4,6 +4,7 @@ import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { DashboardService } from 'src/app/services/dashboard.service';
 import { VendorService } from 'src/app/services/vendor.service';
 import Utils from 'src/utils/Utils';
+import Swal from 'sweetalert2';
 import styles from './stylesMap';
 
 @Component({
@@ -182,14 +183,16 @@ export class SalesComponent implements OnInit {
             config: any
           ) {
             let categoryClicked: any,
-              areaClicked = config.w.config.labels[config.dataPointIndex];
+            areaClicked = config.w.config.labels[config.dataPointIndex];
 
             categoryClicked = array.find(
               (category: any) => category.type === areaClicked
             );
-            id = categoryClicked.type_id;
-            routerIntern.navigate([`tools/customers/category/${id}`]);
-            //console.log(id);
+            //id = categoryClicked.type_id;
+            console.log(categoryClicked, array);
+            return;
+            routerIntern.navigate([`sales/customers/category/${id}`]);
+
           },
         },
       },
@@ -249,7 +252,7 @@ export class SalesComponent implements OnInit {
               (category: any) => category.type === areaClicked
             );
             id = categoryClicked.type_id;
-            routerIntern.navigate([`tools/customers/category/${id}`]);
+            routerIntern.navigate([`sales/customers/category/${id}`]);
             //console.log(id);
           },
         },
@@ -298,6 +301,14 @@ export class SalesComponent implements OnInit {
         },
         (error) => {
           console.log(error);
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'warning',
+            title: `Error: ${error.message}`,
+            showConfirmButton: false,
+            showCloseButton: true
+          });
         }
       );
       return;
@@ -317,6 +328,14 @@ export class SalesComponent implements OnInit {
         },
         (error) => {
           console.log(error);
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'warning',
+            title: `Error: ${error.message}`,
+            showConfirmButton: false,
+            showCloseButton: true
+          });
         }
       );
   }
@@ -343,6 +362,14 @@ export class SalesComponent implements OnInit {
       },
       (error) => {
         console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
       }
     );
   }
@@ -368,7 +395,7 @@ export class SalesComponent implements OnInit {
 
   organiceData(stateData: any, categoryData: any) {
     this.arrayCategories = categoryData;
-    //console.log(this.arrayCategories);
+    console.log(this.arrayCategories);
 
     categoryData.map((data: any) => {
       if (data.isLeader === 1) {
@@ -416,6 +443,14 @@ export class SalesComponent implements OnInit {
       },
       (error) => {
         console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
       }
     );
   }

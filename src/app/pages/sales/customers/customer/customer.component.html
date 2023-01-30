@@ -1,0 +1,200 @@
+<div class="container">
+
+  <div class="botones" >
+    <button class="btn btn-primary m-1" routerLink="/sales/customers">Atrás</button>
+    <button class="btn btn-primary m-1" routerLink="/sales/edit-customer/{{customer.id}}">Editar</button>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-6 m-auto">
+        <img class="avatar" src="{{imageLink}}" alt="{{customer.name}}">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container text-center mt-3">
+
+    <h1>{{customer.name}}</h1>
+    <h2 class="business">{{customer.business}}</h2>
+    <h6>{{category}}</h6>
+    <h6>{{utils.formatStatusCustomer(customer.status, false)}}</h6>
+    <ngb-rating [(rate)]="currentRate"></ngb-rating>
+    <h5>Asesor: {{vendorCustomer}}</h5>
+    <h5 *ngIf="customer.field_2">Asignado por: {{assignedBy}}</h5>
+    <h6>Origen: {{utils.formatOriginProspect(customer.field_3)}}</h6>
+
+  </div>
+
+  <div class="container contacts">
+    <div *ngIf="customer.phone !== 'N/A'">
+      <a href="tel:{{customer.phone}}" class="btn">
+        <i data-feather="phone" appFeatherIcon></i>
+      </a>
+      <h5>Personal</h5>
+    </div>
+
+    <div *ngIf="customer.email">
+      <a href="mailto:{{customer.email}}" class="btn">
+        <i data-feather="mail" appFeatherIcon></i>
+      </a>
+      <h5>E-mail</h5>
+    </div>
+
+    <div *ngIf="customer.business_number">
+      <a href="tel:{{customer.business_number}}" class="btn">
+        <i data-feather="phone" appFeatherIcon></i>
+      </a>
+      <h5>Negocio</h5>
+    </div>
+
+    <div *ngIf="customer.website">
+      <a href="{{customer.website}}" target="_blank" class="btn">
+        <i data-feather="globe" appFeatherIcon></i>
+      </a>
+      <h5>Website</h5>
+    </div>
+
+    <div *ngIf="customer.field_1">
+      <a href="{{customer.field_1}}" target="_blank" class="btn">
+        <i data-feather="facebook" appFeatherIcon></i>
+      </a>
+      <h5>Facebook</h5>
+    </div>
+
+  </div>
+  <div class="separador"></div>
+
+
+  <div class="container text-center mt-3">
+    <h3>Dirección</h3>
+    <h6>{{customer.town}}</h6>
+    <p>{{customer.address}}</p>
+    <p>{{customer.city}}, {{state}}, {{customer.zipcode}}</p>
+    <p>USA</p>
+
+  </div>
+
+  <div class="separador"></div>
+
+  <div class="container text-center">
+    <h6>Notas</h6>
+    <p [innerText]="customer.notes"></p>
+  </div>
+
+  <div class="separador"></div>
+
+  <div class="info-flex text-center">
+
+    <div *ngIf="customer.gender">
+      <h6>Género</h6>
+      <p>{{utils.formatGender(customer.gender)}}</p>
+    </div>
+
+    <div *ngIf="customer.marital_status">
+      <h6>Situación sentimental</h6>
+      <p>{{utils.formatMaritalStatus(customer.marital_status)}}</p>
+    </div>
+
+    <div *ngIf="customer.birthday">
+      <h6>Fecha de nacimiento</h6>
+      <p>{{customer.birthday}}</p>
+    </div>
+
+    <div *ngIf="customer.birthplace">
+      <h6>Lugar de nacimiento</h6>
+      <p>{{customer.birthplace}}</p>
+    </div>
+
+    <div *ngIf="customer.nationality">
+      <h6>Nacionalidad</h6>
+      <p>{{utils.formatNationality(customer.nationality)}}</p>
+    </div>
+
+    <div *ngIf="customer.occupation">
+      <h6>Ocupación</h6>
+      <p>{{customer.occupation}}</p>
+    </div>
+
+    <div *ngIf="customer.language">
+      <h6>Lenguaje de preferencia</h6>
+      <p>{{utils.formatLanguage(customer.language)}}</p>
+    </div>
+
+    <div *ngIf="customer.color">
+      <h6>Color favorito</h6>
+      <p>{{customer.color}}</p>
+    </div>
+
+    <div *ngIf="customer.place">
+      <h6>Lugar favorito</h6>
+      <p>{{customer.place}}</p>
+    </div>
+
+    <div *ngIf="customer.movie">
+      <h6>Película favorita</h6>
+      <p>{{customer.movie}}</p>
+    </div>
+
+    <div *ngIf="customer.music">
+      <h6>Música favorita</h6>
+      <p>{{customer.music}}</p>
+    </div>
+
+    <div *ngIf="customer.sport">
+      <h6>Deporte favorito</h6>
+      <p>{{customer.sport}}</p>
+    </div>
+
+    <div *ngIf="customer.food">
+      <h6>Comida favorita</h6>
+      <p>{{customer.food}}</p>
+    </div>
+
+  </div>
+
+  <div class="separador"></div>
+
+  <div class="container text-center">
+    <h6>Breve biografía</h6>
+    <p [innerText]="customer.bio"></p>
+  </div>
+
+  <div class="separador"></div>
+
+  <div class="container cards">
+    <info-cards *ngIf="customer.mind" class="card card-info" type="percent" title="Mente" [info]="customer.mind" ></info-cards>
+    <info-cards *ngIf="customer.values" class="card card-info" type="tag" title="Valores" [info]="customer.values" ></info-cards>
+    <info-cards *ngIf="customer.emotions" class="card card-info" type="tag" title="Emociones" [info]="customer.emotions" ></info-cards>
+    <info-cards *ngIf="customer.beliefs" class="card card-info" type="tag" title="Creencias" [info]="customer.beliefs" ></info-cards>
+    <info-cards *ngIf="customer.personality" class="card card-info" type="tag" title="Personalidad" [info]="customer.personality" ></info-cards>
+  </div>
+
+  <div class="separador"></div>
+
+  <div class="container cards">
+    <info-cards *ngIf="customer.hobby" class="card card-info" type="text" title="Hobby" [info]="customer.hobby" ></info-cards>
+    <info-cards *ngIf="customer.fears" class="card card-info" type="text" title="Miedos" [info]="customer.fears" ></info-cards>
+    <info-cards *ngIf="customer.needs" class="card card-info" type="text" title="Necesidades" [info]="customer.needs" ></info-cards>
+    <info-cards *ngIf="customer.identity" class="card card-info" type="text" title="Identidad" [info]="customer.identity" ></info-cards>
+    <info-cards *ngIf="customer.dreams" class="card card-info" type="text" title="Sueños" [info]="customer.dreams" ></info-cards>
+    <info-cards *ngIf="customer.goals" class="card card-info" type="text" title="Metas" [info]="customer.goals" ></info-cards>
+    <info-cards *ngIf="customer.tasks" class="card card-info" type="text" title="Actividades" [info]="customer.tasks" ></info-cards>
+    <info-cards *ngIf="customer.relations" class="card card-info" type="text" title="Relaciones" [info]="customer.relations" ></info-cards>
+    <info-cards *ngIf="customer.motivators" class="card card-info" type="text" title="Motivadores" [info]="customer.motivators" ></info-cards>
+    <info-cards *ngIf="customer.demotivators" class="card card-info" type="text" title="Desmotivadores" [info]="customer.demotivators" ></info-cards>
+    <info-cards *ngIf="customer.mindset" class="card card-info" type="text" title="Mentalidad" [info]="customer.mindset" ></info-cards>
+    <info-cards *ngIf="customer.pleasures" class="card card-info" type="text" title="Gustos" [info]="customer.pleasures" ></info-cards>
+    <info-cards *ngIf="customer.finances" class="card card-info" type="text" title="Finanzas" [info]="customer.finances" ></info-cards>
+    <info-cards *ngIf="customer.wishes" class="card card-info" type="text" title="Deseos" [info]="customer.wishes" ></info-cards>
+    <info-cards *ngIf="customer.important_dates" class="card card-info" type="text" title="Fechas importantes" [info]="customer.important_dates" ></info-cards>
+    <info-cards *ngIf="customer.challenges" class="card card-info" type="text" title="Retos" [info]="customer.challenges" ></info-cards>
+    <info-cards *ngIf="customer.responsability" class="card card-info" type="text" title="Responsabilidades" [info]="customer.responsability" ></info-cards>
+    <info-cards *ngIf="customer.works" class="card card-info" type="text" title="Trabajos" [info]="customer.works" ></info-cards>
+  </div>
+
+
+
+
+</div>

@@ -1,0 +1,144 @@
+<div class="table-responsive">
+
+<!--   <div class="row justify-content-center m-3" *ngIf="role === '1'">
+    <div class="col-lg-5">
+      <select (change)="setVendorId($event)" class="form-select" name="" id="">
+        <option value="99">General</option>
+        <option *ngFor="let vendor of vendors" value="{{ vendor.id }}">
+          {{ vendor?.name }}
+        </option>
+      </select>
+    </div>
+  </div> -->
+
+  <h5>Resultados: {{customersFiltered.length}}</h5>
+
+  <table id="dataTableExample" class="table">
+    <thead>
+      <tr>
+        <th>Prospecto</th>
+        <th>Interesado</th>
+        <th>Industría</th>
+        <th>Fecha</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prospect of customersFiltered">
+        <td>
+          <p>{{prospect.name}}</p>
+          <div class="row">
+            <a *ngIf="prospect.phone" href="tel:{{prospect.phone}}">{{prospect.phone}}</a>
+          </div>
+          <div class="row">
+            <a *ngIf="prospect.email || prospect.email !== 'N/A'" href="mailto:{{prospect.email}}">{{prospect.email}}</a>
+          </div>
+          <p *ngIf="role === '1' || departament_id === 8 || departament_alt_id === 8">Asesor: {{showVendor(prospect.vendor_id)}}</p>
+          <p>Origen: {{utils.formatOriginProspect(prospect.field_3)}}</p>
+          <p *ngIf="prospect.field_2">Asignado por: {{showVendor( prospect.field_2 )}}</p>
+          <p *ngIf="prospect.notes"><b>Notas:</b> {{getNotes( prospect.id )}}</p>
+          <button class="btn btn-facebook" (click)="redirectFB(prospect.field_1)" *ngIf="prospect.field_1">Perfil Facebook</button>
+        </td>
+        <td >
+          <p [innerHTML]="interestToString(prospect.interests?.interests)"></p>
+        </td>
+        <td>{{prospect.industry?.type}}</td>
+        <td>
+          <p>Creado: {{prospect.created_at | date}}</p>
+          <p>Modificado: {{prospect.updated_at | date}}</p>
+          <span class="badge bg-danger">{{ warningDate(prospect.updated_at, false) }}</span>
+          <span class="badge bg-success">{{ warningDate(prospect.created_at, true) }}</span>
+        </td>
+        <td>
+          <div>
+            <button *ngIf="!isRejectedTable" class="btn btn-primary m-2" (click)="openBasicModal(basicModal, prospect.id)">Cambiar</button>
+            <button *ngIf="role === '1' || departament_id === 8 || departament_alt_id === 8" class="btn btn-primary m-2" (click)="openBasicModal(changeUser, prospect.id)">Cambiar Vendedor</button>
+            <button class="btn btn-primary m-2" (click)="openFatherModal(prospect.id)">Comentarios</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </tfoot>
+  </table>
+  <button *ngIf="fetchPage && status === 99" type="button" class="btn btn-primary col-lg-2 m-2" (click)="getCustomerData()">Cargar más</button>
+</div>
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel"></h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <h3>Cambiar el estatus de tu prospecto</h3>
+    <div class="row m-2 justify-content-center">
+      <button (click)="changeStatus(0)" class="btn btn-primary col-lg-5 m-1">Prospecto</button>
+      <button (click)="changeStatus(1)" class="btn btn-primary col-lg-5 m-1">Negociación</button>
+    </div>
+    <div class="row m-2 justify-content-center">
+      <button (click)="changeStatus(2)" class="btn btn-primary col-lg-5 m-1">Seguimiento</button>
+      <button (click)="changeStatus(3)" class="btn btn-primary col-lg-5 m-1">Cierre</button>
+    </div>
+    <div class="row m-2 justify-content-center">
+      <button routerLink="/sales/edit-customer/{{idCustomerSelected}}" (click)="modal.close('by: close button')" class="btn btn-success col-lg-5 m-1">Cliente Nuevo</button>
+      <button (click)="openRejectModal(rejectCustomer)" class="btn btn-danger col-lg-5 m-1">Rechazo</button>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #rejectCustomer let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel"></h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <app-comments [idCustomer]="idCustomerSelected" [token]="token!" [status]="4" ></app-comments>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #changeUser let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel"></h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formChangeVendor" (ngSubmit)="changeVendor($event)" >
+      <div>
+        <label class="form-label" for="">Asigne al nuevo vendedor</label>
+        <select formControlName="vendor" class="form-control" name="" id="">
+          <option *ngFor="let user of vendors" value="{{user.id}}">{{user.name}}</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label" for="">Seleccione el nuevo estatus para el prospecto</label>
+        <select formControlName="status" class="form-control" name="" id="">
+          <option value="0">Prospecto</option>
+          <option value="1">En negociación</option>
+          <option value="2">En seguimiento</option>
+          <option value="3">Cierre</option>
+        </select>
+      </div>
+      <div class="m-3">
+        <button [disabled]="formChangeVendor.invalid" class="btn btn-primary" type="submit">Cambiar</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+  </div>
+</ng-template>
+

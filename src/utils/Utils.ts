@@ -1,3 +1,4 @@
+import { Customer, Customer_Type } from 'src/app/models/customer.interface';
 import { Goal } from 'src/app/models/goal.interface';
 import { User } from 'src/app/models/user.interface';
 import { global } from 'src/app/services/global';
@@ -356,5 +357,18 @@ export default class Utils {
     if(parseInt(value) !== 0) result = ( parseInt(value) * 75 ) / parseInt(goal);
 
     return Math.floor(result)
+  }
+
+  getCategoriesFromCustomersArray(customers: Customer[]): number[]{
+
+    return [...new Set(customers.map(customer => customer.type_id))];
+  }
+
+  formatCategory(id: number,  data: Customer_Type[]){
+    let category =  data.find( category => category.id === id)
+
+    if (category) return category.type
+
+    return 'Sin datos'
   }
 }

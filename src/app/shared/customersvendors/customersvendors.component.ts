@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from 'src/app/services/dashboard.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-customersvendors',
@@ -108,7 +109,16 @@ export class CustomersvendorsComponent implements OnInit {
         this.barChartOptions = this.getCustomersChartOptions(this.obj);
       },
       error => {
-        console.log(error)
+        console.log(error);
+
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
       }
     )
   }

@@ -20,13 +20,13 @@ export const MENU: MenuItem[] = [
   {
     label: 'Clientes',
     icon: 'user',
-    link: '/tools/customers',
+    link: '/sales/customers',
     departament: 4
   },
   {
     label: 'Prospectos',
     icon: 'user-plus',
-    link: '/tools/table-prospects',
+    link: '/sales/table-prospects',
     departament: 4
   },
   {
@@ -36,11 +36,11 @@ export const MENU: MenuItem[] = [
     subItems: [
       {
         label: 'Productos',
-        link: '/tools/products'
+        link: '/sales/products'
       },
       {
         label: 'Catalogos',
-        link: '/tools'
+        link: '/sales/catalogues'
       },
     ]
   },

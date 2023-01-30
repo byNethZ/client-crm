@@ -3,6 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.interface';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-navbar',
@@ -70,7 +71,15 @@ export class NavbarComponent implements OnInit {
         this.user = response;
       },
       error => {
-        console.log(error)
+        console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
       }
     )
 

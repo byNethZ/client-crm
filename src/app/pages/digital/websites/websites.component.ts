@@ -79,7 +79,15 @@ export class WebsitesComponent implements OnInit {
         this.websites = response
       },
       error => {
-        console.log(error)
+        console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
       }
     )
 
@@ -92,7 +100,15 @@ export class WebsitesComponent implements OnInit {
         this.vendors = response;
       },
       error => {
-        console.log(error)
+        console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
       }
     )
   }
@@ -181,7 +197,15 @@ export class WebsitesComponent implements OnInit {
           this.resetData();
         },
         error => {
-          console.log(error)
+          console.log(error);
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'warning',
+            title: `Error: ${error.message}`,
+            showConfirmButton: false,
+            showCloseButton: true
+          });
         }
       )
     } else {
@@ -202,7 +226,15 @@ export class WebsitesComponent implements OnInit {
           this.resetData();
         },
         error => {
-          console.log(error)
+          console.log(error);
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'warning',
+            title: `Error: ${error.message}`,
+            showConfirmButton: false,
+            showCloseButton: true
+          });
         }
       )
     }
@@ -238,6 +270,14 @@ export class WebsitesComponent implements OnInit {
           },
           error => {
             console.log(error);
+            Swal.fire({
+              toast: true,
+              position: 'top-end',
+              icon: 'warning',
+              title: `Error: ${error.message}`,
+              showConfirmButton: false,
+              showCloseButton: true
+            });
 
           }
         )

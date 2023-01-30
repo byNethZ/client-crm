@@ -1,0 +1,359 @@
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
+import { Customer_Type, Prospect } from 'src/app/models/customer.interface';
+import { User } from 'src/app/models/user.interface';
+import { CustomerService } from 'src/app/services/customer.service';
+import { global } from 'src/app/services/global';
+import { ProductService } from 'src/app/services/product.service';
+import { UserService } from 'src/app/services/user.service';
+import Utils from 'src/utils/Utils';
+import Swal from 'sweetalert2';
+
+@Component({
+  selector: 'app-data-table',
+  templateUrl: './data-table.component.html',
+  styleUrls: ['./data-table.component.scss']
+})
+export class DataTableComponent implements OnInit {
+  public prospects: Prospect[] = [];
+  public idVendorSelected: number = 99;
+  public customersFiltered: Prospect[] = [];
+
+  public token: string | null = localStorage.getItem('token');
+
+  public role: string | null = localStorage.getItem('role_id');
+  public departament_id: number = parseInt(localStorage.getItem('departament_id')!);
+  public departament_alt_id: number | null = localStorage.getItem('departament_alt_id') ? parseInt(localStorage.getItem('departament_alt_id')!) : null;
+
+  public utils = new Utils();
+
+
+  public departaments: Customer_Type[] = [];
+  public users: User[] = [];
+  public vendors: User[] = [];
+
+  public interests: String[] = [];
+  public idCustomerSelected: number;
+  public notesIdCustomerSelected: string = '';
+
+  basicModalCloseResult: string = '';
+
+  public fetchPage: string | null = `${global.url}/prospects?page=1`;
+
+  public formChangeVendor= new FormGroup({
+    vendor: new FormControl('', [Validators.required]),
+    status: new FormControl('', [Validators.required]),
+  })
+
+  @Input() status: number;
+  @Input() isRejectedTable: boolean = false;
+  @Output() lengthData = new EventEmitter<number>();
+  @Output() id = new EventEmitter<number>()
+
+  constructor(
+    private _customerService: CustomerService,
+    private _userService: UserService,
+    private _modalService: NgbModal,
+    private _router: Router,
+    private _productService: ProductService,
+  ) {
+    this.idCustomerSelected = 1;
+  }
+
+  ngOnInit(): void {
+    this.getCustomerData();
+    this.getDepartaments();
+    this.getUsers();
+  }
+
+  getCustomerData(){
+    if(this.status === 99 && this.fetchPage){
+      this._customerService.getAllProspects(this.token!, this.fetchPage).subscribe(
+        response => {
+          this.parseData(response.prospects.data);
+          this.fetchPage = response.prospects.next_page_url;
+          console.log(response.prospects)
+        },
+        error => {
+          console.log(error);
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'warning',
+            title: `Error: ${error.message}`,
+            showConfirmButton: false,
+            showCloseButton: true
+          });
+        }
+      )
+      return;
+    }
+    this._customerService.getCustomersByProperty(this.token!, 'status', this.status).subscribe(
+      response => {
+        //console.log(response.customers);
+        //this.prospects = response.customers;
+        this.parseData(response.customers)
+
+
+      },
+      error => {
+        console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
+
+      }
+    )
+  }
+
+  getDepartaments(){
+    this._productService.getProductCategories(this.token!).subscribe(
+      response => {
+        //console.log(response);
+        this.departaments = response;
+        //console.log(this.departaments);
+
+
+      },
+      error => {
+        console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
+
+      }
+    )
+  }
+
+  getUsers(){
+    this._userService.getUsers(this.token!).subscribe(
+      response => {
+        //console.log(response)
+        this.users = response;
+        this.vendors = this.utils.getVendorsUsers(response);
+      },
+      error => {
+        console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
+      }
+    )
+  }
+
+  parseData(data: any){
+    data.map( (prospect: Prospect) => {
+      if(prospect.interests !== null && typeof prospect.interests.interests === 'string'){
+        prospect.interests.interests = JSON.parse(prospect.interests.interests);
+      }
+    })
+    console.log(data)
+    if(this.customersFiltered.length === 0){
+      this.prospects = data;
+    } else {
+      this.prospects = [...this.prospects, ...data]
+    }
+    this.customersFiltered = this.prospects;
+    this.setLength();
+
+  }
+
+  interestToString(data: any): string{
+    let interestString: string = '';
+    if(data !== null){
+      data.map( (interest: string | number ) => {
+        let department: any;
+        interest = Number(interest);
+        department = this.departaments.find((element: any) => element.id === interest)
+        interestString = interestString.concat(`${department?.category}<br>`);
+        //console.log(interestString);
+      })
+    }
+
+
+    return interestString
+  }
+
+  redirectFB(link: string){
+    window.open(link);
+  }
+
+  openBasicModal(content: TemplateRef<any>, id: number, xl = false) {
+    this.idCustomerSelected = id;
+    let params = {};
+
+    if(xl) params = {size: 'lg', centered: true}
+
+    this._modalService.open(content, params).result.then((result) => {
+      this.basicModalCloseResult = "Modal closed" + result
+    }).catch((res) => {});
+  }
+
+  openRejectModal(contentCurrent: TemplateRef<any>){
+    this._modalService.dismissAll();
+
+    this._modalService.open(contentCurrent, {}).result.then((result) => {
+      this.basicModalCloseResult = "Modal closed" + result
+    }).catch((res) => {});
+
+  }
+
+  changeStatus(status: number){
+
+    this._customerService.changeStatus(this.idCustomerSelected, status, this.token!).subscribe(
+      response => {
+        this.getCustomerData();
+        this._modalService.dismissAll();
+        //console.log(response)
+
+      },
+      error => {
+        console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
+
+      }
+    )
+
+  }
+
+  changeVendor(evt: Event){
+    evt.preventDefault();
+
+    let req = {
+      vendor_id: parseInt(this.formChangeVendor.value.vendor)
+    }
+
+    this._customerService.changeVendor(this.idCustomerSelected, parseInt(this.formChangeVendor.value.status), this.token!, req).subscribe({
+      next: () => {
+        this.getCustomerData();
+        this._modalService.dismissAll();
+        this.formChangeVendor.reset();
+      },
+      error: ( err ) => {
+        console.log(err);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${err.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
+      }
+    })
+
+  }
+
+  toLink(id: number){
+    this._router.navigate([`/sales/customer/${id}`]);
+  }
+
+  showVendor(id: number | undefined | null | string ): string{
+    let vendorName: string = 'Vendor Name';
+    if(id !== undefined || id !== null){
+      if(typeof id === 'string') id = parseInt(id);
+      let result: any
+      result = this.users.find((user: any) => user.id === id);
+      //console.log(id)
+      vendorName = result !== undefined ? `${result?.name}` : '';
+    }
+    return vendorName;
+  }
+
+  warningDate(dateUpdated: string, isCreatedDate: boolean): string{
+    let time = moment(dateUpdated).fromNow();
+    let diffTime = moment().diff(dateUpdated, 'days');
+
+    if( diffTime > 5 && !isCreatedDate ) return time;
+    if(diffTime <= 5 && isCreatedDate) return 'Nuevo';
+
+    return '';
+  }
+
+  setLength() {
+    this.lengthData.emit(this.prospects.length);
+  }
+
+  sendNotes(){
+    this._modalService.dismissAll();
+    console.log(this.notesIdCustomerSelected);
+    let request = { notes: this.notesIdCustomerSelected}
+    this._customerService.prospectRejected(this.idCustomerSelected, request, this.token!).subscribe({
+      next: (response) => {
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'success',
+          title: 'El cliente ha sido actualizado',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+        });
+        this.notesIdCustomerSelected = '';
+        this.getCustomerData();
+      },
+      error: (error) => {
+        console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
+      }
+    })
+  }
+
+  getNotes(id: number): string{
+    let note: string = '';
+    let prospectSearched = this.prospects.find( (prospect) => prospect.id === id);
+    if(prospectSearched) return note = prospectSearched.notes;
+    return note;
+  }
+
+  openFatherModal(id: number){
+    this.id.emit(id);
+  }
+
+  setVendorId(evt: Event) {
+    this.idVendorSelected = parseInt((evt.target as HTMLSelectElement).value);
+
+    if(this.idVendorSelected === 99){
+      this.customersFiltered = this.prospects;
+
+      return;
+    }
+
+    this.customersFiltered = this.prospects.filter( customer => customer.vendor_id === this.idVendorSelected )
+
+
+  }
+
+}

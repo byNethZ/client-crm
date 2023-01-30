@@ -27,7 +27,17 @@ export class ReportsComponent implements OnInit {
   getUsers(){
     this._userService.getUsers(this.token).subscribe({
       next: (response) => this.users = response.filter( ( user: User ) => user.role_id === 1),
-      error: (error) => console.log(error),
+      error: (error) => {
+        console.log(error)
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
+      },
     })
   }
 
@@ -50,7 +60,7 @@ export class ReportsComponent implements OnInit {
           toast: true,
           position: 'top-end',
           icon: 'error',
-          title: 'Algo falló',
+          title: `Error: ${error.message}`,
           showConfirmButton: false,
           timer: 3000,
           timerProgressBar: true

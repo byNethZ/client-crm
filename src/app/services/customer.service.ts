@@ -20,22 +20,12 @@ export class CustomerService {
     });
   }
 
-  getCustomersByStatus(token: string, status: number): Observable<any> {
+  getCustomersByProperty(token: string, property: keyof Customer, idProperty: number): Observable<any> {
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this._http.get(`${global.url}/customersByStatus/${status}`, {
-      headers: headers,
-    });
-  }
-
-  getCustomersByIndustry(token: string, industry: string): Observable<any> {
-    let headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('Authorization', `Bearer ${token}`);
-
-    return this._http.get(`${global.url}/customers/industry/${industry}`, {
+    return this._http.get(`${global.url}/customers/${property}/${idProperty}`, {
       headers: headers,
     });
   }
@@ -48,12 +38,20 @@ export class CustomerService {
     return this._http.get(`${global.url}/customers`, { headers: headers });
   }
 
+  getAllProspects(token: string, page: string = `${global.url}/prospects?page=1`): Observable<any> {
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`);
+
+    return this._http.get(page, { headers: headers });
+  }
+
   delete(id: number, token: string): Observable<any> {
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this._http.delete(`${global.url}/delete-customer/${id}`, {
+    return this._http.delete(`${global.url}/customers/${id}`, {
       headers: headers,
     });
   }
@@ -63,7 +61,7 @@ export class CustomerService {
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this._http.get(`${global.url}/customer/${id}`, {
+    return this._http.get(`${global.url}/customers/${id}`, {
       headers: headers,
     });
   }
@@ -73,7 +71,7 @@ export class CustomerService {
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this._http.post(`${global.url}/customer`, customer, {
+    return this._http.post(`${global.url}/customers`, customer, {
       headers: headers,
     });
   }
@@ -83,7 +81,7 @@ export class CustomerService {
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this._http.put(`${global.url}/customer/${id}`, customer, {
+    return this._http.put(`${global.url}/customers/${id}`, customer, {
       headers: headers,
     });
   }

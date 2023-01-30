@@ -1,0 +1,104 @@
+<app-customersvendors *ngIf="role_id === 1"></app-customersvendors>
+<button
+  class="btn btn-primary col-lg-2 m-2"
+  routerLink="/sales/create-customer"
+>
+  Nuevo Prospecto
+</button>
+<button class="btn btn-primary col-lg-2 m-2" routerLink="/sales/customers/new">
+  Nuevo Cliente
+</button>
+
+<div>
+  <h2 class="text-center">{{ title }}</h2>
+  <h3 class="text-center">Total: {{ customersFiltered.length }}</h3>
+  <div class="row justify-content-center m-3">
+    <div class="row justify-content-center">
+      <div class="col-lg-5"  *ngIf="role_id === 1">
+        <label for="vendorSelected" class="text-center"
+          >Seleccionar vendedor</label
+        >
+        <select
+          (change)="filterData()"
+          class="form-select"
+          name="vendorSelected"
+          id="vendorSelected"
+          [(ngModel)]="paramsFilter.vendor_id"
+        >
+          <option value="99">General</option>
+          <option *ngFor="let vendor of vendors" value="{{ vendor.id }}">
+            {{ vendor?.name }}
+          </option>
+        </select>
+      </div>
+
+      <div *ngIf="!idIndustryURL" class="col-lg-5">
+        <label for="categorySelected" class="text-center"
+          >Seleccionar Categoria</label
+        >
+        <select
+          (change)="filterData()"
+          class="form-select"
+          name="categorySelected"
+          id="categorySelected"
+          [(ngModel)]="paramsFilter.type_id"
+        >
+          <option value="99">General</option>
+          <option *ngFor="let type of customersTypes" value="{{ type.id }}">
+            {{ type.type }}
+          </option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="m-3">
+      <input
+        (keyup)="applyFilter($event)"
+        type="text"
+        class="form-control"
+        id="exampleInputUsername1"
+        autocomplete="off"
+        placeholder="Filtrar por Negocio"
+      />
+    </div>
+
+    <div class="cards-clients">
+      <div class="row justify-content-center">
+        <div
+          class="card text-center col-3-clients m-2 p-0"
+          *ngFor="let customer of customersFiltered"
+        >
+          <div class="image-header-card">
+            <img
+              class="rounded-circle avatar-client"
+              src="{{ utils.returnUrlImage(customer.image) }}"
+              alt="{{ customer.name }}"
+            />
+          </div>
+          <div class="card-content">
+            <div
+              class="card-title cursor-pointer"
+              routerLink="/sales/customer/{{ customer.id }}"
+            >
+              <h4>{{ customer.name }} {{ customer.surname }}</h4>
+              <h6>{{ customer.business }}</h6>
+            </div>
+            <div class="card-body">
+              <a class="btn btn-primary" href="mailto:{{ customer.email }}"
+                ><i data-feather="mail" appFeatherIcon></i
+              ></a>
+              <a class="btn btn-margin" href="tel:{{ customer.phone }}"
+                ><i data-feather="phone" appFeatherIcon></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="this.customersFiltered.length === 0">
+      <h4 class="text-center">Sin clientes</h4>
+    </div>
+  </div>
+</div>

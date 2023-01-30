@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user.interface';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user',
@@ -48,6 +49,14 @@ export class UserComponent implements OnInit {
         },
         error => {
           console.log(error);
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'warning',
+            title: `Error: ${error.message}`,
+            showConfirmButton: false,
+            showCloseButton: true
+          });
 
         }
       )

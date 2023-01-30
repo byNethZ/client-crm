@@ -1,0 +1,20 @@
+<div>
+  <h4 class="text-center">Prospectos rechazados</h4>
+  <app-data-table [status]="status" (lengthData)="setLenght($event, 4)" (id)="openModal($event, comments, true)" [isRejectedTable]="status === 4 ? true : false"></app-data-table>
+</div>
+
+<ng-template #comments let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Comentarios</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <app-comments [idCustomer]="idCustomerSelected" [token]="token"></app-comments>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+  </div>
+
+</ng-template>

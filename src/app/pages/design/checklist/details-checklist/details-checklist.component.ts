@@ -43,6 +43,14 @@ export class DetailsChecklistComponent implements OnInit {
         },
         error => {
           console.log(error);
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'warning',
+            title: `Error: ${error.message}`,
+            showConfirmButton: false,
+            showCloseButton: true
+          });
 
         }
       )
@@ -56,6 +64,14 @@ export class DetailsChecklistComponent implements OnInit {
         },
         error => {
           console.log(error);
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'warning',
+            title: `Error: ${error.message}`,
+            showConfirmButton: false,
+            showCloseButton: true
+          });
 
         }
       )
@@ -109,6 +125,14 @@ export class DetailsChecklistComponent implements OnInit {
           },
           error => {
             console.log(error);
+            Swal.fire({
+              toast: true,
+              position: 'top-end',
+              icon: 'warning',
+              title: `Error: ${error.message}`,
+              showConfirmButton: false,
+              showCloseButton: true
+            });
 
           }
         )
@@ -132,6 +156,14 @@ export class DetailsChecklistComponent implements OnInit {
       },
       error => {
         console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
 
       }
     )
@@ -150,7 +182,7 @@ export class DetailsChecklistComponent implements OnInit {
       })
       return;
     }
-    navigator.clipboard.writeText(`https://bliones.net/checklist/menus/${type}/${id}`).then(
+    navigator.clipboard.writeText(`https://bliones.net/checklist/menus/${ type? type : 'menu' }/${id}`).then(
       (response) => {
         Swal.fire({
           toast: true,
@@ -180,6 +212,7 @@ export class DetailsChecklistComponent implements OnInit {
     let createdDateParsed: string = new Date(link.created_at).toLocaleString('en-US',{ dateStyle: "long", timeZone: 'America/New_York' });
     let updatedDateParsed: string = new Date(link.updated_at).toLocaleString('en-US',{ dateStyle: "long", timeZone: 'America/New_York' });
     this.getGif();
+    console.log(link.aprobed)
     if(typeof link.aprobed === 'number'){
       statusString = this.setClass(link.aprobed)
     }
@@ -195,7 +228,7 @@ export class DetailsChecklistComponent implements OnInit {
         `<p class="info-swal-checklist info-swal-message">${link.message}</p>` +
         `<p class="info-swal-checklist">Creado: ${ createdDateParsed }</p>` +
         `<p class="info-swal-checklist">${ this.formatedDateUpdated(updatedDateParsed, link.aprobed) }</p>`
-        + `<img class="img-swal-checklist" src="${this.urlGif}" alt="gif">`,
+        + `<img class="img-swal-checklist" src="${link.aprobed === 1 ? this.urlGif : ''}" alt="">`,
       showCloseButton: true
     })
   }
@@ -224,6 +257,14 @@ export class DetailsChecklistComponent implements OnInit {
       },
       error => {
         console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
       }
     )
   }

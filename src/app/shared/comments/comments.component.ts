@@ -6,6 +6,7 @@ import { Comment } from 'src/app/models/comment.interface';
 import { CommentsService } from 'src/app/services/comments.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import Utils from 'src/utils/Utils';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-comments',
@@ -66,7 +67,17 @@ export class CommentsComponent implements OnInit {
         this.comments = response.comments;
         //console.log(this.comments);
       },
-      error: ( error ) => console.log( error )
+      error: ( error ) => {
+        console.log( error );
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
+      }
     })
 
   }
@@ -106,7 +117,17 @@ export class CommentsComponent implements OnInit {
         this.getComments();
         this.htmlText = '';
       },
-      error: ( error ) => console.log(error)
+      error: ( error ) => {
+        console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
+      }
     })
 
     if(this.status) this.changeStatus(this.status)
@@ -124,6 +145,14 @@ export class CommentsComponent implements OnInit {
       },
       error => {
         console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
 
       }
     )

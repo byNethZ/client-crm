@@ -29,7 +29,15 @@ export class PanelComponent implements OnInit {
         this.users = response;
       },
       error => {
-        console.log(error)
+        console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
       }
     )
   }
@@ -48,7 +56,15 @@ export class PanelComponent implements OnInit {
         })
       },
       error => {
-        console.log(error)
+        console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
       }
     )
   }

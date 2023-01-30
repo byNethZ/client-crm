@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReportsComponent } from './reports/reports.component';
 import { GoalsComponent } from './goals/goals.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NgChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SweetAlert2Module.forRoot(),
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    NgChartsModule
   ]
 })
 export class AdminModule { }

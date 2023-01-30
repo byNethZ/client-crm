@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Goal } from 'src/app/models/goal.interface';
 import { GoalsService } from 'src/app/services/goals.service';
 import Utils from 'src/utils/Utils';
+import Swal from 'sweetalert2';
 
 interface IData {
   prospect: {
@@ -63,7 +64,17 @@ export class ProgressComponent implements OnInit, OnChanges {
         this.goalsData = result.goals;
         this.getDataCurrentMonth();
       },
-      error: (error) => console.log(error),
+      error: (error) => {
+        console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
+      }
     });
   }
 

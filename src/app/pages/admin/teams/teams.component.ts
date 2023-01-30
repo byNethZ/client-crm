@@ -34,6 +34,14 @@ export class TeamsComponent implements OnInit {
       },
       error => {
         console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
       }
       )
 
@@ -83,6 +91,14 @@ export class TeamsComponent implements OnInit {
             },
             error => {
               console.log(error);
+              Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'warning',
+                title: `Error: ${error.message}`,
+                showConfirmButton: false,
+                showCloseButton: true
+              });
 
             }
           )

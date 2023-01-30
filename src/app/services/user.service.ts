@@ -145,7 +145,7 @@ export class UserService {
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this._http.get<any>(`${global.url}/user/${id}`, {
+    return this._http.get<any>(`${global.url}/users/${id}`, {
       headers: headers,
     });
   }
@@ -155,7 +155,7 @@ export class UserService {
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this._http.delete(`${global.url}/delete-user/${id}`, {
+    return this._http.delete(`${global.url}/users/${id}`, {
       headers: headers,
     });
   }
@@ -194,7 +194,7 @@ export class UserService {
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this._http.put(`${global.url}/edit-user/${id}`, user, {
+    return this._http.put(`${global.url}/users/${id}`, user, {
       headers: headers,
     });
   }
@@ -204,7 +204,7 @@ export class UserService {
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this._http.post(`${global.url}/user`, user, { headers: headers });
+    return this._http.post(`${global.url}/users`, user, { headers: headers });
   }
 
   activateSystem(token: string, id: string): Observable<any> {

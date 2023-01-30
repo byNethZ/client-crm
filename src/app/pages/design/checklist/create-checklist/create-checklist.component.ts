@@ -65,13 +65,21 @@ export class CreateChecklistComponent implements OnInit {
   }
 
   getCustomers() {
-    this._customerService.getCustomersByStatus(this.token, 5).subscribe(
+    this._customerService.getCustomersByProperty(this.token, 'status', 5).subscribe(
       (response) => {
         this.customers = response.customers;
         this.customersFiltered = this.customers;
       },
       (error) => {
         console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
       }
     );
   }
@@ -146,6 +154,14 @@ export class CreateChecklistComponent implements OnInit {
       },
       error => {
         console.log(error);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${error.message}`,
+          showConfirmButton: false,
+          showCloseButton: true
+        });
 
       }
     )
