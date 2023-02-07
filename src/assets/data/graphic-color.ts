@@ -1,10 +1,10 @@
 const graphicColors = {
-  primary        : "#6571ff",
+  primary        : "#0034c8",
   secondary      : "#7987a1",
   success        : "#05a34a",
   info           : "#66d1d1",
   warning        : "#fbbc06",
-  danger         : "#ff3366",
+  danger         : "#ac0000",
   light          : "#e9ecef",
   dark           : "#060c17",
   muted          : "#7987a1",

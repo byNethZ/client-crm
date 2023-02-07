@@ -13,20 +13,12 @@ export class LinksService {
     private _http: HttpClient
   ) { }
 
-  getLinks(token: string, id : string) : Observable<any>{
+  getLinks(token: string, status: number, nextPage: number) : Observable<any>{
     let headers = new HttpHeaders().set('Content-Type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .set('Accept', 'application/json');
 
-    return this._http.get(`${global.url}/checklists/all/${id}`, {headers: headers});
-  }
-
-  getLinksByStatus(token: string, id : string, status: string|number) : Observable<any>{
-    let headers = new HttpHeaders().set('Content-Type', 'application/json')
-        .set('Authorization', `Bearer ${token}`)
-        .set('Accept', 'application/json');
-
-    return this._http.get(`${global.url}/checklistStatus/${id}/${status}`, {headers: headers});
+    return this._http.get(`${global.url}/checklists/${status}?page=${nextPage}`, {headers: headers});
   }
 
   ///checklistStatus/{id}/{aprobed}

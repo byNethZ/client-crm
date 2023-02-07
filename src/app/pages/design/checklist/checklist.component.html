@@ -25,7 +25,7 @@
               <ng-template ngbNavContent>
                 <h6 class="mb-2">Todos</h6>
 
-                <app-details-checklist [isAll]="true"></app-details-checklist>
+                <app-details-checklist [status]="99"></app-details-checklist>
 
 
               </ng-template>
@@ -35,7 +35,7 @@
               <ng-template ngbNavContent>
                 <h6 class="mb-2">Declinados</h6>
 
-                <app-details-checklist [isAll]="false" [status]="2"></app-details-checklist>
+                <app-details-checklist [status]="2"></app-details-checklist>
 
               </ng-template>
             </li>
@@ -44,7 +44,7 @@
               <ng-template ngbNavContent>
                 <h6 class="mb-2">Pendientes</h6>
 
-                <app-details-checklist [isAll]="false" [status]="0"></app-details-checklist>
+                <app-details-checklist [status]="0"></app-details-checklist>
 
               </ng-template>
             </li>

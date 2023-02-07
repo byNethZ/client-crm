@@ -166,12 +166,16 @@ export class DataTableComponent implements OnInit {
       }
     })
     console.log(data)
+
     if(this.customersFiltered.length === 0){
       this.prospects = data;
     } else {
       this.prospects = [...this.prospects, ...data]
     }
-    this.customersFiltered = this.prospects;
+
+    this.idVendorSelected === 99
+    ? this.customersFiltered = this.prospects
+    : this.customersFiltered = this.prospects.filter( customer => customer.vendor_id === this.idVendorSelected );
     this.setLength();
 
   }

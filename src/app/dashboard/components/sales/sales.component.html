@@ -48,7 +48,7 @@
   <div class="row justify-content-center m-2" *ngIf="role === 1">
     <div class="col-lg-5">
       <select (change)="setVendorId($event)" class="form-select" name="" id="">
-        <option value="">General</option>
+        <option value="99">General</option>
         <option *ngFor="let vendor of vendors" value="{{ vendor.id }}">
           {{ vendor?.name }}
         </option>
@@ -56,14 +56,7 @@
     </div>
   </div>
 
-  <div class="card col-lg-6 m-auto p-3 mb-4 text-center">
-    <app-progress
-    [token]="token"
-    [idUser]="idVendorNumber"
-    [withInfo]="true"
-    [isPanel]="true"
-  ></app-progress>
-  </div>
+  <app-goals-graphics *ngIf="role === 1" [id]="idVendor" [token]="token!"></app-goals-graphics>
 
   <div class="row">
 

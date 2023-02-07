@@ -25,7 +25,7 @@ export class SalesComponent implements OnInit {
   lat: number = 38;
   lng: number = -97;
   public zoom: number = 5;
-  public idVendor: string = '';
+  public idVendor: string = '99';
   public idVendorNumber: number = this.id;
   public vendors: any[] = [];
 
@@ -288,7 +288,7 @@ export class SalesComponent implements OnInit {
   getData() {
     this.getCurrentDay();
 
-    if (this.idVendor === '') {
+    if (this.idVendor === '99') {
       this._dashboardService.getSalesData(this.token!).subscribe(
         (response) => {
           //console.log(response);
@@ -395,7 +395,7 @@ export class SalesComponent implements OnInit {
 
   organiceData(stateData: any, categoryData: any) {
     this.arrayCategories = categoryData;
-    console.log(this.arrayCategories);
+    //console.log(this.arrayCategories);
 
     categoryData.map((data: any) => {
       if (data.isLeader === 1) {
@@ -458,7 +458,7 @@ export class SalesComponent implements OnInit {
   setVendorId(evt: any) {
     //console.log(evt.target?.value);
     this.idVendor = evt.target.value;
-    this.idVendorNumber = this.idVendor !== '' ? parseInt(this.idVendor) : this.id;
+    this.idVendorNumber = this.idVendor !== '99' ? parseInt(this.idVendor) : this.id;
     this.categoryArrayOne = [];
     this.categoryArrayTwo = [];
     this.categoryTotalArrayOne = [];

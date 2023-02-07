@@ -1,30 +1,67 @@
-<div class="col-xl-12 grid-margin grid-margin-xl-0 stretch-card">
-  <div class="card">
-    <div class="card-body">
-      <h6 class="card-title">Métricas</h6>
-      <canvas
-        baseChart
-        [data]="groupedBarChartData"
-        [options]="groupedBarChartOptions"
-        type="bar"
+<div class="row justify-content-center m-2" *ngIf="role === 1">
+  <div class="col-lg-5">
+    <select (change)="setVendorID($event)" class="form-select" name="" id="">
+      <option value="99">General</option>
+      <option *ngFor="let vendor of vendors" value="{{ vendor.id }}">
+        {{ vendor?.name }}
+      </option>
+    </select>
+  </div>
+</div>
+
+<app-goals-graphics *ngIf="role === 1" [token]="token" [id]="vendorID"></app-goals-graphics>
+
+<div *ngIf="role === 1">
+  <h3 class="text-center my-4">Elige a quien deseas editarle la meta</h3>
+
+  <div class="cards-clients">
+    <div class="row justify-content-center">
+      <div
+        class="card cursor-pointer text-center col-3-clients m-2 p-0"
+        *ngFor="let vendor of vendors"
+        routerLink="/admin/metas/{{ vendor.id }}"
       >
-      </canvas>
+        <card-profile
+          [avatar]="vendor.avatar"
+          [name]="vendor.name"
+          [role_id]="vendor.role_id"
+        ></card-profile>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="cards-clients">
-  <div class="row justify-content-center">
-    <div
-      class="card text-center col-3-clients m-2 p-0"
-      *ngFor="let vendor of vendors"
-      (click)="createGoal(vendor.id)"
+<div *ngIf="role !== 1">
+  <h3 class="text-center my-4">Agregar metas</h3>
+  <div class="col-lg-5 m-auto">
+    <label class="form-label" for="month"
+      >Selecciona el mes a agregar para todos los vendedores</label
     >
-      <card-profile
-        [avatar]="vendor.avatar"
-        [name]="vendor.name"
-        [role_id]="vendor.role_id"
-      ></card-profile>
+    <select
+      [ngModel]="monthSelected"
+      (change)="changeMonth($event)"
+      class="form-control"
+      name="month"
+      id="month"
+    >
+      <option
+        *ngFor="let month of months; let i = index"
+        value="{{ utils.formatMonthForGoal(i, 'result') }}"
+      >
+        {{ month }}
+      </option>
+    </select>
+  </div>
+
+  <div class="cards-clients">
+    <div class="row justify-content-center d-flex">
+      <app-add-goals
+        class="card cursor-pointer text-center col-3-clients m-2 p-0"
+        *ngFor="let vendor of vendors"
+        [token]="token"
+        [vendor]="vendor"
+        [month]="monthSelected"
+      ></app-add-goals>
     </div>
   </div>
 </div>

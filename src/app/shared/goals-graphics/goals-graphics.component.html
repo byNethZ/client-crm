@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-xl-8 grid-margin grid-margin-xl-0 stretch-card">
+    <div class="card pt-3">
+      <div class="d-flex m-auto col-6">
+        <div class="form-check col-6 mb-2">
+          <input
+            (click)="changeType($event)"
+            [ngModel]="type"
+            type="radio"
+            class="form-check-input"
+            value="quantity"
+            name="type"
+            id="quantity"
+          />
+          <label class="form-check-label" for="quantity"> Cantidad </label>
+        </div>
+        <div class="form-check col-6 mb-2">
+          <input
+            (click)="changeType($event)"
+            [ngModel]="type"
+            type="radio"
+            class="form-check-input"
+            value="prospect"
+            name="type"
+            id="prospect"
+          />
+          <label class="form-check-label" for="prospect"> Prospecto </label>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <h6 class="card-title">Métricas</h6>
+        <canvas
+          baseChart
+          [data]="groupedBarChartData"
+          [options]="groupedBarChartOptions"
+          type="bar"
+        >
+        </canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-4 grid-margin grid-margin-xl-0 stretch-card">
+    <app-progress
+      [arrayQuantityGoals]="arrayQuantity.goals"
+      [arrayQuantityResults]="arrayQuantity.results"
+      [arrayProspectsGoals]="arrayProspect.goals"
+      [arrayProspectsResults]="arrayProspect.results"
+    ></app-progress>
+  </div>
+</div>

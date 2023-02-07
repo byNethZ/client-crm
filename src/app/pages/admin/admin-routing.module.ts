@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EditGoalsComponent } from './goals/edit-goals/edit-goals.component';
 import { GoalsComponent } from './goals/goals.component';
 import { ReportsComponent } from './reports/reports.component';
 import { CreateUserComponent } from './teams/create-user/create-user.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path:'create-user', component: CreateUserComponent},
   {path:'reportes', component: ReportsComponent},
   {path:'metas', component: GoalsComponent},
+  {path:'metas/:id', component: EditGoalsComponent},
 ];
 
 @NgModule({

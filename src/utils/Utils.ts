@@ -34,7 +34,7 @@ export default class Utils {
         statusString = 'En Negociación';
         break;
       case 2:
-        statusString = 'En Segumient';
+        statusString = 'En Segumiento';
         break;
       case 3:
         statusString = 'En Cierre';
@@ -55,12 +55,14 @@ export default class Utils {
     return statusString;
   }
 
-  returnUrlImage(image: string): string {
-    let urlDefault: string = `${global.urlStorageCustomers}/default.jpg`;
+  returnUrlImage(image: string, mode: 'storage' | 'asset' | 'external', type: 'profile' | 'image' = 'profile'): string {
+    let typeImage = type === 'profile' ? 'profile.webp' : 'placeholder.jpg';
+    if( !image ) return `${global.urlProject}/assets/images/others/${typeImage}`;
 
-    if (image) return `${global.urlStorageCustomers}/${image}`;
+    if(mode === 'storage') return `${global.urlStorageCustomers}/${image}`;
+    if(mode === 'asset') return `${global.urlProject}/${image}`;
 
-    return urlDefault;
+    return image;
   }
 
   formatOriginProspect(origin: string | number): string {
@@ -295,45 +297,44 @@ export default class Utils {
     return result;
   }
 
-  formatMonthForGoal(month: string, type: 'goal' | 'result'): keyof Goal {
+  formatMonthForGoal(month: number, type: 'goal' | 'result'): keyof Goal {
     let monthFormatted: keyof Goal = 'jan_goal';
     switch (month) {
-      case 'enero':
-        monthFormatted = type == 'goal' ? 'jan_goal' : 'jan_result';
+      case 0:
+        monthFormatted = type === 'goal' ? 'jan_goal' : 'jan_result';
         break;
-
-      case 'febrero':
-        monthFormatted = type == 'goal' ? 'feb_goal' : 'feb_result';
+      case 1:
+        monthFormatted = type === 'goal' ? 'feb_goal' : 'feb_result';
         break;
-      case 'marzo':
-        monthFormatted = type == 'goal' ? 'mar_goal' : 'mar_result';
+      case 2:
+        monthFormatted = type === 'goal' ? 'mar_goal' : 'mar_result';
         break;
-      case 'abril':
-        monthFormatted = type == 'goal' ? 'apr_goal' : 'apr_result';
+      case 3:
+        monthFormatted = type === 'goal' ? 'apr_goal' : 'apr_result';
         break;
-      case 'mayo':
-        monthFormatted = type == 'goal' ? 'may_goal' : 'may_result';
+      case 4:
+        monthFormatted = type === 'goal' ? 'may_goal' : 'may_result';
         break;
-      case 'junio':
-        monthFormatted = type == 'goal' ? 'jun_goal' : 'jun_result';
+      case 5:
+        monthFormatted = type === 'goal' ? 'jun_goal' : 'jun_result';
         break;
-      case 'julio':
-        monthFormatted = type == 'goal' ? 'jul_goal' : 'jul_result';
+      case 6:
+        monthFormatted = type === 'goal' ? 'jul_goal' : 'jul_result';
         break;
-      case 'agosto':
-        monthFormatted = type == 'goal' ? 'aug_goal' : 'aug_result';
+      case 7:
+        monthFormatted = type === 'goal' ? 'aug_goal' : 'aug_result';
         break;
-      case 'septiembre':
-        monthFormatted = type == 'goal' ? 'sep_goal' : 'sep_result';
+      case 8:
+        monthFormatted = type === 'goal' ? 'sep_goal' : 'sep_result';
         break;
-      case 'octubre':
-        monthFormatted = type == 'goal' ? 'oct_goal' : 'oct_result';
+      case 9:
+        monthFormatted = type === 'goal' ? 'oct_goal' : 'oct_result';
         break;
-      case 'noviembre':
-        monthFormatted = type == 'goal' ? 'nov_goal' : 'nov_result';
+      case 10:
+        monthFormatted = type === 'goal' ? 'nov_goal' : 'nov_result';
         break;
-      case 'diciembre':
-        monthFormatted = type == 'goal' ? 'dec_goal' : 'dec_result';
+      case 11:
+        monthFormatted = type === 'goal' ? 'dec_goal' : 'dec_result';
         break;
 
       default:
@@ -343,20 +344,11 @@ export default class Utils {
     return monthFormatted;
   }
 
-  calcGoalReal(value: any, goal: any): number{
-    let result: number = 0;
+  calcProgressBar(result: number | null, goal: number | null, percent: number = 100): number{
+    if(result === 0 || result === null ) return 0;
+    if (goal === 0 || goal === null) return 100;
 
-    if(parseInt(value) !== 0) result = ( parseInt(value) * 100 ) / parseInt(goal);
-
-    return Math.floor(result)
-  }
-
-  calcGoalFalse(value: any, goal: any): number{
-    let result: number = 0;
-
-    if(parseInt(value) !== 0) result = ( parseInt(value) * 75 ) / parseInt(goal);
-
-    return Math.floor(result)
+    return Math.floor(( result * percent ) / goal)
   }
 
   getCategoriesFromCustomersArray(customers: Customer[]): number[]{

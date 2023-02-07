@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import Utils from 'src/utils/Utils';
 
 @Component({
   selector: 'card-profile',
@@ -6,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  public utils = new Utils();
   @Input() avatar: string;
   @Input() name: string;
   @Input() role_id: number;

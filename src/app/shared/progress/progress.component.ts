@@ -1,8 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { Goal } from 'src/app/models/goal.interface';
-import { GoalsService } from 'src/app/services/goals.service';
 import Utils from 'src/utils/Utils';
-import Swal from 'sweetalert2';
 
 interface IData {
   prospect: {
@@ -23,94 +20,44 @@ interface IData {
   styleUrls: ['./progress.component.scss'],
 })
 export class ProgressComponent implements OnInit, OnChanges {
-
   public utils = new Utils();
-  public goalsData: Goal[] = [];
-  public currentMonthData: IData;
-  public resultDataProspect: number = 0;
-  public percentDataProspect: number = 0;
-  public goalDataProspect: number = 0;
-  public resultDataQuantity: number = 0;
-  public goalDataQuantity: number = 0;
-  public percentDataQuantity: number = 0;
-  @Input() idUser: number = 0;
-  @Input() withInfo: boolean = true;
-  @Input() token: string | null = '';
-  @Input() isPanel: boolean = false;
 
-  constructor(private _goalsService: GoalsService) {
-    this.currentMonthData = {
-      prospect: { isSet: false, goal: 0, result: 0 },
-      quantity: { isSet: false, goal: 0, result: 0 },
-    }
-  }
+  @Input() arrayQuantityGoals: number[];
+  @Input() arrayQuantityResults: number[];
+  @Input() arrayProspectsGoals: number[];
+  @Input() arrayProspectsResults: number[];
+
+  public indexMonth: number = 0;
+  public isInfo: boolean = false;
+
+
+  constructor() {}
 
   ngOnInit(): void {
-    this.getGoal();
+    this.formatData();
   }
 
   ngOnChanges(){
-    this.handleChanges();
+    this.formatData()
   }
 
-  handleChanges(){
-    if(this.isPanel) this.getGoal();
+  getCurrentMonth(): number{
+    const date = new Date();
+    const month = date.getMonth();
+    return month;
   }
 
-  getGoal() {
-    this._goalsService.getGoalsByUser(this.token!, this.idUser).subscribe({
-      next: (result) => {
-        //console.log(result);
-        this.goalsData = result.goals;
-        this.getDataCurrentMonth();
-      },
-      error: (error) => {
-        console.log(error);
-        Swal.fire({
-          toast: true,
-          position: 'top-end',
-          icon: 'warning',
-          title: `Error: ${error.message}`,
-          showConfirmButton: false,
-          showCloseButton: true
-        });
-      }
-    });
-  }
-
-  getDataCurrentMonth(){
-    const date = new Date(); // 2009-11-10
-    const month = date.toLocaleString('default', { month: 'long' });
-    let currentMonthKey = this.utils.formatMonthForGoal(month, 'goal');
-    let currentMonthValue = this.utils.formatMonthForGoal(month, 'result');
-
-    this.goalsData.map( ( goal: Goal ) => {
-
-      if( goal.type === 1 ){
-        this.currentMonthData.quantity.isSet = true;
-        this.currentMonthData.quantity.goal = goal[currentMonthKey] !== null ? parseInt(goal[currentMonthKey]+'') : 0;
-        this.currentMonthData.quantity.result = goal[currentMonthValue] !== null ? parseInt(goal[currentMonthValue]+'') : 0;
-      }
-
-      if( goal.type === 2 ){
-        this.currentMonthData.prospect.isSet = true;
-        this.currentMonthData.prospect.goal = goal[currentMonthKey] !== null ? parseInt(goal[currentMonthKey]+'') : 0;
-        this.currentMonthData.prospect.result = goal[currentMonthValue] !== null ? parseInt(goal[currentMonthValue]+'') : 0;
-      }
-    })
-
-    this.calcData();
-
-  }
-
-  calcData(){
-    this.resultDataProspect = this.currentMonthData.prospect.result ? this.currentMonthData.prospect.result :0
-    this.goalDataProspect = this.currentMonthData.prospect.goal ? this.currentMonthData.prospect.goal : 0
-
-    this.resultDataQuantity = this.currentMonthData.quantity.result ? this.currentMonthData.quantity.result : 0
-    this.goalDataQuantity = this.currentMonthData.quantity.goal ? this.currentMonthData.quantity.goal : 0
-
-    this.percentDataProspect = ( this.resultDataProspect * 100 ) / this.goalDataProspect
-    this.percentDataQuantity = ( this.resultDataQuantity * 100 ) / this.goalDataQuantity
+  formatData(){
+    this.indexMonth = this.getCurrentMonth();
+    // console.log(this.arrayQuantityGoals[this.indexMonth]);
+    // console.log(this.arrayQuantityResults[this.indexMonth]);
+    // console.log(this.arrayProspectsGoals[this.indexMonth]);
+    // console.log(this.arrayProspectsResults[this.indexMonth]);
+    if(
+      this.arrayQuantityGoals.length === 0 &&
+      this.arrayQuantityResults.length === 0 &&
+      this.arrayProspectsGoals.length === 0 &&
+      this.arrayProspectsResults.length === 0
+    ) { this.isInfo = false } else { this.isInfo = true };
   }
 }

@@ -27,3 +27,8 @@ export interface Goal {
   type: number;
   user_id: number;
 }
+
+export interface ArrayGoalData {
+  goals: number[],
+  results: number[],
+}

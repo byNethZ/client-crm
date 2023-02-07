@@ -13,6 +13,7 @@ import { CommentsComponent } from './comments/comments.component';
 import { QuillModule } from 'ngx-quill';
 import { TableBasicComponent } from './table-basic/table-basic.component';
 import { ProfileComponent } from './profile/profile.component';
+import { GoalsGraphicsComponent } from './goals-graphics/goals-graphics.component';
 
 
 
@@ -24,7 +25,8 @@ import { ProfileComponent } from './profile/profile.component';
     ProgressComponent,
     CommentsComponent,
     TableBasicComponent,
-    ProfileComponent
+    ProfileComponent,
+    GoalsGraphicsComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +44,8 @@ import { ProfileComponent } from './profile/profile.component';
     InfocardsComponent,
     ProgressComponent,
     CommentsComponent,
-    ProfileComponent
+    ProfileComponent,
+    GoalsGraphicsComponent
   ]
 })
 export class SharedModule { }
