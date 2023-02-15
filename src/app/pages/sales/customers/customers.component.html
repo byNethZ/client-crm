@@ -11,7 +11,7 @@
 
 <div>
   <h2 class="text-center">{{ title }}</h2>
-  <h3 class="text-center">Total: {{ customersFiltered.length }}</h3>
+  <h3 class="text-center">Mostrando {{ customersFiltered.length }} de un Total de {{totalCustomers}}</h3>
   <div class="row justify-content-center m-3">
     <div class="row justify-content-center">
       <div class="col-lg-5"  *ngIf="role_id === 1">
@@ -19,7 +19,7 @@
           >Seleccionar vendedor</label
         >
         <select
-          (change)="filterData()"
+          (change)="filterBySelect()"
           class="form-select"
           name="vendorSelected"
           id="vendorSelected"
@@ -37,7 +37,7 @@
           >Seleccionar Categoria</label
         >
         <select
-          (change)="filterData()"
+          (change)="filterBySelect()"
           class="form-select"
           name="categorySelected"
           id="categorySelected"
@@ -54,7 +54,7 @@
 
     <div class="m-3">
       <input
-        (keyup)="applyFilter($event)"
+        (keyup)="setFilter($event)"
         type="text"
         class="form-control"
         id="exampleInputUsername1"
@@ -96,6 +96,8 @@
         </div>
       </div>
     </div>
+
+    <button *ngIf="currentPage < lastPage" (click)="getMore()" type="button" class="btn btn-primary col-lg-2 m-2">Cargar más</button>
 
     <div *ngIf="this.customersFiltered.length === 0">
       <h4 class="text-center">Sin clientes</h4>

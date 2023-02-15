@@ -351,7 +351,7 @@ export class SalesComponent implements OnInit {
 
           this.setProspectsMarketing(response.data.byMarketing)
 
-          this.mergeStatusArray(this.currentTotalByVendor, this.currentStatusByVendor);
+          if(this.currentOrganizedByVendor.length === 0) this.mergeStatusArray(this.currentTotalByVendor, this.currentStatusByVendor);
 
         } else {
           this.currentTotal = response.data.total;
@@ -467,6 +467,7 @@ export class SalesComponent implements OnInit {
     this.statesTotalArray = [];
     this.statesDataArray = [];
     this.markers = [];
+    this.currentStatusByVendor = [];
     //console.log(this.statesDataArray)
     this.getData();
   }

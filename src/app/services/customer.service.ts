@@ -10,22 +10,22 @@ import { global } from './global';
 export class CustomerService {
   constructor(private _http: HttpClient) {}
 
-  getCustomers(token: string): Observable<any> {
+  getCustomers(token: string, page: number): Observable<any> {
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this._http.get(`${global.url}/customersByVendor`, {
+    return this._http.get(`${global.url}/customersByVendor?page=${page}`, {
       headers: headers,
     });
   }
 
-  getCustomersByProperty(token: string, property: keyof Customer, idProperty: number): Observable<any> {
+  getCustomersByProperty(token: string, property: keyof Customer, idProperty: number, page: number = 1): Observable<any> {
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this._http.get(`${global.url}/customers/${property}/${idProperty}`, {
+    return this._http.get(`${global.url}/customers/${property}/${idProperty}?page=${page}`, {
       headers: headers,
     });
   }
@@ -38,12 +38,12 @@ export class CustomerService {
     return this._http.get(`${global.url}/customers`, { headers: headers });
   }
 
-  getAllProspects(token: string, page: string = `${global.url}/prospects?page=1`): Observable<any> {
+  getAllProspects(token: string, page: number = 1): Observable<any> {
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this._http.get(page, { headers: headers });
+    return this._http.get(`${global.url}/prospects?page=${page}`, { headers: headers });
   }
 
   delete(id: number, token: string): Observable<any> {

@@ -46,7 +46,8 @@
             class="btn btn-warning m-1"
             (click)="resetLink(link.id)"
           >
-            Resetear
+            {{isLoading ? '' : 'Resetear'}}
+            <img class="loading" *ngIf="isLoading" src="{{utils.returnUrlImage('assets/images/utils/loading.gif', 'asset')}}" alt="charging">
           </button>
           <button
             *ngIf="role_id === 1"

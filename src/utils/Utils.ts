@@ -2,6 +2,7 @@ import { Customer, Customer_Type } from 'src/app/models/customer.interface';
 import { Goal } from 'src/app/models/goal.interface';
 import { User } from 'src/app/models/user.interface';
 import { global } from 'src/app/services/global';
+import Swal from 'sweetalert2';
 
 export default class Utils {
   constructor() {}
@@ -206,7 +207,6 @@ export default class Utils {
   }
 
   getMarketingUsers(data: User[]) {
-    console.log(data);
     return data.filter((user: User) => {
       if (user.departament_alt_id === 8 || user.departament_id === 8)
         return true;
@@ -363,4 +363,49 @@ export default class Utils {
 
     return 'Sin datos'
   }
+
+  copyToClibpoard(content: string|number){
+    if (!navigator.clipboard) {
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'warning',
+        title: 'El navegador no permite copiar el contenido',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+    navigator.clipboard
+      .writeText(
+        `${content}`
+      )
+      .then(
+        (response) => {
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: 'Se ha copiado al portapapeles',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+          });
+        },
+        (err) => {
+          console.error('Async: Could not copy text: ', err);
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'warning',
+            title: `Error: ${err}`,
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+          });
+        }
+      );
+  }
+
 }

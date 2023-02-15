@@ -2,7 +2,7 @@
 
   <div class="row justify-content-center m-3" *ngIf="role === '1'">
     <div class="col-lg-5">
-      <select (change)="setVendorId($event)" class="form-select" name="" id="">
+      <select (change)="filterByVendor()" [(ngModel)]="idVendorSelected" class="form-select" name="" id="">
         <option value="99">General</option>
         <option *ngFor="let vendor of vendors" value="{{ vendor.id }}">
           {{ vendor?.name }}
@@ -11,7 +11,18 @@
     </div>
   </div>
 
-  <h5>Resultados: {{customersFiltered.length}}</h5>
+  <div class="m-3">
+    <input
+      (keyup)="setFilteredValue($event)"
+      type="text"
+      class="form-control"
+      id="exampleInputUsername1"
+      autocomplete="off"
+      placeholder="Filtrar por Nombre"
+    />
+  </div>
+
+  <h5>Mostrando {{customersFiltered.length}} de un Total de {{totalResults}}</h5>
 
   <table id="dataTableExample" class="table">
     <thead>
@@ -69,7 +80,7 @@
       </tr>
     </tfoot>
   </table>
-  <button *ngIf="fetchPage && status === 99" type="button" class="btn btn-primary col-lg-2 m-2" (click)="getCustomerData()">Cargar más</button>
+  <button *ngIf="currentPage < lastPage" (click)="getMore()" type="button" class="btn btn-primary col-lg-2 m-2">Cargar más</button>
 </div>
 
 <ng-template #basicModal let-modal>

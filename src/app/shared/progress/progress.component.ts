@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { months } from 'src/app/services/global';
 import Utils from 'src/utils/Utils';
 
 interface IData {
@@ -28,6 +29,7 @@ export class ProgressComponent implements OnInit, OnChanges {
   @Input() arrayProspectsResults: number[];
 
   public indexMonth: number = 0;
+  public currentMonth: string = '';
   public isInfo: boolean = false;
 
 
@@ -53,6 +55,7 @@ export class ProgressComponent implements OnInit, OnChanges {
     // console.log(this.arrayQuantityResults[this.indexMonth]);
     // console.log(this.arrayProspectsGoals[this.indexMonth]);
     // console.log(this.arrayProspectsResults[this.indexMonth]);
+    this.currentMonth = months[this.indexMonth];
     if(
       this.arrayQuantityGoals.length === 0 &&
       this.arrayQuantityResults.length === 0 &&

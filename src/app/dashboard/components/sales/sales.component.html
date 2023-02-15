@@ -56,7 +56,7 @@
     </div>
   </div>
 
-  <app-goals-graphics *ngIf="role === 1" [id]="idVendor" [token]="token!"></app-goals-graphics>
+  <app-goals-graphics [id]="role === 1 ? idVendor : id" [token]="token!"></app-goals-graphics>
 
   <div class="row">
 

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ArrayGoalData } from 'src/app/models/goal.interface';
 import { User } from 'src/app/models/user.interface';
+import { months } from 'src/app/services/global';
 import { GoalsService } from 'src/app/services/goals.service';
 import { UserService } from 'src/app/services/user.service';
 import Utils from 'src/utils/Utils';
@@ -24,20 +25,7 @@ export class EditGoalsComponent implements OnInit {
   public arrayQuantity: ArrayGoalData;
   public arrayProspect: ArrayGoalData;
 
-  public months = [
-    'enero',
-    'febrero',
-    'marzo',
-    'abril',
-    'mayo',
-    'junio',
-    'julio',
-    'agosto',
-    'septiembre',
-    'octubre',
-    'novembre',
-    'diciembre',
-  ]
+  public months = months;
 
   quantityForm = new FormGroup({
     jan_goal: new FormControl(''),

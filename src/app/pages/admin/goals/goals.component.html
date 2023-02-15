@@ -47,6 +47,7 @@
       <option
         *ngFor="let month of months; let i = index"
         value="{{ utils.formatMonthForGoal(i, 'result') }}"
+        class="text-capitalize"
       >
         {{ month }}
       </option>

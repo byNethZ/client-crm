@@ -1,3 +1,5 @@
+<button class="btn btn-primary" routerLink="/admin/metas">Atrás</button>
+
 <h3 class="text-center">Estás editando las metas de:</h3>
 
 <ng-container *ngIf="charged">
@@ -11,7 +13,7 @@
     <div class="col-md-6 stretch-card">
       <div class="card">
         <div class="card-body">
-          <h6 class="card-title text-center">Cantidad</h6>
+          <h6 class="card-title text-center">Meta de Ventas</h6>
           <form [formGroup]="quantityForm" class="table-responsive">
             <table id="dataTableCustomer" class="table">
               <thead>
@@ -28,7 +30,7 @@
               </tbody>
               <tfoot>
                 <tr *ngFor="let month of months; let i = index">
-                  <th>{{ month }}</th>
+                  <th class="text-capitalize">{{ month }}</th>
                   <th>
                     <input
                       id="{{ utils.formatMonthForGoal(i, 'goal') }}"
@@ -59,7 +61,7 @@
     <div class="col-md-6 stretch-card">
       <div class="card">
         <div class="card-body">
-          <h6 class="card-title text-center">Prospectos</h6>
+          <h6 class="card-title text-center">Meta de Prospección</h6>
           <form [formGroup]="prospectForm" class="table-responsive">
             <table id="dataTableCustomer" class="table">
               <thead>

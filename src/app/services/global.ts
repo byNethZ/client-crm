@@ -6,3 +6,18 @@ export var global = {
     urlProject: environment.projectPath,
     googleKey: environment.googleKey,
 }
+
+export const months = [
+  'enero',
+  'febrero',
+  'marzo',
+  'abril',
+  'mayo',
+  'junio',
+  'julio',
+  'agosto',
+  'septiembre',
+  'octubre',
+  'novembre',
+  'diciembre',
+];

@@ -31,9 +31,13 @@ export class CustomersComponent implements OnInit {
   public customersFiltered: Customer[] = [];
   public token: string = localStorage.getItem('token')!;
   public role_id: number = parseInt(localStorage.getItem('role_id')!);
-  public filterValue: string;
+  public filterValue: string = '';
   public idIndustryURL: string | null = null;
   public title: string = 'Clientes General';
+
+  public currentPage: number = 1;
+  public lastPage: number = 5;
+  public totalCustomers: number = 0;
 
   constructor(
     private _customerService: CustomerService,
@@ -44,7 +48,7 @@ export class CustomersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getCustomers();
+    this.getCustomers(true);
     this.setTitle();
     this.getVendors();
   }
@@ -69,16 +73,20 @@ export class CustomersComponent implements OnInit {
     );
   }
 
-  getCustomers() {
+  getCustomers(isRefresh: boolean) {
+    if(isRefresh) this.customers = [];
     this.idIndustryURL = this._route.snapshot.paramMap.get('id');
 
     if (this.idIndustryURL) {
       this._customerService
-        .getCustomersByProperty(this.token, 'type_id', parseInt(this.idIndustryURL))
+        .getCustomersByProperty(this.token, 'type_id', parseInt(this.idIndustryURL), this.currentPage)
         .subscribe(
           (response) => {
-            this.customers = response.customers;
-            this.customersFiltered = this.customers;
+            this.setDataCustomers(response.customers.data)
+            if(this.currentPage === 1) {
+              this.lastPage = response.customers.last_page;
+              this.totalCustomers =  response.customers.total;
+            };
           },
           (error) => {
             console.log(error);
@@ -95,10 +103,13 @@ export class CustomersComponent implements OnInit {
       return;
     }
 
-    this._customerService.getCustomers(this.token).subscribe(
+    this._customerService.getCustomers(this.token, this.currentPage).subscribe(
       (response) => {
-        this.customers = response.customers;
-        this.customersFiltered = this.customers;
+        this.setDataCustomers(response.customers.data);
+        if(this.currentPage === 1) {
+          this.lastPage = response.customers.last_page;
+          this.totalCustomers =  response.customers.total;
+        };
       },
       (error) => {
         console.log(error);
@@ -113,7 +124,18 @@ export class CustomersComponent implements OnInit {
       }
     );
 
-    this.getCustomerTypes();
+    if(this.currentPage === 1) this.getCustomerTypes();
+  }
+
+  setDataCustomers(data: Customer[]){
+    if(this.customers.length === 0){
+      this.customers = data;
+    } else {
+      this.customers = [...this.customers, ...data]
+    }
+
+    this.filterByBusiness();
+
   }
 
   getCustomerTypes() {
@@ -165,14 +187,16 @@ export class CustomersComponent implements OnInit {
     }
   }
 
-  applyFilter(event: Event) {
+  setFilter(event: Event){
     this.filterValue = (event.target as HTMLInputElement).value;
+    this.filterByBusiness();
+  }
+
+  filterByBusiness() {
     //console.log(this.filterValue);
     let filterValueLower = this.filterValue.toLowerCase();
     if (this.filterValue === '') {
-      this.customersFiltered = this.customers;
-      this.paramsFilter.vendor_id = '99';
-      this.paramsFilter.type_id = '99';
+      this.filterBySelect();
 
     } else {
       this.customersFiltered = this.customersFiltered.filter((customer) =>
@@ -197,7 +221,7 @@ export class CustomersComponent implements OnInit {
       if (result.isConfirmed) {
         this._customerService.delete(id, this.token).subscribe(
           (response) => {
-            this.getCustomers();
+            this.getCustomers(true);
             Swal.fire({
               toast: true,
               position: 'top-end',
@@ -224,7 +248,7 @@ export class CustomersComponent implements OnInit {
     });
   }
 
-  filterData() {
+  filterBySelect() {
 
     this.customersFiltered = this.customers.filter((customer) => {
       if(this.paramsFilter.vendor_id !== '99'){
@@ -241,5 +265,10 @@ export class CustomersComponent implements OnInit {
       return true;
     })
 
+  }
+
+  getMore(){
+    this.currentPage ++;
+    this.getCustomers(false);
   }
 }

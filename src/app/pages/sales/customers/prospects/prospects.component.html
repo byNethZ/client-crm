@@ -1,5 +1,5 @@
 <div>
-  <h4 class="text-center">Prospectos rechazados</h4>
+  <h4 class="text-center">{{status === 4 ? 'Prospectos rechazados' : 'Prospectos Totales'}}</h4>
   <app-data-table [status]="status" (lengthData)="setLenght($event, 4)" (id)="openModal($event, comments, true)" [isRejectedTable]="status === 4 ? true : false"></app-data-table>
 </div>
 

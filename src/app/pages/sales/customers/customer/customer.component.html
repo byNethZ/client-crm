@@ -29,38 +29,38 @@
 
   <div class="container contacts">
     <div *ngIf="customer.phone !== 'N/A'">
-      <a href="tel:{{customer.phone}}" class="btn">
+      <a href="tel:{{customer.phone}}" class="btn m-auto d-block">
         <i data-feather="phone" appFeatherIcon></i>
       </a>
-      <h5>Personal</h5>
+      <h5 class="cursor-pointer d-none d-md-block" (click)="utils.copyToClibpoard('+'+customer.phone)">Copiar</h5>
     </div>
 
     <div *ngIf="customer.email">
-      <a href="mailto:{{customer.email}}" class="btn">
+      <a href="mailto:{{customer.email}}" class="btn m-auto d-block">
         <i data-feather="mail" appFeatherIcon></i>
       </a>
-      <h5>E-mail</h5>
+      <h5 class="cursor-pointer d-none d-md-block" (click)="utils.copyToClibpoard(customer.email)">Copiar</h5>
     </div>
 
     <div *ngIf="customer.business_number">
-      <a href="tel:{{customer.business_number}}" class="btn">
+      <a href="tel:{{customer.business_number}}" class="btn m-auto d-block">
         <i data-feather="phone" appFeatherIcon></i>
       </a>
-      <h5>Negocio</h5>
+      <h5 class="cursor-pointer d-none d-md-block" (click)="utils.copyToClibpoard('+'+customer.business_number)">Copiar</h5>
     </div>
 
     <div *ngIf="customer.website">
-      <a href="{{customer.website}}" target="_blank" class="btn">
+      <a href="{{customer.website}}" target="_blank" class="btn m-auto d-block">
         <i data-feather="globe" appFeatherIcon></i>
       </a>
-      <h5>Website</h5>
+      <h5 class="cursor-pointer d-none d-md-block" (click)="utils.copyToClibpoard(customer.website)">Copiar</h5>
     </div>
 
     <div *ngIf="customer.field_1">
-      <a href="{{customer.field_1}}" target="_blank" class="btn">
+      <a href="{{customer.field_1}}" target="_blank" class="btn m-auto d-block">
         <i data-feather="facebook" appFeatherIcon></i>
       </a>
-      <h5>Facebook</h5>
+      <h5 class="cursor-pointer d-none d-md-block" (click)="utils.copyToClibpoard(customer.field_1)">Copiar</h5>
     </div>
 
   </div>

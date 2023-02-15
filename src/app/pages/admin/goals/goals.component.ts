@@ -3,6 +3,7 @@ import { Goal } from 'src/app/models/goal.interface';
 
 import { User } from 'src/app/models/user.interface';
 import { VendorService } from 'src/app/services/vendor.service';
+import { months } from 'src/app/services/global';
 
 import Utils from 'src/utils/Utils';
 import Swal from 'sweetalert2';
@@ -19,21 +20,9 @@ export class GoalsComponent implements OnInit {
   public vendors: User[] = []
   public vendorID: number = 99;
 
-  public months = [
-    'enero',
-    'febrero',
-    'marzo',
-    'abril',
-    'mayo',
-    'junio',
-    'julio',
-    'agosto',
-    'septiembre',
-    'octubre',
-    'novembre',
-    'diciembre',
-  ];
   public monthSelected: keyof Goal;
+
+  public months =  months;
 
   constructor(
     private _vendorService: VendorService,

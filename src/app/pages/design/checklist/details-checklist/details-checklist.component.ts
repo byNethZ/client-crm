@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Link } from 'src/app/models/link.interface';
 import { LinksService } from 'src/app/services/links.service';
+import Utils from 'src/utils/Utils';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -9,6 +10,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./details-checklist.component.scss'],
 })
 export class DetailsChecklistComponent implements OnInit {
+  public utils = new Utils();
   public token: string = localStorage.getItem('token')!;
   public links: Link[] = [];
   public linksFiltered: Link[] = [];
@@ -16,6 +18,8 @@ export class DetailsChecklistComponent implements OnInit {
   public urlGif: string = '';
   public currentPage: number = 1;
   public lastPage: number = 5;
+
+  public isLoading: boolean = false;
 
   public filteredValue: string = '';
   public role_id: number = parseInt(localStorage.getItem('role_id')!);
@@ -25,12 +29,13 @@ export class DetailsChecklistComponent implements OnInit {
   constructor(private _linkService: LinksService) {}
 
   ngOnInit(): void {
-    this.getLinks();
+    this.getLinks(true);
     //console.log(this.isAll)
     this.getGif();
   }
 
-  getLinks() {
+  getLinks(isRefresh: boolean) {
+    if(isRefresh) this.links = [];
     this._linkService
       .getLinks(this.token, this.status, this.currentPage)
       .subscribe(
@@ -98,7 +103,7 @@ export class DetailsChecklistComponent implements OnInit {
       if (result.isConfirmed) {
         this._linkService.deleteLink(id, this.token).subscribe(
           (response) => {
-            this.getLinks();
+            this.getLinks(true);
             Swal.fire({
               toast: true,
               position: 'top-end',
@@ -126,9 +131,11 @@ export class DetailsChecklistComponent implements OnInit {
   }
 
   resetLink(id: number) {
+    this.isLoading = true;
     this._linkService.changeStatusLink(id + '', this.token).subscribe(
       (response) => {
-        this.getLinks();
+        this.getLinks(true);
+        this.isLoading = false;
         Swal.fire({
           toast: true,
           position: 'top-end',
@@ -272,6 +279,6 @@ export class DetailsChecklistComponent implements OnInit {
 
   getMore(){
     this.currentPage ++;
-    this.getLinks();
+    this.getLinks(false);
   }
 }

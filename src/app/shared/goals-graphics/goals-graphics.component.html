@@ -1,5 +1,14 @@
+<div class="card col-xl-6 my-2 p-3 m-auto">
+  <app-progress
+    [arrayQuantityGoals]="arrayQuantity.goals"
+    [arrayQuantityResults]="arrayQuantity.results"
+    [arrayProspectsGoals]="arrayProspect.goals"
+    [arrayProspectsResults]="arrayProspect.results"
+  ></app-progress>
+</div>
+
 <div class="row">
-  <div class="col-xl-8 grid-margin grid-margin-xl-0 stretch-card">
+  <div class="col-xl-12 grid-margin grid-margin-xl-0 stretch-card">
     <div class="card pt-3">
       <div class="d-flex m-auto col-6">
         <div class="form-check col-6 mb-2">
@@ -39,14 +48,5 @@
         </canvas>
       </div>
     </div>
-  </div>
-
-  <div class="col-xl-4 grid-margin grid-margin-xl-0 stretch-card">
-    <app-progress
-      [arrayQuantityGoals]="arrayQuantity.goals"
-      [arrayQuantityResults]="arrayQuantity.results"
-      [arrayProspectsGoals]="arrayProspect.goals"
-      [arrayProspectsResults]="arrayProspect.results"
-    ></app-progress>
   </div>
 </div>

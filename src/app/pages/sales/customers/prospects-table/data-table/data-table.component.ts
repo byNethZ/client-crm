@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -19,7 +19,7 @@ import Swal from 'sweetalert2';
 })
 export class DataTableComponent implements OnInit {
   public prospects: Prospect[] = [];
-  public idVendorSelected: number = 99;
+  public idVendorSelected: string = '99';
   public customersFiltered: Prospect[] = [];
 
   public token: string | null = localStorage.getItem('token');
@@ -39,9 +39,16 @@ export class DataTableComponent implements OnInit {
   public idCustomerSelected: number;
   public notesIdCustomerSelected: string = '';
 
+  public filterValue: string = '';
+
   basicModalCloseResult: string = '';
 
-  public fetchPage: string | null = `${global.url}/prospects?page=1`;
+  //public fetchPage: string | null = `${global.url}/prospects?page=1`;
+
+  public currentPage: number = 1;
+  public lastPage: number = 5;
+
+  public totalResults: number = 0;
 
   public formChangeVendor= new FormGroup({
     vendor: new FormControl('', [Validators.required]),
@@ -64,18 +71,23 @@ export class DataTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCustomerData();
+    this.getCustomerData(true);
     this.getDepartaments();
     this.getUsers();
   }
 
-  getCustomerData(){
-    if(this.status === 99 && this.fetchPage){
-      this._customerService.getAllProspects(this.token!, this.fetchPage).subscribe(
+  getCustomerData(isRefresh: boolean){
+    if(isRefresh) this.prospects = [];
+
+    if(this.status === 99){
+      this._customerService.getAllProspects(this.token!, this.currentPage).subscribe(
         response => {
           this.parseData(response.prospects.data);
-          this.fetchPage = response.prospects.next_page_url;
-          console.log(response.prospects)
+          if(this.currentPage === 1) {
+            this.lastPage = response.prospects.last_page;
+            this.totalResults = response.prospects.total;
+          };
+          //console.log(response)
         },
         error => {
           console.log(error);
@@ -91,11 +103,16 @@ export class DataTableComponent implements OnInit {
       )
       return;
     }
-    this._customerService.getCustomersByProperty(this.token!, 'status', this.status).subscribe(
+    this._customerService.getCustomersByProperty(this.token!, 'status', this.status, this.currentPage).subscribe(
       response => {
-        //console.log(response.customers);
+        //console.log(response);
         //this.prospects = response.customers;
-        this.parseData(response.customers)
+        this.parseData(response.customers.data);
+        if(this.currentPage === 1) {
+          this.lastPage = response.customers.last_page;
+          this.totalResults = response.customers.total;
+        };
+        this.setLength();
 
 
       },
@@ -111,7 +128,7 @@ export class DataTableComponent implements OnInit {
         });
 
       }
-    )
+    );
   }
 
   getDepartaments(){
@@ -165,17 +182,15 @@ export class DataTableComponent implements OnInit {
         prospect.interests.interests = JSON.parse(prospect.interests.interests);
       }
     })
-    console.log(data)
+    //console.log(data)
 
-    if(this.customersFiltered.length === 0){
+    if(this.prospects.length === 0){
       this.prospects = data;
     } else {
       this.prospects = [...this.prospects, ...data]
     }
 
-    this.idVendorSelected === 99
-    ? this.customersFiltered = this.prospects
-    : this.customersFiltered = this.prospects.filter( customer => customer.vendor_id === this.idVendorSelected );
+    this.filterByName(this.filterValue);
     this.setLength();
 
   }
@@ -224,7 +239,7 @@ export class DataTableComponent implements OnInit {
 
     this._customerService.changeStatus(this.idCustomerSelected, status, this.token!).subscribe(
       response => {
-        this.getCustomerData();
+        this.getCustomerData(true);
         this._modalService.dismissAll();
         //console.log(response)
 
@@ -254,7 +269,7 @@ export class DataTableComponent implements OnInit {
 
     this._customerService.changeVendor(this.idCustomerSelected, parseInt(this.formChangeVendor.value.status), this.token!, req).subscribe({
       next: () => {
-        this.getCustomerData();
+        this.getCustomerData(true);
         this._modalService.dismissAll();
         this.formChangeVendor.reset();
       },
@@ -300,7 +315,7 @@ export class DataTableComponent implements OnInit {
   }
 
   setLength() {
-    this.lengthData.emit(this.prospects.length);
+    this.lengthData.emit(this.totalResults);
   }
 
   sendNotes(){
@@ -319,7 +334,7 @@ export class DataTableComponent implements OnInit {
           timerProgressBar: true,
         });
         this.notesIdCustomerSelected = '';
-        this.getCustomerData();
+        this.getCustomerData(true);
       },
       error: (error) => {
         console.log(error);
@@ -346,18 +361,43 @@ export class DataTableComponent implements OnInit {
     this.id.emit(id);
   }
 
-  setVendorId(evt: Event) {
-    this.idVendorSelected = parseInt((evt.target as HTMLSelectElement).value);
+  filterByVendor() {
+    //this.idVendorSelected = (evt.target as HTMLSelectElement).value;
+    //console.log(this.idVendorSelected)
 
-    if(this.idVendorSelected === 99){
+    if(this.idVendorSelected === '99'){
       this.customersFiltered = this.prospects;
 
       return;
     }
 
-    this.customersFiltered = this.prospects.filter( customer => customer.vendor_id === this.idVendorSelected )
+    this.customersFiltered = this.prospects.filter( customer => customer.vendor_id === parseInt(this.idVendorSelected) )
 
 
+  }
+
+  setFilteredValue(event: Event){
+    this.filterValue = (event.target as HTMLInputElement).value;
+    this.filterByName(this.filterValue);
+
+  }
+
+  filterByName(value: string) {
+    //console.log(this.filterValue);
+    let filterValueLower = value.toLowerCase();
+    if (value === '') {
+      this.filterByVendor();
+
+    } else {
+      this.customersFiltered = this.customersFiltered.filter((customer) =>
+        customer?.name?.toLowerCase().includes(filterValueLower, -1)
+      );
+    }
+  }
+
+  getMore(){
+    this.currentPage ++;
+    this.getCustomerData(false);
   }
 
 }

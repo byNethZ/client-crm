@@ -234,7 +234,7 @@ export class EditCustomerComponent implements OnInit {
 
           this.customer = response.customer;
           this.stateChoosed = response.customer.state_id;
-          console.log(this.customer);
+
           this.form.setValue({
             status: 5,
             name: this.customer.name,
@@ -517,7 +517,7 @@ export class EditCustomerComponent implements OnInit {
 
         this._customerService.uploadImage(this.token!, this.customer.id, this.formData).subscribe(
           response => {
-            console.log(response)
+            //console.log(response)
             this.imageLink = `${global.urlStorageCustomers}/${response.newImage}`
           },
           error => {
