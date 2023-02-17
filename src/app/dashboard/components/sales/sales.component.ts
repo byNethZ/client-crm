@@ -188,9 +188,8 @@ export class SalesComponent implements OnInit {
             categoryClicked = array.find(
               (category: any) => category.type === areaClicked
             );
-            //id = categoryClicked.type_id;
-            console.log(categoryClicked, array);
-            return;
+            id = categoryClicked.type_id;
+            //console.log(categoryClicked, array);
             routerIntern.navigate([`sales/customers/category/${id}`]);
 
           },

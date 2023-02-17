@@ -25,6 +25,7 @@ export class DataTableComponent implements OnInit {
   public token: string | null = localStorage.getItem('token');
 
   public role: string | null = localStorage.getItem('role_id');
+  public vendorID: string = localStorage.getItem('id')!;
   public departament_id: number = parseInt(localStorage.getItem('departament_id')!);
   public departament_alt_id: number | null = localStorage.getItem('departament_alt_id') ? parseInt(localStorage.getItem('departament_alt_id')!) : null;
 
@@ -103,7 +104,8 @@ export class DataTableComponent implements OnInit {
       )
       return;
     }
-    this._customerService.getCustomersByProperty(this.token!, 'status', this.status, this.currentPage).subscribe(
+    if(this.role !== '1' && this.departament_id !== 8 && this.departament_alt_id !== 8) this.idVendorSelected = this.vendorID;
+    this._customerService.getCustomersByProperty(this.token!, 'status', this.status, this.currentPage, this.idVendorSelected).subscribe(
       response => {
         //console.log(response);
         //this.prospects = response.customers;
@@ -374,6 +376,10 @@ export class DataTableComponent implements OnInit {
     this.customersFiltered = this.prospects.filter( customer => customer.vendor_id === parseInt(this.idVendorSelected) )
 
 
+  }
+
+  getCustomersByVendorSelected(){
+    this.getCustomerData(true);
   }
 
   setFilteredValue(event: Event){

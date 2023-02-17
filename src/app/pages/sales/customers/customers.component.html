@@ -1,3 +1,24 @@
+<h2 class="text-center">{{ title }}</h2>
+<div class="m-auto col-lg-5 mt-3 mb-5"  *ngIf="role_id === 1 || departament_id === 8 || departament_alt_id === 8">
+  <label for="vendorSelected" class="text-center"
+    >Seleccionar vendedor</label
+  >
+  <select
+    class="form-select"
+    name="vendorSelected"
+    id="vendorSelected"
+    [(ngModel)]="paramsFilter.vendor_id"
+  >
+    <option value="99">General</option>
+    <option *ngFor="let vendor of vendors" value="{{ vendor.id }}">
+      {{ vendor?.name }}
+    </option>
+  </select>
+  <div class="d-flex flex-column justify-content-center col-12">
+    <button class="btn btn-primary col-lg-3 mt-3 m-auto" (click)="searchByVendorID()" >Buscar</button>
+  </div>
+</div>
+
 <app-customersvendors *ngIf="role_id === 1"></app-customersvendors>
 <button
   class="btn btn-primary col-lg-2 m-2"
@@ -10,27 +31,9 @@
 </button>
 
 <div>
-  <h2 class="text-center">{{ title }}</h2>
   <h3 class="text-center">Mostrando {{ customersFiltered.length }} de un Total de {{totalCustomers}}</h3>
   <div class="row justify-content-center m-3">
     <div class="row justify-content-center">
-      <div class="col-lg-5"  *ngIf="role_id === 1">
-        <label for="vendorSelected" class="text-center"
-          >Seleccionar vendedor</label
-        >
-        <select
-          (change)="filterBySelect()"
-          class="form-select"
-          name="vendorSelected"
-          id="vendorSelected"
-          [(ngModel)]="paramsFilter.vendor_id"
-        >
-          <option value="99">General</option>
-          <option *ngFor="let vendor of vendors" value="{{ vendor.id }}">
-            {{ vendor?.name }}
-          </option>
-        </select>
-      </div>
 
       <div *ngIf="!idIndustryURL" class="col-lg-5">
         <label for="categorySelected" class="text-center"
@@ -85,10 +88,14 @@
               <h6>{{ customer.business }}</h6>
             </div>
             <div class="card-body">
-              <a class="btn btn-primary" href="mailto:{{ customer.email }}"
+              <div class="d-none d-md-flex flex-column justify-content-center">
+                <button (click)="utils.copyToClibpoard(customer.email)" *ngIf="customer.email" class="btn copy-button">{{customer.email}}</button>
+                <button (click)="utils.copyToClibpoard(utils.formatPhoneToShow(customer.phone))" *ngIf="customer.phone" class="btn copy-button">{{utils.formatPhoneToShow(customer.phone)}}</button>
+              </div>
+              <a *ngIf="customer.email" class="d-md-none btn btn-primary" href="mailto:{{ customer.email }}"
                 ><i data-feather="mail" appFeatherIcon></i
               ></a>
-              <a class="btn btn-margin" href="tel:{{ customer.phone }}"
+              <a *ngIf="customer.phone" class="d-md-none btn btn-margin" href="tel:{{ customer.phone }}"
                 ><i data-feather="phone" appFeatherIcon></i
               ></a>
             </div>

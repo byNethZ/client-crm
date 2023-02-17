@@ -197,6 +197,16 @@ export default class Utils {
     return formattedPhoneNumber;
   }
 
+  formatPhoneToShow(phone: string): string {
+    let formatted = phone.match(/.{1,3}/g)
+    if(formatted && formatted?.length > 3){
+
+      return `+(${formatted[0]}) ${formatted[1]} ${formatted[2]}${formatted[3]}`;
+    }
+
+    return 'N/A';
+  }
+
   getVendorsUsers(data: User[]) {
     //console.log(data);
     return data.filter((user: User) => {

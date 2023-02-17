@@ -10,22 +10,22 @@ import { global } from './global';
 export class CustomerService {
   constructor(private _http: HttpClient) {}
 
-  getCustomers(token: string, page: number): Observable<any> {
+  getCustomers(token: string, page: number, customerID: string): Observable<any> {
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this._http.get(`${global.url}/customersByVendor?page=${page}`, {
+    return this._http.get(`${global.url}/customersByVendor/${customerID}?page=${page}`, {
       headers: headers,
     });
   }
 
-  getCustomersByProperty(token: string, property: keyof Customer, idProperty: number, page: number = 1): Observable<any> {
+  getCustomersByProperty(token: string, property: keyof Customer, idProperty: number, page: number = 1, vendorID: string): Observable<any> {
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this._http.get(`${global.url}/customers/${property}/${idProperty}?page=${page}`, {
+    return this._http.get(`${global.url}/customers/${property}/${idProperty}/${vendorID}?page=${page}`, {
       headers: headers,
     });
   }

@@ -56,7 +56,7 @@ export class CreateChecklistComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCustomers();
+    //this.getCustomers();
     this.filCustomers = this.controlCust.valueChanges.pipe(
       startWith(''),
       map(val => (typeof val === 'string' ? val : val.business)),
@@ -64,8 +64,8 @@ export class CreateChecklistComponent implements OnInit {
     );
   }
 
-  getCustomers() {
-    this._customerService.getCustomersByProperty(this.token, 'status', 5).subscribe(
+/*   getCustomers() {
+    this._customerService.getAllCustomers(this.token).subscribe(
       (response) => {
         this.customers = response.customers;
         this.customersFiltered = this.customers;
@@ -82,7 +82,7 @@ export class CreateChecklistComponent implements OnInit {
         });
       }
     );
-  }
+  } */
 
   private _filterCustomers(value: string): Customer[] {
     const formatVal = value.toLowerCase();

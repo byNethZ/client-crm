@@ -31,6 +31,9 @@ export class CustomersComponent implements OnInit {
   public customersFiltered: Customer[] = [];
   public token: string = localStorage.getItem('token')!;
   public role_id: number = parseInt(localStorage.getItem('role_id')!);
+  public departament_id: number = parseInt(localStorage.getItem('departament_id')!);
+  public departament_alt_id: number = parseInt(localStorage.getItem('departament_alt_id')!);
+  public vendorID: string = localStorage.getItem('id')!;
   public filterValue: string = '';
   public idIndustryURL: string | null = null;
   public title: string = 'Clientes General';
@@ -77,9 +80,11 @@ export class CustomersComponent implements OnInit {
     if(isRefresh) this.customers = [];
     this.idIndustryURL = this._route.snapshot.paramMap.get('id');
 
+    if(this.role_id !== 1 && this.departament_id !== 8 && this.departament_alt_id !== 8 ) this.paramsFilter.vendor_id = this.vendorID;
+
     if (this.idIndustryURL) {
       this._customerService
-        .getCustomersByProperty(this.token, 'type_id', parseInt(this.idIndustryURL), this.currentPage)
+        .getCustomersByProperty(this.token, 'type_id', parseInt(this.idIndustryURL), this.currentPage, this.paramsFilter.vendor_id)
         .subscribe(
           (response) => {
             this.setDataCustomers(response.customers.data)
@@ -103,7 +108,7 @@ export class CustomersComponent implements OnInit {
       return;
     }
 
-    this._customerService.getCustomers(this.token, this.currentPage).subscribe(
+    this._customerService.getCustomers(this.token, this.currentPage, this.paramsFilter.vendor_id).subscribe(
       (response) => {
         this.setDataCustomers(response.customers.data);
         if(this.currentPage === 1) {
@@ -250,13 +255,7 @@ export class CustomersComponent implements OnInit {
 
   filterBySelect() {
 
-    this.customersFiltered = this.customers.filter((customer) => {
-      if(this.paramsFilter.vendor_id !== '99'){
-        return customer.vendor_id === parseInt(this.paramsFilter.vendor_id);
-
-      }
-      return true;
-    })
+    this.customersFiltered = this.customers
     .filter((customer) => {
       if(this.paramsFilter.type_id !== '99'){
         return customer.type_id === parseInt(this.paramsFilter.type_id);
@@ -264,6 +263,14 @@ export class CustomersComponent implements OnInit {
       }
       return true;
     })
+
+  }
+
+  searchByVendorID(){
+    let vendorSelected = this.vendors.find( (vendor) => vendor.id === parseInt(this.paramsFilter.vendor_id))
+    let nameVendor = vendorSelected?.name;
+    this.title = `Clientes de ${nameVendor}`;
+    this.getCustomers(true);
 
   }
 
