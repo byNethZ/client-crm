@@ -5,14 +5,14 @@
 export const environment = {
   production: false,
 
-  //url: 'http://localhost:8000/api',
-  url: 'https://bliones.net/api/api',
+  url: 'http://localhost:8000/api',
+  //url: 'https://bliones.net/api/api',
 
-  //urlStorageCustomers: 'http://localhost:8000/storage/customers',
-  urlStorageCustomers: 'https://bliones.net/api/storage/customers',
+  urlStorageCustomers: 'http://localhost:8000/storage/customers',
+  //urlStorageCustomers: 'https://bliones.net/api/storage/customers',
 
-  //projectPath: 'http://localhost:4200',
-  projectPath: 'https://bliones.net/system',
+  projectPath: 'http://localhost:4200',
+  //projectPath: 'https://bliones.net/system',
 
   googleKey: 'AIzaSyBfc7gde2FSVvX1h2M3_nNFwowx5zpvDJc',
 };
