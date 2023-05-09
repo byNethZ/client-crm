@@ -11,7 +11,7 @@
         </div>
         <div class="card-body text-center">
           <img
-          class="icon-button"
+            class="icon-button"
             src="https://bliones.net/assets/system/plus-solid.svg"
             alt="nuevo"
           />
@@ -28,7 +28,7 @@
         </div>
         <div class="card-body text-center">
           <img
-          class="icon-button"
+            class="icon-button"
             src="https://bliones.net/assets/system/user-solid.svg"
             alt="viejo"
           />
@@ -61,10 +61,7 @@
               choice.category.toLowerCase()
             }} "
           >
-            <img
-              src="{{ choice.img_url }}"
-              alt="{{ choice.category }}"
-            />
+            <img src="{{ choice.img_url }}" alt="{{ choice.category }}" />
           </label>
         </div>
       </div>
@@ -191,10 +188,7 @@
               choice.category.toLowerCase()
             }} "
           >
-            <img
-              src="{{ choice.img_url }}"
-              alt="{{ choice.category }}"
-            />
+            <img src="{{ choice.img_url }}" alt="{{ choice.category }}" />
           </label>
         </div>
       </div>
@@ -229,7 +223,7 @@
         <div class="row">
           <label class="col-sm-3 col-form-label" for="phone">Teléfono*</label>
           <input
-            class="form-control {{errorMessage ? 'error-input': ''}}"
+            class="form-control {{ errorMessage ? 'error-input' : '' }}"
             type="tel"
             formControlName="phone"
             name="phone"
@@ -237,7 +231,11 @@
           />
         </div>
         <div *ngIf="customerExists !== undefined">
-          <p class="text-danger">Este número ya existe en la base de datos y pertenece al cliente {{customerExists.name}} del(a) vendedor(a) {{vendorDesigned?.name}}</p>
+          <p class="text-danger">
+            Este número ya existe en la base de datos y pertenece al cliente
+            {{ customerExists.name }} del(a) vendedor(a)
+            {{ vendorDesigned?.name }}
+          </p>
         </div>
         <div class="row">
           <label class="col-sm-3 col-form-label" for="email">Email</label>
@@ -281,7 +279,10 @@
             <option value="10">Networking</option>
           </select>
         </div>
-        <div class="row" *ngIf="departament_id === 8 || departament_id_alt === 8  ">
+        <div
+          class="row"
+          *ngIf="departament_id === 8 || departament_id_alt === 8"
+        >
           <label class="col-sm-3 col-form-label" for="vendor_id"
             >Vendedor*</label
           >
@@ -309,7 +310,6 @@
             id=""
           ></textarea>
         </div>
-
       </form>
     </div>
 

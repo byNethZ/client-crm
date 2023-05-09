@@ -27,7 +27,7 @@ import Swal from 'sweetalert2';
 })
 export class CreateCustomerComponent implements OnInit {
   public user: User;
-  public utils= new Utils();
+  public utils = new Utils();
   public errorMessage: string | boolean = false;
   public typeCustomer: FormGroup;
   formData: FormGroup;
@@ -80,7 +80,7 @@ export class CreateCustomerComponent implements OnInit {
     private _productService: ProductService,
     private _vendorService: VendorService,
     private _fb: FormBuilder,
-    private _userService: UserService,
+    private _userService: UserService
   ) {
     this.customer = {
       id: 1,
@@ -145,7 +145,7 @@ export class CreateCustomerComponent implements OnInit {
       notes: '',
       image: '',
       created_at: '',
-      updated_at: ''
+      updated_at: '',
     };
     this.formDepartaments = fb.group({
       selectedDepartaments: new FormArray([]),
@@ -184,7 +184,7 @@ export class CreateCustomerComponent implements OnInit {
           icon: 'warning',
           title: `Error: ${error.message}`,
           showConfirmButton: false,
-          showCloseButton: true
+          showCloseButton: true,
         });
       }
     );
@@ -195,7 +195,6 @@ export class CreateCustomerComponent implements OnInit {
       (response) => {
         this.departaments = response;
         //console.log(this.departaments)
-
       },
       (error) => {
         console.log(error);
@@ -205,7 +204,7 @@ export class CreateCustomerComponent implements OnInit {
           icon: 'warning',
           title: `Error: ${error.message}`,
           showConfirmButton: false,
-          showCloseButton: true
+          showCloseButton: true,
         });
       }
     );
@@ -214,15 +213,19 @@ export class CreateCustomerComponent implements OnInit {
   getCustomers() {
     this._customerService.getAllCustomers(this.token!).subscribe(
       (response) => {
+        // console.log(response.customers);
         this.customers = response.customers;
-        this.customersByVendor = this.customers.filter( (customer) => {
-          if( customer.vendor_id === parseInt(this.vendor_id!) && customer.status === 5 ){
-            return true
+        this.customersByVendor = this.customers.filter((customer) => {
+          if (
+            customer.vendor_id === parseInt(this.vendor_id!) &&
+            customer.status === 5
+          ) {
+            return true;
           }
           return false;
         });
-        //console.log(this.customersByVendor);
-        this.customersFiltered = this.customersByVendor
+        // console.log(this.customersByVendor);
+        this.customersFiltered = this.customersByVendor;
       },
       (error) => {
         console.log(error);
@@ -232,7 +235,7 @@ export class CreateCustomerComponent implements OnInit {
           icon: 'warning',
           title: `Error: ${error.message}`,
           showConfirmButton: false,
-          showCloseButton: true
+          showCloseButton: true,
         });
       }
     );
@@ -294,8 +297,6 @@ export class CreateCustomerComponent implements OnInit {
   save(event: Event, status: number = 0) {
     event.preventDefault();
 
-
-
     this.customer.name = this.formData.value.name;
     this.customer.phone = this.utils.formatPhone(this.formData.value.phone);
     this.customer.email = this.formData.value.email;
@@ -305,9 +306,10 @@ export class CreateCustomerComponent implements OnInit {
     this.customer.notes = this.formData.value.notes;
     this.customer.status = status;
 
-    this.customer.vendor_id = this.departament_id === 8 || this.departament_id_alt === 8
-      ? this.formData.value.vendor_id
-      : this.vendor_id;
+    this.customer.vendor_id =
+      this.departament_id === 8 || this.departament_id_alt === 8
+        ? this.formData.value.vendor_id
+        : this.vendor_id;
 
     this.arrayInterests = this.formDepartaments.value.selectedDepartaments;
 
@@ -315,7 +317,7 @@ export class CreateCustomerComponent implements OnInit {
       this.customer.token = this.generateToken();
     }
 
-    if( this.departament_id === 8 || this.departament_id_alt === 8 ){
+    if (this.departament_id === 8 || this.departament_id_alt === 8) {
       this.customer.field_2 = this.id;
     }
 
@@ -351,7 +353,7 @@ export class CreateCustomerComponent implements OnInit {
           icon: 'warning',
           title: `Error: ${error.message}`,
           showConfirmButton: false,
-          showCloseButton: true
+          showCloseButton: true,
         });
       }
     );
@@ -379,7 +381,7 @@ export class CreateCustomerComponent implements OnInit {
           icon: 'warning',
           title: `Error: ${error.message}`,
           showConfirmButton: false,
-          showCloseButton: true
+          showCloseButton: true,
         });
       }
     );
@@ -394,7 +396,9 @@ export class CreateCustomerComponent implements OnInit {
         startWith(''),
         map((val) => (typeof val === 'string' ? val : val.business)),
         map((business) =>
-          business ? this._filterCustomers(business) : this.customersByVendor.slice()
+          business
+            ? this._filterCustomers(business)
+            : this.customersByVendor.slice()
         )
       );
     }
@@ -423,86 +427,86 @@ export class CreateCustomerComponent implements OnInit {
         this.getErrorMessage('Debes seleccionar al menos un departamento');
       }
     } else {
-
-      if(this.customerSelected !== null){
-
+      if (this.customerSelected !== null) {
         this.wizard.goToNextStep();
         //console.log(this.customerSelected);
         this.getDepartaments();
         this.getErrorMessage(false);
-
       } else {
         this.getErrorMessage('Debes seleccionar un cliente');
       }
     }
   }
 
-  verifyStepThree(){
-    if(this.isProspect){
-      if(this.typeCustomer.value.type_id){
+  verifyStepThree() {
+    if (this.isProspect) {
+      if (this.typeCustomer.value.type_id) {
         this.getErrorMessage(false);
         this.wizard.goToNextStep();
-
       } else {
         this.getErrorMessage('Debes seleccionar la industria del cliente');
       }
-
     } else {
-      let lenghtArrayForm = this.formDepartaments.value.selectedDepartaments.length;
+      let lenghtArrayForm =
+        this.formDepartaments.value.selectedDepartaments.length;
 
-      if(lenghtArrayForm > 0){
+      if (lenghtArrayForm > 0) {
         this.getErrorMessage(false);
-        this.arrayInterests = this.formDepartaments.value.selectedDepartaments
+        this.arrayInterests = this.formDepartaments.value.selectedDepartaments;
 
         let id = this.customerSelected?.id;
-        if(id){
-          this._customerService.updateInterests( id, this.arrayInterests, this.token!).subscribe(
-            response => {
-              //console.log(response);
-              this.wizard.goToNextStep();
-              this.wizard.completed;
-              this.wizard.goToNextStep();
-
-            },
-            error => {
-              console.log(error);
-              Swal.fire({
-                toast: true,
-                position: 'top-end',
-                icon: 'warning',
-                title: `Error: ${error.message}`,
-                showConfirmButton: false,
-                showCloseButton: true
-              });
-
-            }
-          )
+        if (id) {
+          this._customerService
+            .updateInterests(id, this.arrayInterests, this.token!)
+            .subscribe(
+              (response) => {
+                //console.log(response);
+                this.wizard.goToNextStep();
+                this.wizard.completed;
+                this.wizard.goToNextStep();
+              },
+              (error) => {
+                console.log(error);
+                Swal.fire({
+                  toast: true,
+                  position: 'top-end',
+                  icon: 'warning',
+                  title: `Error: ${error.message}`,
+                  showConfirmButton: false,
+                  showCloseButton: true,
+                });
+              }
+            );
         }
-
       } else {
         this.getErrorMessage('Debes seleccionar al menos un departamento');
       }
-
     }
   }
 
-  verifyCustomer(){
+  verifyCustomer() {
     let phone = this.formData.value.phone;
     let formattedPhone = this.utils.formatPhone(phone);
-    this.customerExists = this.customers.find( (customer) => customer.phone === phone)
-    this.vendorDesigned = this.vendors.find( (vendor) => vendor.id === this.customerExists?.vendor_id)
+    this.customerExists = this.customers.find(
+      (customer) => customer.phone === phone
+    );
+    this.vendorDesigned = this.vendors.find(
+      (vendor) => vendor.id === this.customerExists?.vendor_id
+    );
     //console.log( this.customers );
 
-    if(this.customerExists !== undefined || formattedPhone === '' || formattedPhone.length < 10) {
-      this.formData.patchValue({phone: ''});
-      this.errorMessage = 'Ingrese un teléfono válido'
+    if (
+      this.customerExists !== undefined ||
+      formattedPhone === '' ||
+      formattedPhone.length < 10
+    ) {
+      this.formData.patchValue({ phone: '' });
+      this.errorMessage = 'Ingrese un teléfono válido';
     } else {
-      this.errorMessage = ''
-
+      this.errorMessage = '';
     }
 
     //if(phone)
     //
-
   }
 }

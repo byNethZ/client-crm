@@ -4,30 +4,36 @@ export const MENU: MenuItem[] = [
   {
     label: 'Main',
     isTitle: true,
-    departament: 10
+    departament: 10,
   },
   {
     label: 'Dashboard',
     icon: 'home',
     link: '/dashboard',
-    departament: 10
+    departament: 10,
   },
   {
     label: 'Ventas',
     isTitle: true,
-    departament: 4
+    departament: 4,
   },
   {
     label: 'Clientes',
     icon: 'user',
     link: '/sales/customers',
-    departament: 4
+    departament: 4,
+  },
+  {
+    label: 'Notas de Orden',
+    icon: 'shopping-cart',
+    link: '/sales/orders',
+    departament: 4,
   },
   {
     label: 'Prospectos',
     icon: 'user-plus',
     link: '/sales/table-prospects',
-    departament: 4
+    departament: 4,
   },
   {
     label: 'Herramientas',
@@ -36,81 +42,81 @@ export const MENU: MenuItem[] = [
     subItems: [
       {
         label: 'Productos',
-        link: '/sales/products'
+        link: '/sales/products',
       },
       {
         label: 'Catalogos',
-        link: '/sales/catalogues'
+        link: '/sales/catalogues',
       },
-    ]
+    ],
   },
   {
     label: 'Ganadores Black Friday',
     icon: 'gift',
     link: '/tools/ruleta',
-    departament: 4
+    departament: 4,
   },
   {
     label: 'Contratos',
     isTitle: true,
-    departament: 4
+    departament: 4,
   },
   {
     label: 'Fotografías',
     icon: 'link',
     link: '/design/photographies',
-    departament: 4
+    departament: 4,
   },
   {
     label: 'Menus',
     isTitle: true,
-    departament: 6
+    departament: 6,
   },
   {
     label: 'Enlaces',
     icon: 'link',
     link: '/design/checklists',
-    departament: 6
+    departament: 6,
   },
   {
     label: 'Admin',
     isTitle: true,
-    departament: 1
+    departament: 1,
   },
   {
     label: 'Team',
     icon: 'user',
     link: '/admin/team',
-    departament: 1
+    departament: 1,
   },
   {
     label: 'Metas',
     icon: 'trending-up',
     link: '/admin/metas',
-    departament: 1
+    departament: 1,
   },
   {
     label: 'Digital',
     isTitle: true,
-    departament: 2
+    departament: 2,
   },
   {
     label: 'Panel',
     icon: 'settings',
     link: '/digital',
-    departament: 2
+    departament: 2,
   },
   {
     label: 'Websites',
     icon: 'smartphone',
     link: '/digital/websites',
-    departament: 2
+    departament: 2,
   },
   {
     label: 'Reportes',
     icon: 'send',
     link: '/admin/reportes',
-    departament: 10
+    departament: 10,
   },
   //start ui components
 ];

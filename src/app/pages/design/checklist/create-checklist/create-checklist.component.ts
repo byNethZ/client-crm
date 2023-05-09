@@ -24,7 +24,7 @@ export class CreateChecklistComponent implements OnInit {
   public customersFiltered: Customer[];
   public filterValue: string;
 
-  controlCust = new FormControl();
+  public controlCust = new FormControl();
 
   filCustomers: Observable<Customer[]> = new Observable();
 
@@ -37,7 +37,7 @@ export class CreateChecklistComponent implements OnInit {
       urldropbox: new FormControl('', [Validators.required]),
       customer: new FormControl('', [Validators.required]),
       type: new FormControl('menu', [Validators.required]),
-      notes: new FormControl('',),
+      notes: new FormControl(''),
     });
     this.link = {
       id: 1,
@@ -51,23 +51,26 @@ export class CreateChecklistComponent implements OnInit {
       updated_at: '',
       customer_id: 1,
       type: '',
-      notes: ''
-    }
+      notes: '',
+    };
   }
 
   ngOnInit(): void {
-    //this.getCustomers();
+    this.getCustomers();
     this.filCustomers = this.controlCust.valueChanges.pipe(
       startWith(''),
-      map(val => (typeof val === 'string' ? val : val.business)),
-      map(business => (business ? this._filterCustomers(business) : this.customers.slice()))
+      map((val) => (typeof val === 'string' ? val : val.business)),
+      map((business) =>
+        business ? this._filterCustomers(business) : this.customers.slice()
+      )
     );
   }
 
-/*   getCustomers() {
-    this._customerService.getAllCustomers(this.token).subscribe(
+  getCustomers() {
+    this._customerService.getJustCustomers(this.token).subscribe(
       (response) => {
         this.customers = response.customers;
+        console.log(response.customers);
         this.customersFiltered = this.customers;
       },
       (error) => {
@@ -78,18 +81,17 @@ export class CreateChecklistComponent implements OnInit {
           icon: 'warning',
           title: `Error: ${error.message}`,
           showConfirmButton: false,
-          showCloseButton: true
+          showCloseButton: true,
         });
       }
     );
-  } */
+  }
 
   private _filterCustomers(value: string): Customer[] {
     const formatVal = value.toLowerCase();
 
-
-    return this.customers.filter(
-      (customer) => customer.business?.toLowerCase().includes(formatVal)
+    return this.customers.filter((customer) =>
+      customer.business?.toLowerCase().includes(formatVal)
     );
   }
 
@@ -125,17 +127,21 @@ export class CreateChecklistComponent implements OnInit {
     evt.preventDefault();
 
     //this lines is for mat autocomplete in future functionality
-    // this.link.customer = this.customerSelected?.business;
-    // this.link.customer_id = this.customerSelected?.id ? this.customerSelected?.id : 1;
+    this.link.customer = this.customerSelected
+      ? this.customerSelected?.business
+      : this.form.value.customer;
+    this.link.customer_id = this.customerSelected?.id
+      ? this.customerSelected?.id
+      : 1;
 
-    this.link.customer = this.form.value.customer;
+    // this.link.customer = this.form.value.customer;
     this.link.urldropbox = this.form.value.urldropbox;
     this.link.type = this.form.value.type;
     this.link.notes = this.form.value.notes;
 
     this._linkService.createLink(this.link, this.token).subscribe(
-      response => {
-        if(this._router.url === '/design/checklists'){
+      (response) => {
+        if (this._router.url === '/design/checklists') {
           this.reloadCurrentRoute();
         } else {
           this._router.navigate(['/dashboard/enlaces']);
@@ -149,10 +155,8 @@ export class CreateChecklistComponent implements OnInit {
           timer: 3000,
           timerProgressBar: true,
         });
-
-
       },
-      error => {
+      (error) => {
         console.log(error);
         Swal.fire({
           toast: true,
@@ -160,11 +164,14 @@ export class CreateChecklistComponent implements OnInit {
           icon: 'warning',
           title: `Error: ${error.message}`,
           showConfirmButton: false,
-          showCloseButton: true
+          showCloseButton: true,
         });
-
       }
-    )
+    );
+  }
 
+  cleanCustomer() {
+    this.customerSelected = null;
+    this.controlCust.setValue('');
   }
 }

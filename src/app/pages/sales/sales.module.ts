@@ -24,6 +24,7 @@ import { DashboardModule } from 'src/app/dashboard/dashboard.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FeatherIconModule } from 'src/app/core/feather-icon/feather-icon.module';
 import { ProspectsComponent } from './customers/prospects/prospects.component';
+import { OrdersComponent } from './orders/orders.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { ProspectsComponent } from './customers/prospects/prospects.component';
     DataTableComponent,
     NewComponent,
     ProspectsComponent,
+    OrdersComponent,
   ],
   imports: [
     SharedModule,

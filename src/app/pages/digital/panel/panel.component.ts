@@ -7,28 +7,26 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
-  styleUrls: ['./panel.component.scss']
+  styleUrls: ['./panel.component.scss'],
 })
 export class PanelComponent implements OnInit {
   public token: string = localStorage.getItem('token')!;
-  public users: User[]= [];
+  public users: User[] = [];
   public idUser: string = '99';
 
-  constructor(
-    private _userService: UserService
-  ) {}
+  constructor(private _userService: UserService) {}
 
   ngOnInit(): void {
     this.getUsers();
   }
 
-  getUsers(){
+  getUsers() {
     this._userService.getUsers(this.token).subscribe(
-      response => {
+      (response) => {
         //console.log(response)
         this.users = response;
       },
-      error => {
+      (error) => {
         console.log(error);
         Swal.fire({
           toast: true,
@@ -36,15 +34,15 @@ export class PanelComponent implements OnInit {
           icon: 'warning',
           title: `Error: ${error.message}`,
           showConfirmButton: false,
-          showCloseButton: true
+          showCloseButton: true,
         });
       }
-    )
+    );
   }
 
-  activate(){
+  activate() {
     this._userService.activateSystem(this.token, this.idUser).subscribe(
-      response => {
+      (response) => {
         Swal.fire({
           toast: true,
           position: 'top-end',
@@ -52,10 +50,10 @@ export class PanelComponent implements OnInit {
           title: 'Se ha mandado correctamente el mensaje',
           showConfirmButton: false,
           timer: 3000,
-          timerProgressBar: true
-        })
+          timerProgressBar: true,
+        });
       },
-      error => {
+      (error) => {
         console.log(error);
         Swal.fire({
           toast: true,
@@ -63,10 +61,9 @@ export class PanelComponent implements OnInit {
           icon: 'warning',
           title: `Error: ${error.message}`,
           showConfirmButton: false,
-          showCloseButton: true
+          showCloseButton: true,
         });
       }
-    )
+    );
   }
-
 }

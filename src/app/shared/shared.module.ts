@@ -14,8 +14,7 @@ import { QuillModule } from 'ngx-quill';
 import { TableBasicComponent } from './table-basic/table-basic.component';
 import { ProfileComponent } from './profile/profile.component';
 import { GoalsGraphicsComponent } from './goals-graphics/goals-graphics.component';
-
-
+import { LayoutRestringedComponent } from './layout-restringed/layout-restringed.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +25,8 @@ import { GoalsGraphicsComponent } from './goals-graphics/goals-graphics.componen
     CommentsComponent,
     TableBasicComponent,
     ProfileComponent,
-    GoalsGraphicsComponent
+    GoalsGraphicsComponent,
+    LayoutRestringedComponent,
   ],
   imports: [
     CommonModule,
@@ -45,7 +45,8 @@ import { GoalsGraphicsComponent } from './goals-graphics/goals-graphics.componen
     ProgressComponent,
     CommentsComponent,
     ProfileComponent,
-    GoalsGraphicsComponent
-  ]
+    GoalsGraphicsComponent,
+    LayoutRestringedComponent,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

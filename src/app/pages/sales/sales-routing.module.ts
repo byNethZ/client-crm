@@ -12,25 +12,31 @@ import { ProductComponent } from './products/product/product.component';
 import { ProductsComponent } from './products/products.component';
 import { PromosComponent } from './promos/promos.component';
 import { RuletaComponent } from './ruleta/ruleta.component';
+import { OrdersComponent } from './orders/orders.component';
 
 const routes: Routes = [
-  {path:'catalogues', component: CataloguesComponent},
-  {path:'products', component: ProductsComponent},
-  {path:'product/:id', component: ProductComponent},
-  {path:'customers', component: CustomersComponent},
-  {path:'customers/new', component: NewComponent},
-  {path:'customers/category/:id', component: CustomersComponent},
-  {path:'customer/:id', component: CustomerComponent},
-  {path:'edit-customer/:id', component: EditCustomerComponent},
-  {path:'create-customer', component: CreateCustomerComponent},
-  {path:'promos', component: PromosComponent},
-  {path:'ruleta', component: RuletaComponent},
-  {path:'table-prospects', component: ProspectsTableComponent},
-  {path:'prospects/:status', component: ProspectsComponent},
+  { path: 'catalogues', component: CataloguesComponent },
+  { path: 'products', component: ProductsComponent },
+  { path: 'product/:id', component: ProductComponent },
+  { path: 'customers', component: CustomersComponent },
+  { path: 'customers/new', component: NewComponent },
+  { path: 'customers/category/:id', component: CustomersComponent },
+  { path: 'customer/:id', component: CustomerComponent },
+  { path: 'edit-customer/:id', component: EditCustomerComponent },
+  { path: 'create-customer', component: CreateCustomerComponent },
+  { path: 'promos', component: PromosComponent },
+  { path: 'ruleta', component: RuletaComponent },
+  { path: 'table-prospects', component: ProspectsTableComponent },
+  { path: 'prospects/:status', component: ProspectsComponent },
+  {
+    path: 'orders',
+    loadChildren: () =>
+      import('./orders/orders.module').then((m) => m.OrdersModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class SalesRoutingModule { }
+export class SalesRoutingModule {}

@@ -56,12 +56,16 @@ export default class Utils {
     return statusString;
   }
 
-  returnUrlImage(image: string, mode: 'storage' | 'asset' | 'external', type: 'profile' | 'image' = 'profile'): string {
+  returnUrlImage(
+    image: string,
+    mode: 'storage' | 'asset' | 'external',
+    type: 'profile' | 'image' = 'profile'
+  ): string {
     let typeImage = type === 'profile' ? 'profile.webp' : 'placeholder.jpg';
-    if( !image ) return `${global.urlProject}/assets/images/others/${typeImage}`;
+    if (!image) return `${global.urlProject}/assets/images/others/${typeImage}`;
 
-    if(mode === 'storage') return `${global.urlStorageCustomers}/${image}`;
-    if(mode === 'asset') return `${global.urlProject}/${image}`;
+    if (mode === 'storage') return `${global.urlStorageCustomers}/${image}`;
+    if (mode === 'asset') return `${global.urlProject}/${image}`;
 
     return image;
   }
@@ -197,10 +201,11 @@ export default class Utils {
     return formattedPhoneNumber;
   }
 
-  formatPhoneToShow(phone: string): string {
-    let formatted = phone.match(/.{1,3}/g)
-    if(formatted && formatted?.length > 3){
+  formatPhoneToShow(phone: string | null | undefined): string {
+    if (!phone) return 'N/A';
 
+    let formatted = phone.match(/.{1,3}/g);
+    if (formatted && formatted?.length > 3) {
       return `+(${formatted[0]}) ${formatted[1]} ${formatted[2]}${formatted[3]}`;
     }
 
@@ -354,27 +359,30 @@ export default class Utils {
     return monthFormatted;
   }
 
-  calcProgressBar(result: number | null, goal: number | null, percent: number = 100): number{
-    if(result === 0 || result === null ) return 0;
+  calcProgressBar(
+    result: number | null,
+    goal: number | null,
+    percent: number = 100
+  ): number {
+    if (result === 0 || result === null) return 0;
     if (goal === 0 || goal === null) return 100;
 
-    return Math.floor(( result * percent ) / goal)
+    return Math.floor((result * percent) / goal);
   }
 
-  getCategoriesFromCustomersArray(customers: Customer[]): number[]{
-
-    return [...new Set(customers.map(customer => customer.type_id))];
+  getCategoriesFromCustomersArray(customers: Customer[]): number[] {
+    return [...new Set(customers.map((customer) => customer.type_id))];
   }
 
-  formatCategory(id: number,  data: Customer_Type[]){
-    let category =  data.find( category => category.id === id)
+  formatCategory(id: number, data: Customer_Type[]) {
+    let category = data.find((category) => category.id === id);
 
-    if (category) return category.type
+    if (category) return category.type;
 
-    return 'Sin datos'
+    return 'Sin datos';
   }
 
-  copyToClibpoard(content: string|number){
+  copyToClibpoard(content: string | number) {
     if (!navigator.clipboard) {
       Swal.fire({
         toast: true,
@@ -387,35 +395,30 @@ export default class Utils {
       });
       return;
     }
-    navigator.clipboard
-      .writeText(
-        `${content}`
-      )
-      .then(
-        (response) => {
-          Swal.fire({
-            toast: true,
-            position: 'top-end',
-            icon: 'success',
-            title: 'Se ha copiado al portapapeles',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-          });
-        },
-        (err) => {
-          console.error('Async: Could not copy text: ', err);
-          Swal.fire({
-            toast: true,
-            position: 'top-end',
-            icon: 'warning',
-            title: `Error: ${err}`,
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-          });
-        }
-      );
+    navigator.clipboard.writeText(`${content}`).then(
+      (response) => {
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'success',
+          title: 'Se ha copiado al portapapeles',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+        });
+      },
+      (err) => {
+        console.error('Async: Could not copy text: ', err);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'warning',
+          title: `Error: ${err}`,
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+        });
+      }
+    );
   }
-
 }

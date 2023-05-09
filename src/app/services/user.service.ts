@@ -41,7 +41,7 @@ export class UserService {
       .set('Authorization', `Bearer ${token}`);
 
     return this._http
-      .post(`${global.url}/validateToken`, '', { headers: headers })
+      .post(`${global.url}/validate_token`, '', { headers: headers })
       .pipe(
         map((res) => {
           //console.log(res);
@@ -174,7 +174,7 @@ export class UserService {
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this._http.get(`${global.url}/publicDepartaments`, {
+    return this._http.get(`${global.url}/public_departaments`, {
       headers: headers,
     });
   }
@@ -212,6 +212,8 @@ export class UserService {
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this._http.post(`${global.url}/notifications/${id}`, '', { headers: headers });
+    return this._http.post(`${global.url}/notifications/${id}`, '', {
+      headers: headers,
+    });
   }
 }
