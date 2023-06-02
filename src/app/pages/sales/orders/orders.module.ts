@@ -8,12 +8,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OrdersRoutingModule } from './orders-routing.module';
 import { OrderProductComponent } from './create-orders/order-product/order-product.component';
 import { TableOrderComponent } from './create-orders/table-order/table-order.component';
+import { UniformOrderComponent } from './create-orders/order-product/uniform-order/uniform-order.component';
 
 @NgModule({
   declarations: [
     CreateOrdersComponent,
     OrderProductComponent,
     TableOrderComponent,
+    UniformOrderComponent,
   ],
   imports: [
     OrdersRoutingModule,

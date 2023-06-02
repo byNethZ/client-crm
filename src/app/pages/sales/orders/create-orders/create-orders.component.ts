@@ -33,35 +33,7 @@ export class CreateOrdersComponent implements OnInit {
   public states: State[] = [];
   public customers: Customer[] = [];
   public customersFiltered: Customer[] = [];
-  public productsOrder: Array<OrderProductUniforms | OrderProductGeneral> = [
-    {
-      status: 1,
-      product_id: 1,
-      sku: '',
-      name: '',
-      product_category_id: 1,
-      description: '',
-      subtotal: 1,
-      type: 1,
-      size_xs: 1,
-      size_s: 1,
-      size_m: 1,
-      size_l: 1,
-      size_xl: 1,
-      size_xxl: 1,
-      color: '',
-    },
-    {
-      status: 1,
-      product_id: 2,
-      sku: '',
-      name: '',
-      product_category_id: 2,
-      description: '',
-      subtotal: 1,
-      qty: 1,
-    },
-  ];
+  // public productsOrder: Array<OrderProductUniforms | OrderProductGeneral> = [];
 
   //forms
   public customerData: FormGroup;
@@ -226,10 +198,10 @@ export class CreateOrdersComponent implements OnInit {
     );
   }
 
-  public addProductReceiver(
-    product: OrderProductUniforms | OrderProductGeneral
-  ) {
-    this.productsOrder.push(product);
-    console.log(this.productsOrder);
-  }
+  // public addProductReceiver(
+  //   product: OrderProductUniforms | OrderProductGeneral
+  // ) {
+  //   this.productsOrder.push(product);
+  //   console.log(this.productsOrder);
+  // }
 }

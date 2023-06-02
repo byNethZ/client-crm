@@ -24,7 +24,7 @@ export const MENU: MenuItem[] = [
     departament: 4,
   },
   {
-    label: 'Notas de Orden',
+    label: 'Formas de Orden',
     icon: 'shopping-cart',
     link: '/sales/orders',
     departament: 4,

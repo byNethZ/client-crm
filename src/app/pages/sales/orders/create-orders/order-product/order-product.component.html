@@ -1,96 +1,31 @@
-<!-- Table Products -->
 <div *ngIf="products.length > 0">
-  <div class="row col-md-8 grid-margin stretch-card mx-auto">
-    <div class="card">
-      <div class="card-body" *ngIf="uniformsProducts.length > 0">
-        <h6 class="card-title">Uniformes</h6>
-
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Model #</th>
-                <th>Embroidery or Transfer</th>
-                <th>Color</th>
-                <th>XS</th>
-                <th>S</th>
-                <th>M</th>
-                <th>L</th>
-                <th>XL</th>
-                <th>XXL</th>
-                <th>Total</th>
-                <th>Unit $</th>
-                <th>Subtotal</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let uniformsProduct of uniformsProducts">
-                <th>{{ uniformsProduct.name }}</th>
-                <td>{{ uniformsProduct.type }}</td>
-                <td>{{ uniformsProduct.color }}</td>
-                <td>{{ uniformsProduct.size_xs }}</td>
-                <td>{{ uniformsProduct.size_s }}</td>
-                <td>{{ uniformsProduct.size_m }}</td>
-                <td>{{ uniformsProduct.size_l }}</td>
-                <td>{{ uniformsProduct.size_xl }}</td>
-                <td>{{ uniformsProduct.size_xxl }}</td>
-                <td>{{ uniformsProduct.size_xxl }}</td>
-                <td>Precio Unitario</td>
-                <td>{{ uniformsProduct.subtotal }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="card-body" *ngIf="generalProducts.length > 0">
-        <h6 class="card-title">General</h6>
-
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>SKU</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Qty</th>
-                <th>Unit $</th>
-                <th>Subtotal</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let generalProduct of generalProducts">
-                <th>{{ generalProduct.sku }}</th>
-                <td>{{ generalProduct.name }}</td>
-                <td>{{ generalProduct.description }}</td>
-                <td>{{ generalProduct.qty }}</td>
-                <td>Precio Unitario</td>
-                <td>{{ generalProduct.subtotal }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+  <app-table-order></app-table-order>
 </div>
 <!-- End Table Products Section -->
 <!-- Form and Add Button Section -->
+<!-- <i data-feather="plus" appFeatherIcon></i>
+<i
+  class="link-icon plus-product cursor-pointer"
+  [attr.data-feather]="'plus'"
+  [attr.width]="60"
+  [attr.height]="60"
+  appFeatherIcon
+></i> -->
 <div *ngIf="selectedCategory">
   <!-- Add Button -->
-  <div
+  <ng-container
     *ngIf="formProductSubmitted"
     class="w-100 d-flex justify-content-center mb-7"
   >
-    <div (click)="clearData()">
-      <i
-        class="link-icon plus-product cursor-pointer"
-        [attr.data-feather]="'plus'"
-        [attr.width]="60"
-        [attr.height]="60"
-        appFeatherIcon
-      ></i>
-    </div>
-  </div>
+    <i
+      (click)="clearData()"
+      class="link-icon plus-product cursor-pointer"
+      [attr.data-feather]="'plus'"
+      [attr.width]="60"
+      [attr.height]="60"
+      appFeatherIcon
+    ></i>
+  </ng-container>
   <!-- End Add Button -->
   <!-- Form -->
   <div *ngIf="!formProductSubmitted">
@@ -101,200 +36,7 @@
           <h6 class="card-title">Uniformes</h6>
 
           <div>
-            <form [formGroup]="formUniforms" (ngSubmit)="addProduct()">
-              <div class="row mb-3">
-                <div class="col-lg-6">
-                  <label class="col-form-label text-sm col-12" for="name"
-                    >Modelo #</label
-                  >
-                  <div class="col-12">
-                    <input
-                      type="text"
-                      class="form-control col-12"
-                      id="name"
-                      matInput
-                      [formControl]="controlProduct"
-                      [matAutocomplete]="autocompleteProduct"
-                      required
-                      placeholder="Nombre"
-                      [ngClass]="
-                        formUniforms.get('name')?.errors?.required
-                          ? 'is-invalid'
-                          : ''
-                      "
-                    />
-                    <mat-autocomplete
-                      autoActiveFirstOption
-                      #autocompleteProduct="matAutocomplete"
-                      [displayWith]="displayFn"
-                      (optionSelected)="OnProductSelected($event.option)"
-                    >
-                      <mat-option
-                        *ngFor="let product of filProducts | async"
-                        [value]="product"
-                      >
-                        {{ product.name }}
-                      </mat-option>
-                    </mat-autocomplete>
-                  </div>
-                </div>
-                <div class="col-lg-3">
-                  <label class="col-form-label text-sm col-12" for="name"
-                    >Tipo de uniforme</label
-                  >
-                  <div class="form-check mb-2">
-                    <input
-                      type="radio"
-                      class="form-check-input"
-                      id="type"
-                      name="type"
-                      value="1"
-                      formControlName="type"
-                      required
-                      [ngClass]="
-                        formUniforms.get('type')?.errors?.required
-                          ? 'is-invalid'
-                          : ''
-                      "
-                    />
-                    <label class="form-check-label" for="type"
-                      >Embroidery</label
-                    >
-                  </div>
-                  <div class="form-check mb-2">
-                    <input
-                      type="radio"
-                      class="form-check-input"
-                      id="type"
-                      name="type"
-                      value="2"
-                      formControlName="type"
-                      required
-                      [ngClass]="
-                        formUniforms.get('type')?.errors?.required
-                          ? 'is-invalid'
-                          : ''
-                      "
-                    />
-                    <label class="form-check-label" for="type">Transfer</label>
-                  </div>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <div class="col-lg-6">
-                  <label class="col-form-label text-sm col-12" for="color"
-                    >Color</label
-                  >
-                  <div class="col-12">
-                    <input
-                      type="text"
-                      class="form-control col-12"
-                      id="color"
-                      required
-                      placeholder="Color"
-                      formControlName="color"
-                      [ngClass]="
-                        formUniforms.get('color')?.errors?.required
-                          ? 'is-invalid'
-                          : ''
-                      "
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div class="row mb-3 d-flex justify-content-between">
-                <div class="col-lg-9 d-lg-flex">
-                  <div class="col-lg-2" *ngFor="let input of inputs">
-                    <label
-                      class="col-form-label text-sm col-12"
-                      [for]="input.value"
-                    >
-                      {{ input.name }}
-                    </label>
-                    <div class="col-12">
-                      <input
-                        type="number"
-                        class="form-control col-12"
-                        [id]="input.value"
-                        [formControlName]="input.value"
-                        placeholder="0"
-                        (keyup)="calculateTotal()"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-2">
-                  <label class="col-form-label text-sm col-12" for="total_units"
-                    >Total</label
-                  >
-                  <div class="col-12">
-                    <input
-                      type="text"
-                      class="form-control col-12"
-                      id="total_units"
-                      placeholder="0"
-                      formControlName="total_units"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <div class="col-lg-10">
-                  <label class="col-form-label text-sm col-12" for="description"
-                    >Descripción</label
-                  >
-                  <div class="col-12">
-                    <input
-                      type="text"
-                      class="form-control col-12"
-                      id="description"
-                      placeholder="Descripción o Notas"
-                      formControlName="description"
-                    />
-                  </div>
-                </div>
-                <div class="col-lg-2">
-                  <label class="col-form-label text-sm col-12" for="unit_price"
-                    >Precio unitario</label
-                  >
-                  <div class="col-12">
-                    <input
-                      type="text"
-                      class="form-control col-12"
-                      id="unit_price"
-                      placeholder="0"
-                      formControlName="unit_price"
-                      [ngClass]="
-                        formUniforms.get('unit_price')?.errors?.required
-                          ? 'is-invalid'
-                          : ''
-                      "
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <div class="col-lg-10"></div>
-                <div class="col-lg-2">
-                  <label class="col-form-label text-sm col-12" for="unit_price"
-                    >Subtotal del producto</label
-                  >
-                  <div class="col-12">
-                    <input
-                      type="text"
-                      class="form-control col-12"
-                      id="unit_price"
-                      placeholder="0"
-                      formControlName="subtotal"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="d-flex justify-content-center col-12">
-                <button class="btn btn-primary" type="submit">Agregar</button>
-              </div>
-            </form>
+            <app-uniform-order [products]="productsByCat"></app-uniform-order>
           </div>
         </div>
       </div>

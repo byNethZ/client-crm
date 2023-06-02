@@ -303,11 +303,7 @@
 
   <aw-wizard-step stepTitle="step 2">
     <form (ngSubmit)="orderSubmit()" [formGroup]="orderData">
-      <order-product
-        [token]="token"
-        [productsOrder]="productsOrder"
-        (productOrderedEmitter)="addProductReceiver($event)"
-      ></order-product>
+      <order-product [token]="token"></order-product>
       <div class="d-flex justify-content-center mt-2">
         <button class="btn btn-secondary me-2" type="button" awPreviousStep>
           Back

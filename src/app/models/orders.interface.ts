@@ -1,20 +1,27 @@
-export interface Order {
+export type OrderProduct =
+  | (OrderProductMain & OrderProductUniforms)
+  | (OrderProductMain & OrderProductGeneral);
+export interface OrderShow {
+  id: number;
   status: number;
   user_id: number;
   customer_id: number;
+  subtotal: number;
+}
+export interface Order extends OrderShow {
   shipping_address: string;
   shipping_state_id: number;
   shipping_zipcode: string;
   alternative_phone: null | string;
   address_on_product: null | string;
-  subtotal: number;
   discount: number;
   taxes: number;
   observations: null | string;
   projects: Array<OrderProductUniforms | OrderProductGeneral>;
 }
 
-interface OrderProduct {
+export interface OrderProductMain {
+  id: number;
   status: number;
   product_id: number;
   sku: string;
@@ -24,7 +31,7 @@ interface OrderProduct {
   subtotal: number;
 }
 
-export interface OrderProductUniforms extends OrderProduct {
+export interface OrderProductUniforms extends OrderProductMain {
   type: number;
   size_xs: number;
   size_s: number;
@@ -35,6 +42,6 @@ export interface OrderProductUniforms extends OrderProduct {
   color: string;
 }
 
-export interface OrderProductGeneral extends OrderProduct {
+export interface OrderProductGeneral extends OrderProductMain {
   qty: number;
 }

@@ -14,13 +14,11 @@ import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UtilsComponent } from './pages/utils/utils.component';
+import { StoreModule } from '@ngrx/store';
+import { ROOT_REDUCERS } from './state/app.state';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ErrorPageComponent,
-    UtilsComponent,
-  ],
+  declarations: [AppComponent, ErrorPageComponent, UtilsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -29,6 +27,7 @@ import { UtilsComponent } from './pages/utils/utils.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    StoreModule.forRoot(ROOT_REDUCERS, {}),
   ],
   providers: [
     AuthGuard,
@@ -40,10 +39,10 @@ import { UtilsComponent } from './pages/utils/utils.component';
           xml: () => import('highlight.js/lib/languages/xml'),
           typescript: () => import('highlight.js/lib/languages/typescript'),
           scss: () => import('highlight.js/lib/languages/scss'),
-        }
-      }
-    }
+        },
+      },
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

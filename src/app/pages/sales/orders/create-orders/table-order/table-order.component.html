@@ -1,1 +1,73 @@
+<!-- Table Products -->
+<div class="row col-md-8 grid-margin stretch-card mx-auto">
+  <div class="card">
+    <div class="card-body" *ngIf="uniformsProducts.length > 0">
+      <h6 class="card-title">Uniformes</h6>
 
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Model #</th>
+              <th>Embroidery or Transfer</th>
+              <th>Color</th>
+              <th>XS</th>
+              <th>S</th>
+              <th>M</th>
+              <th>L</th>
+              <th>XL</th>
+              <th>XXL</th>
+              <th>Total</th>
+              <th>Unit $</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let uniformsProduct of uniformsProducts">
+              <th>{{ uniformsProduct.name }}</th>
+              <td>{{ uniformsProduct.type }}</td>
+              <td>{{ uniformsProduct.color }}</td>
+              <td>{{ uniformsProduct.size_xs }}</td>
+              <td>{{ uniformsProduct.size_s }}</td>
+              <td>{{ uniformsProduct.size_m }}</td>
+              <td>{{ uniformsProduct.size_l }}</td>
+              <td>{{ uniformsProduct.size_xl }}</td>
+              <td>{{ uniformsProduct.size_xxl }}</td>
+              <td>{{ uniformsProduct.size_xxl }}</td>
+              <td>Precio Unitario</td>
+              <td>{{ uniformsProduct.subtotal }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-body" *ngIf="generalProducts.length > 0">
+      <h6 class="card-title">General</h6>
+
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>SKU</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Qty</th>
+              <th>Unit $</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let generalProduct of generalProducts">
+              <th>{{ generalProduct.sku }}</th>
+              <td>{{ generalProduct.name }}</td>
+              <td>{{ generalProduct.description }}</td>
+              <td>{{ generalProduct.qty }}</td>
+              <td>Precio Unitario</td>
+              <td>{{ generalProduct.subtotal }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
