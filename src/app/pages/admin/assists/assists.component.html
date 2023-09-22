@@ -1,0 +1,13 @@
+<div class="col-xl-6 m-auto mb-3 grid-margin stretch-card">
+  <div class="card p-3">
+    <h4 class="text-center">Asistencias al evento ChattLatino</h4>
+    <div class="card-body">
+      <h6
+        *ngFor="let assist of assists"
+        class="card-title justify-content-center text-center"
+      >
+        {{ setAssist(assist.state) }}: {{ assist.assists }}
+      </h6>
+    </div>
+  </div>
+</div>

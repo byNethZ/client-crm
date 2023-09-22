@@ -7,20 +7,22 @@ import { CreateUserComponent } from './teams/create-user/create-user.component';
 import { EditUserComponent } from './teams/edit-user/edit-user.component';
 import { TeamsComponent } from './teams/teams.component';
 import { UserComponent } from './teams/user/user.component';
+import { AssistsComponent } from './assists/assists.component';
 
 const routes: Routes = [
-  {path:'', component: TeamsComponent},
-  {path:'team', component: TeamsComponent},
-  {path:'team/:id', component: UserComponent},
-  {path:'edit-user/:id', component: EditUserComponent},
-  {path:'create-user', component: CreateUserComponent},
-  {path:'reportes', component: ReportsComponent},
-  {path:'metas', component: GoalsComponent},
-  {path:'metas/:id', component: EditGoalsComponent},
+  { path: '', component: TeamsComponent },
+  { path: 'team', component: TeamsComponent },
+  { path: 'team/:id', component: UserComponent },
+  { path: 'edit-user/:id', component: EditUserComponent },
+  { path: 'create-user', component: CreateUserComponent },
+  { path: 'reportes', component: ReportsComponent },
+  { path: 'metas', component: GoalsComponent },
+  { path: 'metas/:id', component: EditGoalsComponent },
+  { path: 'asistencias', component: AssistsComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {}

@@ -96,6 +96,12 @@ export const MENU: MenuItem[] = [
     departament: 1,
   },
   {
+    label: 'Asistencias',
+    icon: 'user-check',
+    link: '/admin/asistencias',
+    departament: 1,
+  },
+  {
     label: 'Digital',
     isTitle: true,
     departament: 2,

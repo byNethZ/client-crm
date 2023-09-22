@@ -14,6 +14,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { NgChartsModule } from 'ng2-charts';
 import { EditGoalsComponent } from './goals/edit-goals/edit-goals.component';
 import { AddGoalsComponent } from './goals/add-goals/add-goals.component';
+import { AssistsComponent } from './assists/assists.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { AddGoalsComponent } from './goals/add-goals/add-goals.component';
     ReportsComponent,
     GoalsComponent,
     EditGoalsComponent,
-    AddGoalsComponent
+    AddGoalsComponent,
+    AssistsComponent
   ],
   imports: [
     CommonModule,
