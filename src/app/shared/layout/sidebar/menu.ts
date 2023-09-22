@@ -53,7 +53,7 @@ export const MENU: MenuItem[] = [
   {
     label: 'Ganadores Black Friday',
     icon: 'gift',
-    link: '/tools/ruleta',
+    link: '/sales/ruleta',
     departament: 4,
   },
   {
